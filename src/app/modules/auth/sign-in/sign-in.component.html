@@ -2,12 +2,12 @@
     <div class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
         <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
             <!-- Logo -->
-            <div class="w-18 -ml-3">
-                <img src="assets/images/logo/logo-negro.svg">
+            <div class="flex justify-end items-end w-full -ml-3">
+                <img class="w-16" src="assets/images/logo/logo-negro.svg">
             </div>
 
             <!-- Title -->
-            <div class="text-4xl font-extrabold tracking-tight leading-tight">Ingresar</div>
+            <div class="text-4xl font-extrabold tracking-tight leading-tight">App capacidad de servicio</div>
             <!--<div class="flex items-baseline mt-0.5 font-medium">
                 <div>Don't have an account?</div>
                 <a
@@ -33,9 +33,32 @@
                 [formGroup]="signInForm"
                 #signInNgForm="ngForm">
 
+                <!-- Empresa -->
+                <!--<mat-form-field class="w-full">
+                    <mat-label>Empresa</mat-label>
+                    <input
+                        id="empresa"
+                        matInput
+                        [formControlName]="'empresa'">
+                    <mat-error *ngIf="signInForm.get('empresa').hasError('empresa')">
+                        Empresa requerida
+                    </mat-error>
+                    <mat-error *ngIf="signInForm.get('empresa').hasError('empresa')">
+                        Ingrese empresa válida
+                    </mat-error>
+                </mat-form-field>-->
+
+                <mat-form-field class="w-full">
+                    <mat-label>Empresa</mat-label>
+                    <mat-select [formControlName]="'empresa'">
+                        <mat-option [value]="'DMS'">DMS</mat-option>
+                        <mat-option [value]="'Renault'">Renault</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Correo</mat-label>
+                    <mat-label>Usuario</mat-label>
                     <input
                         id="email"
                         matInput
@@ -163,15 +186,16 @@
         </svg>
         <!-- @formatter:on -->
         <!-- Content -->
-        <!--<div class="z-10 relative w-full max-w-2xl">
-            <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+        <div class="z-10 relative w-full max-w-2xl">
+            <!--<div class="text-7xl font-bold leading-none text-gray-100">
+                <div>App capacidad</div>
+                <div>de servicio</div>
             </div>
             <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
                 Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
                 Join us and start building your application today.
-            </div>
+            </div>-->
+            <!--
             <div class="flex items-center mt-8">
                 <div class="flex flex-0 items-center -space-x-1.5">
                     <img
@@ -188,7 +212,7 @@
                         src="assets/images/avatars/male-16.jpg">
                 </div>
                 <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
-            </div>
-        </div>-->
+            </div>-->
+        </div>
     </div>
 </div>
