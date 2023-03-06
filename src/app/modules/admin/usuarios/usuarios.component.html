@@ -1,0 +1,102 @@
+<section class="w-full p-5">
+    <div class="py-4 flex justify-between">
+        <div>
+            <div class="text-4xl font-semibold tracking-tight leading-8">Lista de usuarios</div>
+            <div class="font-medium tracking-tight text-secondary">Monitor metrics, check reports and review performance</div>            
+        </div>
+        <div>
+            <button class="bg-black text-white mr-1" mat-button>
+                <mat-icon class="icon-size-5 text-white" matPrefix [svgIcon]="'heroicons_outline:table'"></mat-icon>
+            </button>
+            <button class="bg-black text-white" mat-button>
+                <mat-icon class="icon-size-5 text-white" matPrefix [svgIcon]="'heroicons_outline:user-add'"></mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="w-full">
+        <div class="w'full">
+            <form [formGroup]="filtrosForm" class="grid grid-cols-4 gap-2">
+                <mat-form-field class="w-full mt-2">
+                    <input placeholder="Nombre" matInput [formControlName]="'nombre'">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:user'">
+                    </mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="w-full mt-2">
+                    <input placeholder="Telefono" matInput [formControlName]="'telefono'">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:phone'">
+                    </mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="w-full mt-2">
+                    <input placeholder="Cedula" matInput [formControlName]="'cedula'">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
+                    </mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="w-full mt-2">
+                    <input placeholder="Sede" matInput [formControlName]="'sede'">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:office-building'">
+                    </mat-icon>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="bg-card shadow rounded-2xl overflow-hidden">
+            <table mat-table [dataSource]="dataSource" class="w-full">
+
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element?.nombre+element?.apellido}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="sede">
+                    <th mat-header-cell *matHeaderCellDef> Sede </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.sede}} </td>
+                  </ng-container>
+
+                <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef> Telefono </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.telefono}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cedula">
+                  <th mat-header-cell *matHeaderCellDef> Cedula </th>
+                  <td mat-cell *matCellDef="let element"> {{element?.cedula}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="genero">
+                  <th mat-header-cell *matHeaderCellDef> Genero </th>
+                  <td mat-cell *matCellDef="let element"> {{element?.genero}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button>
+                            <mat-icon class="text-red-300" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon [svgIcon]="'heroicons_outline:pencil-alt'"></mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="flex justify-center mt-4">
+        <mat-paginator class="rounded-2xl shadow" [length]="100"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+</section>

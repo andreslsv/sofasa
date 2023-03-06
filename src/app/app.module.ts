@@ -15,6 +15,13 @@ import { appRoutes } from 'app/app.routing';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {MatIconModule} from '@angular/material/icon';
+import { UsuariosComponent } from './modules/admin/usuarios/usuarios.component';
+import {MatTableModule} from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -24,7 +31,8 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent
+        DashboardComponent,
+        UsuariosComponent
     ],
     imports     : [
         BrowserModule,
@@ -42,8 +50,18 @@ const routerConfig: ExtraOptions = {
         // Layout module of your application
         LayoutModule,
         NgApexchartsModule,
+        ReactiveFormsModule,
 
         MatIconModule,
+        MatTableModule,
+        MatButtonModule,
+        MatPaginatorModule,
+
+        MatFormFieldModule,
+        FormsModule,
+
+        MatInputModule,
+        
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})
