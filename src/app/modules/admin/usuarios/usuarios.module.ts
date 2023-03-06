@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ListaComponent } from './lista/lista.component';
 
 const exampleRoutes: Route[] = [
     {
@@ -17,7 +18,9 @@ const exampleRoutes: Route[] = [
 
 @NgModule({
     declarations: [
-    ],
+    
+    ListaComponent
+  ],
     imports     : [
         RouterModule.forChild(exampleRoutes),
 

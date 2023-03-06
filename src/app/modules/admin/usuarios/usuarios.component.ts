@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { SubirExcelUsuariosComponent } from 'app/modals/subir-excel-usuarios/subir-excel-usuarios.component';
 
 export interface Usuario {
   idUsuarioBir?: string;
@@ -53,7 +55,18 @@ export class UsuariosComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'sede', 'telefono', 'email', 'cedula','genero','acciones'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,public _dialog: MatDialog) { }
+
+  opensuburExcelUsuariosModal() {
+    const dialogRef = this._dialog.open(SubirExcelUsuariosComponent, {
+      width: '350px',
+      height: 'auto',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+    });
+  }
 
   ngOnInit(): void {
   }

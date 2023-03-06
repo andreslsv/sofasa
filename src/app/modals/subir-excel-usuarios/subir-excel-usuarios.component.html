@@ -1,0 +1,14 @@
+<section>
+    <div>
+        <div class="text-3xl font-semibold tracking-tight leading-8">Subir usuarios</div>
+        <div class="font-medium tracking-tight text-secondary">Seleccione el archivo de Excel</div>            
+    </div>
+    <div class="mt-2">
+        <input #inputArchivo hidden="true" type="file" (change)="setDocumento($event)">
+        <button class="bg-black text-white" mat-button (click)="inputArchivo.click()">
+            <span>Subir</span>
+            <mat-icon class="icon-size-5 text-white" matPrefix [svgIcon]="'heroicons_outline:upload'"></mat-icon>
+        </button>
+        <div class="text-sm tracking-tight text-secondary">{{documento?.name}}</div> 
+    </div>
+</section>
