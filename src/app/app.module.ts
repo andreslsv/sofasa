@@ -13,6 +13,8 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import {MatIconModule} from '@angular/material/icon';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -39,6 +41,9 @@ const routerConfig: ExtraOptions = {
 
         // Layout module of your application
         LayoutModule,
+        NgApexchartsModule,
+
+        MatIconModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})
