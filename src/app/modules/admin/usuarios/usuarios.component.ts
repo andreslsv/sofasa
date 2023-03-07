@@ -26,16 +26,9 @@ export interface Usuario {
 
 const ELEMENT_DATA: Usuario[] = [
   {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
-  {nombre: "Andres", apellido:"Salas Velasco", cedula: '1090481240', fechaNacimiento: "23-08-1994", genero: 'Hombre',ipnToken:"AAA", telefono:"3118976896", email:"fasalasdsgn@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"}
+  {nombre: "Juan Carlos", apellido:"García", cedula: '1523568965', fechaNacimiento: "12-05-1998", genero: 'Hombre',ipnToken:"AAA", telefono:"3258987896", email:"dfgdfg@gmail.com", funcionPrincipal:"Help desk", sede:"Medellin",sociedad:"Ninugna"},
+  {nombre: "Fredy", apellido:"Fuentes", cedula: '1258696636', fechaNacimiento: "01-06-1992", genero: 'Hombre',ipnToken:"AAA", telefono:"3002225468", email:"f758fsd@gmail.com", funcionPrincipal:"Desarrollador", sede:"Medellin",sociedad:"Ninugna"},
+  {nombre: "Diana Sofia", apellido:"Velasquez", cedula: '1255789456', fechaNacimiento: "02-10-1996", genero: 'Hombre',ipnToken:"CCQ", telefono:"3117525417", email:"ufhfghj8@gmail.com", funcionPrincipal:"Help desk", sede:"Cali",sociedad:"Ninugna"},
 ];
 
 @Component({
