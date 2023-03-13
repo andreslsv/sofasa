@@ -4,14 +4,14 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id   : 'mecanica',
-        title: 'Capacidad servicio mecanica',
+        title: 'Mecanica',
         type : 'basic',
         icon : 'heroicons_outline:clipboard-list',
         link : '/mecanica'
     },
     {
         id   : 'colision',
-        title: 'Capacidad de Servicio Colisión',
+        title: 'Colisión',
         type : 'basic',
         icon : 'heroicons_outline:cube-transparent',
         link : '/colision'
