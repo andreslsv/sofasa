@@ -24,6 +24,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { SubirExcelUsuariosComponent } from './modals/subir-excel-usuarios/subir-excel-usuarios.component';
 import { AgregarUsuarioComponent } from './modals/agregar-usuario/agregar-usuario.component';
+import { ColisionComponent } from './modules/admin/colision/colision.component';
+import { MecanicaComponent } from './modules/admin/mecanica/mecanica.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -36,7 +38,9 @@ const routerConfig: ExtraOptions = {
         DashboardComponent,
         UsuariosComponent,
         SubirExcelUsuariosComponent,
-        AgregarUsuarioComponent
+        AgregarUsuarioComponent,
+        ColisionComponent,
+        MecanicaComponent
     ],
     imports     : [
         BrowserModule,

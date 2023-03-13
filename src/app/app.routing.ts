@@ -77,6 +77,8 @@ export const appRoutes: Route[] = [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
             {path: 'dashboard', loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule)},
             {path: 'usuarios', loadChildren: () => import('app/modules/admin/usuarios/usuarios.module').then(m => m.UsuariosModule)},
+            {path: 'colision', loadChildren: () => import('app/modules/admin/colision/colision.module').then(m => m.ColisionModule)},
+            {path: 'mecanica', loadChildren: () => import('app/modules/admin/mecanica/mecanica.module').then(m => m.MecanicaModule)},
         ]
     }
 ];
