@@ -44,12 +44,14 @@
             </mat-form-field>
 
             <mat-form-field class="w-full -mb-3">
-                <input placeholder="Genero" matInput [formControlName]="'genero'">
+                <mat-select placeholder="Genero" >
+                  <mat-option [value]="'hombre'">Hombre</mat-option>
+                  <mat-option [value]="'mujer'">Mujer</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="w-full -mb-3">
                 <input placeholder="fecha nacimiento" matInput [formControlName]="'fechaNacimiento'">
-
             </mat-form-field>
 
             <mat-form-field class="w-full -mb-3">

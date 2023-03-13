@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ListaComponent } from './lista/lista.component';
+import {MatSelectModule} from '@angular/material/select';
+
 
 const exampleRoutes: Route[] = [
     {
@@ -30,7 +32,8 @@ const exampleRoutes: Route[] = [
         MatFormFieldModule,
         FormsModule,
         MatInputModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSelectModule
     ]
 })
 export class UsuariosModule

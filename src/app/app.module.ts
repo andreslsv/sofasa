@@ -26,6 +26,7 @@ import { SubirExcelUsuariosComponent } from './modals/subir-excel-usuarios/subir
 import { AgregarUsuarioComponent } from './modals/agregar-usuario/agregar-usuario.component';
 import { ColisionComponent } from './modules/admin/colision/colision.component';
 import { MecanicaComponent } from './modules/admin/mecanica/mecanica.component';
+import {MatSelectModule} from '@angular/material/select';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -69,6 +70,7 @@ const routerConfig: ExtraOptions = {
         FormsModule,
 
         MatInputModule,
+        MatSelectModule,
         
 
         // 3rd party modules that require global configuration via forRoot
