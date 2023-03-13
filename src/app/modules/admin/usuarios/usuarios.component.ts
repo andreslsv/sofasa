@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AgregarUsuarioComponent } from 'app/modals/agregar-usuario/agregar-usuario.component';
 import { SubirExcelUsuariosComponent } from 'app/modals/subir-excel-usuarios/subir-excel-usuarios.component';
+import { ApiService } from 'app/services/api.service';
 
 export interface Usuario {
   idUsuarioBir?: string;
-  cedula?: string;
-  apellido?: string;
   nombre?: string;
-  fechaNacimiento?: string;
-  genero?: string,
-  ipnToken?: string;
+  apellido?: string;
+  sede?: string;
   telefono?: string;
   email?: string;
+  cedula?: string;
+  genero?: string,
+  fechaNacimiento?: string;
+  ipnToken?: string;
   funcionPrincipal?: string;
   funcionSecundaria?: string;
-  sede?: string;
   sociedad?: string;
   duplicados?: string;
   codigoBir?: string;
@@ -55,7 +57,7 @@ export class UsuariosComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'sede', 'telefono', 'email', 'cedula','genero','acciones'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private _formBuilder: FormBuilder,public _dialog: MatDialog) { }
+  constructor(private _formBuilder: FormBuilder,public _dialog: MatDialog,private _apiService: ApiService) { }
 
   opensuburExcelUsuariosModal() {
     const dialogRef = this._dialog.open(SubirExcelUsuariosComponent, {
@@ -68,7 +70,21 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  agregarUsuarioModal(){
+    const dialogRef = this._dialog.open(AgregarUsuarioComponent, {
+      minWidth: '500px',
+      height: 'auto',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+    });
+  }
+
   ngOnInit(): void {
+    this._apiService.getQuery("Empresa","").subscribe(async(data:any)=>{
+      await console.log(data);
+    });
   }
 
 }

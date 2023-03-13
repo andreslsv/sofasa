@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { ApiService } from 'app/services/api.service';
 
 @Component({
     selector     : 'auth-sign-in',
@@ -21,6 +22,7 @@ export class AuthSignInComponent implements OnInit
     };
     signInForm: FormGroup;
     showAlert: boolean = false;
+    dataEmpresas: any;
 
     /**
      * Constructor
@@ -29,7 +31,8 @@ export class AuthSignInComponent implements OnInit
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: FormBuilder,
-        private _router: Router
+        private _router: Router,
+        private _apiService: ApiService
     )
     {
     }
@@ -43,6 +46,10 @@ export class AuthSignInComponent implements OnInit
      */
     ngOnInit(): void
     {
+        this._apiService.getQuery("Empresa","").subscribe(async(data:any)=>{
+            await console.log(data);
+        });
+
         // Create the form
         this.signInForm = this._formBuilder.group({
             empresa  : ['dms'],
@@ -61,6 +68,7 @@ export class AuthSignInComponent implements OnInit
      */
     signIn(): void
     {
+
         // Return if the form is invalid
         if ( this.signInForm.invalid )
         {

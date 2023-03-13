@@ -1,0 +1,97 @@
+<section class="relative">
+
+    <button (click)="dialogRef.close()" class="absolute top-0 right-0" mat-icon-button>
+        <mat-icon class="icon-size-6" matPrefix [svgIcon]="'heroicons_outline:x'"></mat-icon>
+    </button>
+
+    <div>
+        <div class="text-3xl font-semibold tracking-tight leading-8">Agregar usuario</div>
+        <div class="font-medium tracking-tight text-secondary">Cree un nuevo usuario</div>            
+    </div>
+
+    <div class="mt-4">
+        <form [formGroup]="usuarioForm" class="grid grid-cols-2 gap-2">
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Nombres" matInput [formControlName]="'nombre'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Apellidos" matInput [formControlName]="'apellido'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Sede" matInput [formControlName]="'sede'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:office-building'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Telefono" matInput [formControlName]="'telefono'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:phone'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Email" matInput [formControlName]="'email'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:mail'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Cedula" matInput [formControlName]="'cedula'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Genero" matInput [formControlName]="'genero'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="fecha nacimiento" matInput [formControlName]="'fechaNacimiento'">
+
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="funcion principal" matInput [formControlName]="'funcionPrincipal'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="funcion secundaria" matInput [formControlName]="'funcionSecundaria'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="sociedad" matInput [formControlName]="'sociedad'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="duplicados" matInput [formControlName]="'duplicados'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:duplicate'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="codigo bir" matInput [formControlName]="'codigoBir'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:qrcode'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Zona" matInput [formControlName]="'zona'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:map'">
+                </mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Region" matInput [formControlName]="'region'">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:map'">
+                </mat-icon>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div class="mt-4 flex justify-end">
+        <button mat-button class="mr-1" (click)="dialogRef.close()">Cancelar</button>
+        <button class="bg-black text-white" mat-button>Aceptar</button>
+    </div>
+</section>

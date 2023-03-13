@@ -23,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { SubirExcelUsuariosComponent } from './modals/subir-excel-usuarios/subir-excel-usuarios.component';
+import { AgregarUsuarioComponent } from './modals/agregar-usuario/agregar-usuario.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -34,7 +35,8 @@ const routerConfig: ExtraOptions = {
         AppComponent,
         DashboardComponent,
         UsuariosComponent,
-        SubirExcelUsuariosComponent
+        SubirExcelUsuariosComponent,
+        AgregarUsuarioComponent
     ],
     imports     : [
         BrowserModule,
