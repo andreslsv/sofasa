@@ -46,10 +46,6 @@ export class AuthSignInComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this._apiService.getQuery("Empresa","").subscribe(async(data:any)=>{
-            await console.log(data);
-        });
-
         // Create the form
         this.signInForm = this._formBuilder.group({
             empresa  : ['dms'],
@@ -57,6 +53,10 @@ export class AuthSignInComponent implements OnInit
             password  : ['admin', Validators.required],
             rememberMe: ['']
         });
+
+        /*this._apiService.getQuery("Empresa/ObtenerEmpresas","").subscribe(async(data:any)=>{
+            this.dataEmpresas = await data.result;
+        });*/
     }
 
     // -----------------------------------------------------------------------------------------------------

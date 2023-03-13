@@ -51,7 +51,7 @@
                 <mat-form-field class="w-full">
                     <mat-label>Empresa</mat-label>
                     <mat-select [formControlName]="'empresa'">
-                        <mat-option *ngFor="let empresas of dataEmpresas" [value]="empresas.descripcion">{{empresas?.descripcion}}</mat-option>
+                        <mat-option [value]="'dms'">DMS</mat-option>
                     </mat-select>
                 </mat-form-field>
 
