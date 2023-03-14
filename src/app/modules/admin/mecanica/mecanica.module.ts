@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSelectModule} from '@angular/material/select';
 
 const mecanicaRoutes: Route[] = [
     {
@@ -27,7 +29,9 @@ const mecanicaRoutes: Route[] = [
         MatFormFieldModule,
         FormsModule,
         MatInputModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatSelectModule
     ]
 })
 export class MecanicaModule
