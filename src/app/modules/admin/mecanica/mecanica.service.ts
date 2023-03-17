@@ -24,6 +24,12 @@ export class MecanicaService {
 
   dataMecanica=[
     {
+      datosGenerales:"Entradas x puesto de trabajo - completo",
+      labelFormula:"(Entradas promedio dia (6 Meses)/(Puestos de trabajo completos)",
+      indicador:0,
+      formula:(valores)=>{return valores.ent_pro_tal_6_mes/Math.min(valores.ele_tot_mec,valores.tec_mec)}
+    },
+    {
       datosGenerales:"Tasa Empleo",
       labelFormula:"Total horas trabajadas / Total horas disponibles",
       indicador:0,
