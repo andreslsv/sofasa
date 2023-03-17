@@ -8,6 +8,12 @@ export class ColisionService {
 
   dataMecanica=[
     {
+      datosGenerales:"Entradas por puestos de trabajo",
+      labelFormula:"Total horas trabajadas / Total horas disponibles",
+      indicador:0,
+      formula:(valores)=>{return (valores.hor_hab_ley/valores.tie_pro)/valores.pro_hor_fac_por_ent}
+    },
+    {
       datosGenerales:"Tasa Empleo",
       labelFormula:"Total horas trabajadas / Total horas disponibles",
       indicador:0,
@@ -29,28 +35,29 @@ export class ColisionService {
       datosGenerales:"Aprovechamiento Capacidad Servicio - Puesto completo",
       labelFormula:"(Entradas Promedio Taller / Elevadores Productivos) / Entradas x Puestos De Trabajo",
       indicador:0,
-      formula:(valores)=>{return (valores.ent_pro_tal_6_mes/valores.ele_pro)/valores.ent_x_pues_de_tra}
+      formula:(valores)=>{return valores.pul_por_pue_tra/((valores.hor_hab_ley/valores.tie_pro)/valores.pro_hor_fac_por_ent)}
     },
     {
       datosGenerales:"Capacidad de servicio instalada",
       labelFormula:"Entradas Promedio Taller / (Elevadores Totales - Mecánida*Entradas x Puestos de trabajo",
       indicador:0,
-      formula:(valores)=>{return valores.ent_pro_tal_6_mes/(valores.ele_tot_mec*valores.ent_x_pues_de_tra)}
+      formula:(valores)=>{return valores.ent_pro_tal/(valores.ele_tot_mec*valores.ent_x_pues_de_tra)}
     },
+    /*-----------------------FALTANDO-----------------------------*/
     {
-      datosGenerales:"Tecnicos / Elevadores Totales - Mecanica",
+      datosGenerales:"Tecnicos / Puestos de trabajo",
       labelFormula:"Elevadores Totales/Técnicos mecánicos + Electrónica",
       indicador:0,
-      formula:(valores)=>{return valores.ele_tot_mec/valores.tec_mec}
+      formula:(valores, valoresPuestosTrabajo)=>{return valores.ele_tot_mec/valores.tec_mec}
     },
     {
-      datosGenerales:"Pulmones / Elevadores Totales - Mecanica",
+      datosGenerales:"Pulmones / Puesto de trabajo",
       labelFormula:"Pulmones / Elevadores Totales - Mecánica",
       indicador:0,
       formula:(valores)=>{return valores.pulmones/valores.ele_tot_mec}
     },
     {
-      datosGenerales:"Pulmones / Elevadores Productivos (Elevador + Tecnico)",
+      datosGenerales:"Pulmones / Puesto de trabajo completo (puesto + técnico)",
       labelFormula:"Pulmones / Elevadores Productivos (Elevador + Tecnico)",
       indicador:0,
       formula:(valores)=>{return valores.pulmones/valores.ele_pro}
@@ -67,6 +74,7 @@ export class ColisionService {
       indicador:0,
       formula:(valores)=>{return valores.ent_x_pues_de_tra*valores.ele_tot_mec}
     }
+    /*-----------------------FALTANDO-----------------------------*/
   ];
 
   private dataMecanica$: BehaviorSubject<any> = new BehaviorSubject<any>(this.dataMecanica);

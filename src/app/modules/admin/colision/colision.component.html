@@ -48,50 +48,34 @@
                     </div>
                 </div>
 
-                <div class="w-full mb-4">
+                <div class="w-full mb-6">
                     <div class="text-2xl font-semibold tracking-tight leading-6">Inputs</div>
                     <div class="font-medium tracking-tight text-secondary">Ingresa los valores solicitados</div>
                 </div>
     
                     <form [formGroup]="mecanicaForm" class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <mat-form-field class="w-full mt-2">
-                            <input placeholder="Entradas x puestos de trabajo" matInput [formControlName]="'ent_x_pues_de_tra'">
-                        </mat-form-field>
-        
-                        <mat-form-field class="w-full mt-2">
+                        <mat-form-field class="w-full -mt-3">
                             <input placeholder="Pulmones por puesto trabajo" matInput [formControlName]="'pul_por_pue_tra'">
-                        </mat-form-field>
-        
-                        <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Elevadores Totales - Mecanica" matInput [formControlName]="'ele_tot_mec'">
-                        </mat-form-field>
-
-                        <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Tecnicos Mecanicos + Electromecanicos" matInput [formControlName]="'tec_mec'">
-                        </mat-form-field>
-
-                        <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Elevadores Productivos (Elevador + Tecnico)" matInput [formControlName]="'ele_pro'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Pulmones" matInput [formControlName]="'pulmones'">
                         </mat-form-field>
-        
+
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Entradas promedio taller (6 Meses)" matInput [formControlName]="'ent_pro_tal_6_mes'">
+                            <input placeholder="Entradas promedio taller (6 Meses)" matInput [formControlName]="'ent_pro_tal'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Total Horas Facturadas" matInput [formControlName]="'tot_hor_fac'">
                         </mat-form-field>
-        
+
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Total Horas Trabajadas" matInput [formControlName]="'tot_hor_tra'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Total Horas Disponibles" matInput [formControlName]="'tot_hor_dis'">
+                            <input placeholder="Total Horas disponibles" matInput [formControlName]="'tot_hor_dis'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
@@ -99,12 +83,95 @@
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Tiempo productivo (habil - muerto )" matInput [formControlName]="'tie_prod'">
+                            <input placeholder="Tiempo productivo (habil - muerto)" matInput [formControlName]="'tie_pro'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Promedio horas facturacion por entrada" matInput [formControlName]="'pro_hor_fac_por_ent'">
                         </mat-form-field>
+                    </form>
+
+                    <div class="w-full mb-4">
+                        <div class="text-2xl font-semibold tracking-tight leading-6">Lista de puestos de trabajo</div>
+                        <!--<div class="font-medium tracking-tight text-secondary">Valores calculados automáticamente</div>-->
+                    </div>
+        
+                    <form [formGroup]="puestosTrabajoForm">
+
+                        <h3>Puesto desarmado</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Puesto desarmado" matInput [formControlName]="'ej_puesto_desarmado'">
+                            </mat-form-field>
+    
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Puesto desarmado" matInput [formControlName]="'tec_puesto_desarmado'">
+                            </mat-form-field>
+                        </div>
+
+                        <h3>Puesto latonería</h3>
+        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Puesto latonería" matInput [formControlName]="'ej_puesto_latoneria'">
+                            </mat-form-field>
+    
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Puesto latonería" matInput [formControlName]="'tec_puesto_latoneria'">
+                            </mat-form-field>
+                        </div>
+
+
+                        <h3>Puesto preparación</h3>
+        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Puesto preparación" matInput [formControlName]="'ej_puesto_preparacion'">
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Puesto preparación" matInput [formControlName]="'tec_puesto_preparacion'">
+                            </mat-form-field>                            
+                        </div>
+
+
+                        <h3>Cabina pintura</h3>
+        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Cabina pintura" matInput [formControlName]="'ej_cabina_pintura'">
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Cabina pintura" matInput [formControlName]="'tec_cabina_pintura'">
+                            </mat-form-field>                            
+                        </div>
+
+                        <h3>Puesto armado</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Puesto armado" matInput [formControlName]="'ej_cabina_pintura'">
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Puesto armado" matInput [formControlName]="'tec_cabina_pintura'">
+                            </mat-form-field>                            
+                        </div>
+        
+                        <h3>Puesto brillado</h3>
+        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <mat-form-field class="w-full">
+                                <input placeholder="Puesto brillado" matInput [formControlName]="'ej_puesto_brillado'">
+                            </mat-form-field>
+
+                            <mat-form-field class="w-full">
+                                <input placeholder="Tec Puesto brillado" matInput [formControlName]="'tec_puesto_brillado'">
+                            </mat-form-field>                            
+                        </div>
+
                     </form>
     
                 <div class="flex justify-end">
@@ -147,5 +214,7 @@
                   </table>
             </div>
         </div>
+
+
     </div>
 </div>
