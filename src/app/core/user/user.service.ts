@@ -30,6 +30,7 @@ export class UserService
     {
         // Store the value
         this._user.next(value);
+        localStorage.setItem('usuario', JSON.stringify(value));
     }
 
     get user$(): Observable<User>
@@ -48,7 +49,7 @@ export class UserService
     {
         return this._httpClient.get<User>('api/common/user').pipe(
             tap((user) => {
-                this._user.next(user);
+                //this._user.next(user);
             })
         );
     }

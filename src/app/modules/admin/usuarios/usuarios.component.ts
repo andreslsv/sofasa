@@ -82,9 +82,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._apiService.getQuery("Empresa","").subscribe(async(data:any)=>{
-      await console.log(data);
-    });
   }
 
 }

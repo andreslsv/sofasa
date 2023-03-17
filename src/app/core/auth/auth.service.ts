@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { AsyncSubject, catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 
@@ -8,6 +8,7 @@ import { UserService } from 'app/core/user/user.service';
 export class AuthService
 {
     private _authenticated: boolean = false;
+    tokenLocalStorage$ = new AsyncSubject();
 
     /**
      * Constructor
@@ -40,6 +41,21 @@ export class AuthService
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    getTokenDeLocalStorage(){
+        const tokenLocalStorage = localStorage.getItem("accessToken");
+        const usuarioLocalStorage = localStorage.getItem("usuario");
+        this.accessToken = tokenLocalStorage;
+
+        if (tokenLocalStorage) {
+            this.tokenLocalStorage$.next({token:tokenLocalStorage,usuario:JSON.parse(usuarioLocalStorage)});
+            this.tokenLocalStorage$.complete();
+        }else{
+            this.tokenLocalStorage$.error("El token no existe");
+        }
+
+        return tokenLocalStorage;
+    }
+
     /**
      * Forgot password
      *
@@ -65,7 +81,7 @@ export class AuthService
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any>
+    signIn(credentials: { empresa: string; usuario: string; clave: string }): Observable<any>
     {
         // Throw error, if the user is already logged in
         if ( this._authenticated )
@@ -73,17 +89,19 @@ export class AuthService
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+        return this._httpClient.post('http://139.99.121.175:9091/CapacidadServicio/api/Usuario/ValidarUsuario', credentials).pipe(
             switchMap((response: any) => {
 
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.result.token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
                 // Store the user on the user service
-                this._userService.user = response.user;
+                this._userService.user = response.result.informacionUsuario.usuario;
+
+                console.log("response.result.usuario =>", response.result.informacionUsuario.usuario);
 
                 // Return a new observable with the response
                 return of(response);
@@ -97,9 +115,7 @@ export class AuthService
     signInUsingToken(): Observable<any>
     {
         // Renew token
-        return this._httpClient.post('api/auth/refresh-access-token', {
-            accessToken: this.accessToken
-        }).pipe(
+        return this.tokenLocalStorage$.pipe(
             catchError(() =>
 
                 // Return false
@@ -107,14 +123,16 @@ export class AuthService
             ),
             switchMap((response: any) => {
 
+                console.log("Respuesta desde tokenLocalStorage$", response);
+
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
                 // Store the user on the user service
-                this._userService.user = response.user;
+                this._userService.user = response.usuario;
 
                 // Return true
                 return of(true);
@@ -163,13 +181,13 @@ export class AuthService
     check(): Observable<boolean>
     {
         // Check if the user is logged in
-        if ( this._authenticated )
+        if ( this._authenticated && this.getTokenDeLocalStorage())
         {
             return of(true);
         }
 
         // Check the access token availability
-        if ( !this.accessToken )
+        if ( !this.accessToken || !this.getTokenDeLocalStorage())
         {
             return of(false);
         }

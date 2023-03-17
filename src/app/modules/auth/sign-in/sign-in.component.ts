@@ -48,15 +48,15 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            empresa  : ['dms'],
-            email     : ['hughes.brian@company.com', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
+            empresa  : ['DMS', [Validators.required]],
+            usuario     : ['1022036754', [Validators.required]],
+            clave  : ['edwin10', Validators.required],
             rememberMe: ['']
         });
 
-        /*this._apiService.getQuery("Empresa/ObtenerEmpresas","").subscribe(async(data:any)=>{
+        this._apiService.getQuery("Empresa/ObtenerEmpresas","").subscribe(async(data:any)=>{
             this.dataEmpresas = await data.result;
-        });*/
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
