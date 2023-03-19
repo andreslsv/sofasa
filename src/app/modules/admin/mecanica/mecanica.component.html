@@ -54,11 +54,11 @@
                 </div>
     
                     <form [formGroup]="mecanicaForm" class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <mat-form-field class="w-full mt-2">
+                        <mat-form-field class="w-full -mt-3">
                             <input placeholder="Entradas x puestos de trabajo" matInput [formControlName]="'ent_x_pues_de_tra'">
                         </mat-form-field>
         
-                        <mat-form-field class="w-full mt-2">
+                        <mat-form-field class="w-full -mt-3">
                             <input placeholder="Pulmones por puesto trabajo" matInput [formControlName]="'pul_por_pue_tra'">
                         </mat-form-field>
         
@@ -70,9 +70,10 @@
                             <input placeholder="Tecnicos Mecanicos + Electromecanicos" matInput [formControlName]="'tec_mec'">
                         </mat-form-field>
 
+                        <!--
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Elevadores Productivos (Elevador + Tecnico)" matInput [formControlName]="'ele_pro'">
-                        </mat-form-field>
+                        </mat-form-field>-->
 
                         <mat-form-field class="w-full -mt-3">
                             <input placeholder="Pulmones" matInput [formControlName]="'pulmones'">

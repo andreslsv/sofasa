@@ -56,10 +56,12 @@ export class ColisionComponent implements OnInit {
 
   recalcular(){
     const valores = this.mecanicaForm.value;
+    const valores2 = this.puestosTrabajoForm.value;
 
     this.dataColision.forEach(element => {
       if (element.formula) {
-        element.indicador = element.formula(valores);
+        console.log("Este es el valor de los valores", valores);
+        element.indicador = element.formula(valores,valores2);
       }
     });
 

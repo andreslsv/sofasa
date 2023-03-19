@@ -55,39 +55,39 @@
     
                     <form [formGroup]="mecanicaForm" class="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Pulmones por puesto trabajo" matInput [formControlName]="'pul_por_pue_tra'">
+                            <input type="number" placeholder="Pulmones por puesto trabajo" matInput [formControlName]="'pul_por_pue_tra'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Pulmones" matInput [formControlName]="'pulmones'">
+                            <input type="number" placeholder="Pulmones" matInput [formControlName]="'pulmones'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Entradas promedio taller (6 Meses)" matInput [formControlName]="'ent_pro_tal'">
+                            <input type="number" placeholder="Entradas promedio taller (6 Meses)" matInput [formControlName]="'ent_pro_tal'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Total Horas Facturadas" matInput [formControlName]="'tot_hor_fac'">
+                            <input type="number" placeholder="Total Horas Facturadas" matInput [formControlName]="'tot_hor_fac'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Total Horas Trabajadas" matInput [formControlName]="'tot_hor_tra'">
+                            <input type="number" placeholder="Total Horas Trabajadas" matInput [formControlName]="'tot_hor_tra'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Total Horas disponibles" matInput [formControlName]="'tot_hor_dis'">
+                            <input type="number" placeholder="Total Horas disponibles" matInput [formControlName]="'tot_hor_dis'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Horas habiles - Ley" matInput [formControlName]="'hor_hab_ley'">
+                            <input type="number" placeholder="Horas habiles - Ley" matInput [formControlName]="'hor_hab_ley'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Tiempo productivo (habil - muerto)" matInput [formControlName]="'tie_pro'">
+                            <input type="number" placeholder="Tiempo productivo (habil - muerto)" matInput [formControlName]="'tie_pro'">
                         </mat-form-field>
 
                         <mat-form-field class="w-full -mt-3">
-                            <input placeholder="Promedio horas facturacion por entrada" matInput [formControlName]="'pro_hor_fac_por_ent'">
+                            <input type="number" placeholder="Promedio horas facturacion por entrada" matInput [formControlName]="'pro_hor_fac_por_ent'">
                         </mat-form-field>
                     </form>
 
@@ -102,11 +102,11 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Puesto desarmado" matInput [formControlName]="'ej_puesto_desarmado'">
+                                <input type="number" placeholder="Puesto desarmado def marca" matInput [formControlName]="'ej_puesto_desarmado'">
                             </mat-form-field>
     
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Puesto desarmado" matInput [formControlName]="'tec_puesto_desarmado'">
+                                <input type="number" placeholder="Puesto desarmado def con" matInput [formControlName]="'tec_puesto_desarmado'">
                             </mat-form-field>
                         </div>
 
@@ -114,11 +114,11 @@
         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Puesto latonería" matInput [formControlName]="'ej_puesto_latoneria'">
+                                <input type="number" placeholder="Puesto latonería def marca" matInput [formControlName]="'ej_puesto_latoneria'">
                             </mat-form-field>
     
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Puesto latonería" matInput [formControlName]="'tec_puesto_latoneria'">
+                                <input type="number" placeholder="Puesto latonería def con" matInput [formControlName]="'tec_puesto_latoneria'">
                             </mat-form-field>
                         </div>
 
@@ -127,11 +127,11 @@
         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Puesto preparación" matInput [formControlName]="'ej_puesto_preparacion'">
+                                <input type="number" placeholder="Puesto preparación def marca" matInput [formControlName]="'ej_puesto_preparacion'">
                             </mat-form-field>
 
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Puesto preparación" matInput [formControlName]="'tec_puesto_preparacion'">
+                                <input type="number" placeholder="Puesto preparación def con" matInput [formControlName]="'tec_puesto_preparacion'">
                             </mat-form-field>                            
                         </div>
 
@@ -140,11 +140,11 @@
         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Cabina pintura" matInput [formControlName]="'ej_cabina_pintura'">
+                                <input type="number" placeholder="Cabina pintura def marca" matInput [formControlName]="'ej_cabina_pintura'">
                             </mat-form-field>
 
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Cabina pintura" matInput [formControlName]="'tec_cabina_pintura'">
+                                <input type="number" placeholder="Cabina pintura def con" matInput [formControlName]="'tec_cabina_pintura'">
                             </mat-form-field>                            
                         </div>
 
@@ -152,11 +152,11 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Puesto armado" matInput [formControlName]="'ej_cabina_pintura'">
+                                <input type="number" placeholder="Puesto armado def marca" matInput [formControlName]="'ej_cabina_pintura'">
                             </mat-form-field>
 
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Puesto armado" matInput [formControlName]="'tec_cabina_pintura'">
+                                <input type="number" placeholder="Puesto armado def con" matInput [formControlName]="'tec_cabina_pintura'">
                             </mat-form-field>                            
                         </div>
         
@@ -164,11 +164,11 @@
         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             <mat-form-field class="w-full">
-                                <input placeholder="Puesto brillado" matInput [formControlName]="'ej_puesto_brillado'">
+                                <input type="number" placeholder="Puesto brillado def marca" matInput [formControlName]="'ej_puesto_brillado'">
                             </mat-form-field>
 
                             <mat-form-field class="w-full">
-                                <input placeholder="Tec Puesto brillado" matInput [formControlName]="'tec_puesto_brillado'">
+                                <input type="number" placeholder="Puesto brillado def con" matInput [formControlName]="'tec_puesto_brillado'">
                             </mat-form-field>                            
                         </div>
 
