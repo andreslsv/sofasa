@@ -9,6 +9,8 @@ import { ColisionService } from './colision.service';
 })
 export class ColisionComponent implements OnInit {
 
+  numeroInicial = 0;
+
   mecanicaForm = this._formBuilder.group({
     pul_por_pue_tra     : [, [Validators.required]],
     pulmones            : [, [Validators.required]],
