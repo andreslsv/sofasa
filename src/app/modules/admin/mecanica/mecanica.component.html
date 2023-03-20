@@ -54,20 +54,24 @@
                 </div>
     
                     <form [formGroup]="mecanicaForm" class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Entradas x puestos de trabajo" matInput [formControlName]="'ent_x_pues_de_tra'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Entradas x puestos de trabajo</mat-label>
+                            <input type="number" matInput [formControlName]="'ent_x_pues_de_tra'">
                         </mat-form-field>
         
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Pulmones por puesto trabajo" matInput [formControlName]="'pul_por_pue_tra'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Pulmones por puesto trabajo</mat-label>
+                            <input type="number" matInput [formControlName]="'pul_por_pue_tra'">
                         </mat-form-field>
         
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Elevadores Totales - Mecanica" matInput [formControlName]="'ele_tot_mec'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Elevadores Totales - Mecanica</mat-label>
+                            <input type="number" matInput [formControlName]="'ele_tot_mec'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Tecnicos Mecanicos + Electromecanicos" matInput [formControlName]="'tec_mec'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Tecnicos Mecanicos + Electromecanicos</mat-label>
+                            <input type="number" matInput [formControlName]="'tec_mec'">
                         </mat-form-field>
 
                         <!--
@@ -75,36 +79,44 @@
                             <input placeholder="Elevadores Productivos (Elevador + Tecnico)" matInput [formControlName]="'ele_pro'">
                         </mat-form-field>-->
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Pulmones" matInput [formControlName]="'pulmones'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Pulmones</mat-label>
+                            <input type="number" matInput [formControlName]="'pulmones'">
                         </mat-form-field>
         
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Entradas promedio taller (6 Meses)" matInput [formControlName]="'ent_pro_tal_6_mes'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Entradas promedio taller (6 Meses)</mat-label>
+                            <input type="number" matInput [formControlName]="'ent_pro_tal_6_mes'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Total Horas Facturadas" matInput [formControlName]="'tot_hor_fac'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Total Horas Facturadas</mat-label>
+                            <input type="number" matInput [formControlName]="'tot_hor_fac'">
                         </mat-form-field>
         
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Total Horas Trabajadas" matInput [formControlName]="'tot_hor_tra'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Total Horas Trabajadas</mat-label>
+                            <input type="number" matInput [formControlName]="'tot_hor_tra'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Total Horas Disponibles" matInput [formControlName]="'tot_hor_dis'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Total Horas Disponibles</mat-label>
+                            <input type="number" matInput [formControlName]="'tot_hor_dis'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Horas habiles - Ley" matInput [formControlName]="'hor_hab_ley'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Horas habiles - Ley</mat-label>
+                            <input type="number" matInput [formControlName]="'hor_hab_ley'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Tiempo productivo (habil - muerto )" matInput [formControlName]="'tie_prod'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Tiempo productivo (habil - muerto )</mat-label>
+                            <input type="number" matInput [formControlName]="'tie_prod'">
                         </mat-form-field>
 
-                        <mat-form-field class="w-full -mt-3">
-                            <input type="number" placeholder="Promedio horas facturacion por entrada" matInput [formControlName]="'pro_hor_fac_por_ent'">
+                        <mat-form-field appearance="outline" class="w-full -mt-3">
+                            <mat-label>Promedio horas facturacion por entrada</mat-label>
+                            <input type="number" matInput [formControlName]="'pro_hor_fac_por_ent'">
                         </mat-form-field>
                     </form>
     
