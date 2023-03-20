@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
         {
           name: "Inflation",
           data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
-          color:"#888B8D"
+          color:"#efdf00"
         }
       ],
       chart: {
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
         offsetY: -20,
         style: {
           fontSize: "12px",
-          colors: ["#000"]
+          colors: ["#fff"]
         }
       },
   
@@ -71,7 +71,10 @@ export class DashboardComponent implements OnInit {
         ],
         position: "top",
         labels: {
-          offsetY: 0
+          offsetY: 0,
+          style:{
+            colors:"#fff"
+          }
         },
         axisBorder: {
           show: false
