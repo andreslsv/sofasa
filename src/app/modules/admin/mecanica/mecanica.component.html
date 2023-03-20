@@ -142,8 +142,15 @@
                 <table mat-table [dataSource]="dataMecanica" class="w-full -mx-3">
 
                     <ng-container matColumnDef="datos-generales">
-                      <th mat-header-cell *matHeaderCellDef> Datos generales. </th>
-                      <td mat-cell *matCellDef="let element">{{element?.datosGenerales}}</td>
+                        <th mat-header-cell *matHeaderCellDef>
+                            Datos generales.
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="flex">
+                                <mat-icon [svgIcon]="'heroicons_outline:cog'" class="icon-size-5 mr-1"></mat-icon>
+                                <span>{{element?.datosGenerales}}</span>                                
+                            </div>
+                        </td>
                     </ng-container>
                   
                     <ng-container matColumnDef="indicador">
