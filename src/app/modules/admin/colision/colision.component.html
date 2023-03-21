@@ -11,7 +11,7 @@
                         <div class="text-2xl font-semibold tracking-tight leading-6">Seleccionar empresa</div>
                     </div>
 
-                    <div class="w-full">
+                    <div class="w-full" *ngIf="user?.admin==1">
                         <form [formGroup]="seccionForm" class="grid grid-cols-1 md:grid-cols-4 gap-2">
                             <mat-form-field class="w-full mt-2">
                                 <mat-select placeholder="Región" [formControlName]="'region'">

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
+import { Subject, takeUntil } from 'rxjs';
 import { MecanicaService } from './mecanica.service';
 
 @Component({
@@ -32,10 +35,12 @@ export class MecanicaComponent implements OnInit {
     sede                  : [, [Validators.required]],
   });
 
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   displayedColumns: string[] = ['datos-generales', 'indicador'];
   dataMecanica:any;
+  user: User;
 
-  constructor(private _formBuilder: FormBuilder, private _mecanicaService:MecanicaService) { }
+  constructor(private _formBuilder: FormBuilder, private _mecanicaService:MecanicaService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef) { }
 
   recalcular(){
     const valores = this.mecanicaForm.value;
@@ -52,6 +57,15 @@ export class MecanicaComponent implements OnInit {
   ngOnInit(): void {
     this._mecanicaService.getMecanica().subscribe((data)=>{
       this.dataMecanica=data;
+    });
+
+    this._userService.user$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((user: User) => {
+        this.user = user;
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
     });
   }
 

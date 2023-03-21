@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
+import { Subject, takeUntil } from 'rxjs';
 import { ColisionService } from './colision.service';
 
 @Component({
@@ -47,8 +50,10 @@ export class ColisionComponent implements OnInit {
 
   displayedColumns: string[] = ['datos-generales', 'indicador'];
   dataColision:any;
+  user: User;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _formBuilder: FormBuilder, private _colisionService:ColisionService) { }
+  constructor(private _formBuilder: FormBuilder, private _colisionService:ColisionService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef) { }
 
   sumatoriaPuestosTrabajo(){
     const valores = this.puestosTrabajoForm.value;
@@ -73,6 +78,15 @@ export class ColisionComponent implements OnInit {
   ngOnInit(): void {
     this._colisionService.getColision().subscribe((data)=>{
       this.dataColision=data;
+    });
+
+    this._userService.user$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((user: User) => {
+        this.user = user;
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
     });
   }
 
