@@ -13,6 +13,26 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;
 };
 
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+];
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -21,7 +41,107 @@ export type ChartOptions = {
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  chartOptions2: { series: number[]; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; }; }; }[]; };
+  chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
+  displayedColumns: string[] = ['position', 'name'];
+  dataSource = ELEMENT_DATA;
+
+  dataIndicadores = [
+    {
+      clave:"Tasa ocupacion",
+      valor: 0
+    },
+    {
+      clave:"Tasa eficiencia",
+      valor: 0
+    },
+    {
+      clave:"Tasa empleo",
+      valor: 0
+    },
+    {
+      clave:"Capacidad de servicio - puesto completo",
+      valor: 0
+    },
+    {
+      clave:"Tecnicos / elevadores",
+      valor: 0
+    },
+    {
+      clave:"Pulmones / elevador",
+      valor: 0
+    },
+    {
+      clave:"Puestos de trabajo - completos",
+      valor: 0
+    },
+    {
+      clave:"Elevadores",
+      valor: 0
+    },
+    {
+      clave:"Entradas totales",
+      valor: 0
+    },
+    {
+      clave:"Entradas x puesto completo",
+      valor: 0
+    }
+  ];
+
+  dataPersonalProductivo = [
+    {
+      clave:"Control Calidad",
+      valor: 0
+    },
+    {
+      clave:"Tecnico",
+      valor: 0
+    },
+    {
+      clave:"Electromecánico",
+      valor: 0
+    },
+    {
+      clave:"COTEC",
+      valor: 0
+    }
+  ];
+
+  
+  dataActividadesSede = [
+    {
+      clave:"VN",
+      valor: 0
+    },
+    {
+      clave:"Renault selection",
+      valor: 0
+    },
+    {
+      clave:"Venta Electricos",
+      valor: 0
+    },
+    {
+      clave:"Colision",
+      valor: 0
+    },
+    {
+      clave:"Mecánica",
+      valor: 0
+    },
+    {
+      clave:"R. Minuto",
+      valor: 0
+    },
+    {
+      clave:"PRO+",
+      valor: 0
+    },
+    {
+      clave:"Taller Eléctricos",
+      valor: 0
+    }
+  ];
 
   constructor() {
 
@@ -154,10 +274,16 @@ export class DashboardComponent implements OnInit {
 
 
     this.chartOptions2 = {
-      series: [50, 20],
+      colors: ["#000", "#efdf00"],
+      series: [
+        50, 20
+      ],
       chart: {
         width: 300,
-        type: "pie"
+        type: "pie",
+      },
+      stroke:{
+        width:0
       },
       labels: ["Si", "No"],
       responsive: [
@@ -168,7 +294,8 @@ export class DashboardComponent implements OnInit {
               width: 200
             },
             legend: {
-              position: "bottom"
+              show: false,
+              position: "right"
             }
           }
         }
