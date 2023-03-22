@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
+  grid:ApexGrid;
   chart: ApexChart;
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
@@ -20,19 +21,46 @@ export type ChartOptions = {
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
+  chartOptions2: { series: number[]; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; }; }; }[]; };
 
   constructor() {
 
     this.chartOptions = {
+      grid:{
+        show:true,
+        borderColor:"#fff",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+              show: true,
+              //offsetX: 60,
+              //offsetY: 60
+          }
+        },
+        yaxis: {
+            lines: {
+                show: true,
+                //offsetX: 60,
+                //offsetY: 60
+            }
+        },
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      },
       series: [
         {
-          name: "Inflation",
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+          name: "Valor",
+          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3],
           color:"#efdf00"
         }
       ],
       chart: {
         height: 350,
+        width:"100%",
         type: "bar"
       },
       plotOptions: {
@@ -56,18 +84,14 @@ export class DashboardComponent implements OnInit {
   
       xaxis: {
         categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
+          "Zona1",
+          "Zona2",
+          "Zona3",
+          "Zona4",
+          "Zona5",
+          "Zona6",
+          "Zona7",
+          "Zona8"
         ],
         position: "top",
         labels: {
@@ -126,6 +150,29 @@ export class DashboardComponent implements OnInit {
           }
         }
       }
+    };
+
+
+    this.chartOptions2 = {
+      series: [50, 20],
+      chart: {
+        width: 300,
+        type: "pie"
+      },
+      labels: ["Si", "No"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
     };
 
 

@@ -1,32 +1,80 @@
 <section class="p-4 w-full">
-    <div class="grid gap-3 grid-cols-1 lg:grid-cols-3">
-        <div class="col-span-1"> 
-            <div class="bg-card shadow-md rounded-2xl flex justify-start items-center p-4">
-                <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="text-[#EFDF00] mr-1"></mat-icon>
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate text-left">
-                    Zonas
-                </h2>
+    <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
+            <div class="text-white px-2 pt-4 pb-6 text-xl font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                <h2 class="opacity-40 ml-2">Capacidad de servicio - Puesto completo</h2>
+                <div>
+                    <button mat-icon-button>
+                        <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                    </button>
+                </div>
             </div>
-            <div class="bg-card shadow-md rounded-2xl flex justify-start items-center p-4">
-                <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="text-[#EFDF00] mr-1"></mat-icon>
-                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate text-left">
-                    Zonas
-                </h2>     
-            </div>
+            <apx-chart
+            class="w-full"
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [grid]="chartOptions.grid"
+              [dataLabels]="chartOptions.dataLabels"
+              [plotOptions]="chartOptions.plotOptions"
+              [yaxis]="chartOptions.yaxis"
+              [xaxis]="chartOptions.xaxis"
+              [fill]="chartOptions.fill"
+              [title]="chartOptions.title"
+            ></apx-chart>
         </div>
-        <div class="col-span-2">
-            <div class="w-full bg-black shadow-md rounded-2xl">
+
+        <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
+            <div class="text-white px-2 pt-4 pb-6 text-xl font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                <h2 class="opacity-40 ml-2">Capacidad de servicio - Estandar x elevador productivo</h2>
+                <div>
+                    <button mat-icon-button>
+                        <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                    </button>
+                </div>
+            </div>
+            <apx-chart
+            class="w-full"
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [grid]="chartOptions.grid"
+              [dataLabels]="chartOptions.dataLabels"
+              [plotOptions]="chartOptions.plotOptions"
+              [yaxis]="chartOptions.yaxis"
+              [xaxis]="chartOptions.xaxis"
+              [fill]="chartOptions.fill"
+              [title]="chartOptions.title"
+            ></apx-chart>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-5 gap-2 mt-3">
+        <div class="flex flex-col w-full bg-black shadow-md rounded-lg col-span-2">
+            <div id="chart">
                 <apx-chart
-                  [series]="chartOptions.series"
-                  [chart]="chartOptions.chart"
-                  [dataLabels]="chartOptions.dataLabels"
-                  [plotOptions]="chartOptions.plotOptions"
-                  [yaxis]="chartOptions.yaxis"
-                  [xaxis]="chartOptions.xaxis"
-                  [fill]="chartOptions.fill"
-                  [title]="chartOptions.title"
+                  [series]="chartOptions2.series"
+                  [chart]="chartOptions2.chart"
+                  [labels]="chartOptions2.labels"
+                  [responsive]="chartOptions2.responsive"
                 ></apx-chart>
             </div>
+
+            <div id="chart">
+                <apx-chart
+                  [series]="chartOptions2.series"
+                  [chart]="chartOptions2.chart"
+                  [labels]="chartOptions2.labels"
+                  [responsive]="chartOptions2.responsive"
+                ></apx-chart>
+            </div>
+        </div>
+        <div>
+            sdfdsf
         </div>
     </div>
 </section>
