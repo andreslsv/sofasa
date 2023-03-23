@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApiService } from 'app/services/api.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
 import { DashboardService } from './dashboard.service';
 
@@ -50,6 +51,13 @@ export class DashboardComponent implements OnInit {
   dataPersonalProductivo:any;
   dataActividadesSede:any;
 
+  paramsDefault=      {
+    "empresa": "",
+    "ultimoReg": "1",
+    "fechaIni": "2023-03-23T14:29:27.803Z",
+    "fechaFin": "2023-03-23T14:29:27.803Z"
+  };
+
   dataPuestoCompleto = [
     {
       name: "Valor",
@@ -69,7 +77,7 @@ export class DashboardComponent implements OnInit {
   dataFichajeRedRenault=[10,6];
   dataClipRedRenault=[2,2];
 
-  constructor(private _dashBoardService:DashboardService) {
+  constructor(private _dashBoardService:DashboardService, private _apiService:ApiService) {
 
     this.chartOptions = {
       grid:{
@@ -228,7 +236,12 @@ export class DashboardComponent implements OnInit {
       ]
     };
 
+  }
 
+  obtenerDataPersonalProductivo(data){
+    const valor = {
+      
+    }
   }
 
   ngOnInit(): void {
@@ -258,6 +271,10 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getClipRedRenault().subscribe(async(data)=>{
       this.dataClipRedRenault = await data;
+    });
+
+    this._apiService.postQuery("Colision/ConsultarColision","",this.paramsDefault).subscribe(async(data:any)=>{
+      await console.log("Esto devuelve el query", data.result.result);
     });
   }
 
