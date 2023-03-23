@@ -14,7 +14,7 @@
             </div>
             <apx-chart
             class="w-full"
-              [series]="chartOptions.series"
+              [series]="dataPuestoCompleto"
               [chart]="chartOptions.chart"
               [grid]="chartOptions.grid"
               [dataLabels]="chartOptions.dataLabels"
@@ -40,7 +40,7 @@
             </div>
             <apx-chart
             class="w-full"
-              [series]="chartOptions.series"
+              [series]="dataEstandarElevadorProductivo"
               [chart]="chartOptions.chart"
               [grid]="chartOptions.grid"
               [dataLabels]="chartOptions.dataLabels"
@@ -53,39 +53,12 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-5">
-        <div class="bg-renault-4 shadow-md py-4 rounded-xl shadow mt-2 grid grid-cols-1 gap-4 mt-2">
-            <div id="chart">
-                <div class="text-center text-lg mb-2 font-semibold tracking-tight leading-7 flex justify-center items-center">
-                    <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="icon-size-5 mr-1"></mat-icon>
-                    <span class="opacity-50">FICHAJE RED RENAULT</span>
-                </div>
-                <apx-chart
-                  [series]="chartOptions2.series"
-                  [chart]="chartOptions2.chart"
-                  [labels]="chartOptions2.labels"
-                  [responsive]="chartOptions2.responsive"
-                  [colors]="chartOptions2.colors"
-                  [stroke]="chartOptions2.stroke"
-                ></apx-chart>
+    <div class="grid grid-cols-3">
+        <div class="grow mt-3 px-1 rounded-2xl overflow-hidden">
+            <div class="text-center text-lg mb-2 font-semibold tracking-tight leading-7 flex justify-center items-center">
+                <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="icon-size-5 mr-1"></mat-icon>
+                <span class="opacity-50">FICHAJE RED RENAULT</span>
             </div>
-
-            <div id="chart" class="mt-3">
-                <div class="text-center text-lg mb-2 font-semibold tracking-tight leading-7 flex justify-center items-center">
-                    <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="icon-size-5 mr-1"></mat-icon>
-                    <span class="opacity-50">CLIP RED RENAULT</span>
-                </div>
-                <apx-chart
-                  [series]="chartOptions2.series"
-                  [chart]="chartOptions2.chart"
-                  [labels]="chartOptions2.labels"
-                  [responsive]="chartOptions2.responsive"
-                  [colors]="chartOptions2.colors"
-                  [stroke]="chartOptions2.stroke"
-                ></apx-chart>
-            </div>
-        </div>
-        <div class="grow mt-3 px-3 rounded-2xl overflow-hidden col-span-2">
             <table mat-table [dataSource]="dataIndicadores" class="w-full">
                 <ng-container matColumnDef="position">
                   <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
@@ -101,7 +74,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
         </div>
-        <div class="grow mt-3 px-3 rounded-2xl overflow-hidden col-span-2">
+        <div class="grow mt-3 px-1 rounded-2xl overflow-hidden">
 
             <div class="my-2 text-center">
                 <span class="font-semibold tracking-tight leading-7">PERSONAL PRODUCTIVO</span>
@@ -121,7 +94,8 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-
+        </div>
+        <div class="grow mt-3 px-1 rounded-2xl overflow-hidden">
             <div class="my-2 text-center">
                 <span class="font-semibold tracking-tight leading-7">ACTIVIDADES SEDE</span>
             </div>
@@ -140,6 +114,40 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-2">
+        <div class="bg-renault-4 shadow-md py-4 rounded-xl shadow mt-2 flex justify-between">
+            <div id="chart">
+                <div class="text-center text-lg mb-2 font-semibold tracking-tight leading-7 flex justify-center items-center">
+                    <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="icon-size-5 mr-1"></mat-icon>
+                    <span class="opacity-50">FICHAJE RED RENAULT</span>
+                </div>
+                <apx-chart
+                  [series]="dataFichajeRedRenault"
+                  [chart]="chartOptions2.chart"
+                  [labels]="chartOptions2.labels"
+                  [responsive]="chartOptions2.responsive"
+                  [colors]="chartOptions2.colors"
+                  [stroke]="chartOptions2.stroke"
+                ></apx-chart>
+            </div>
+
+            <div id="chart" class="mt-3">
+                <div class="text-center text-lg mb-2 font-semibold tracking-tight leading-7 flex justify-center items-center">
+                    <mat-icon [svgIcon]="'heroicons_outline:chart-pie'" class="icon-size-5 mr-1"></mat-icon>
+                    <span class="opacity-50">CLIP RED RENAULT</span>
+                </div>
+                <apx-chart
+                  [series]="dataClipRedRenault"
+                  [chart]="chartOptions2.chart"
+                  [labels]="chartOptions2.labels"
+                  [responsive]="chartOptions2.responsive"
+                  [colors]="chartOptions2.colors"
+                  [stroke]="chartOptions2.stroke"
+                ></apx-chart>
+            </div>
         </div>
     </div>
     

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
+import { DashboardService } from './dashboard.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -45,105 +46,30 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
 
-  dataIndicadores = [
+  dataIndicadores:any;
+  dataPersonalProductivo:any;
+  dataActividadesSede:any;
+
+  dataPuestoCompleto = [
     {
-      clave:"Tasa ocupacion",
-      valor: 0
-    },
-    {
-      clave:"Tasa eficiencia",
-      valor: 0
-    },
-    {
-      clave:"Tasa empleo",
-      valor: 0
-    },
-    {
-      clave:"Capacidad de servicio - puesto completo",
-      valor: 0
-    },
-    {
-      clave:"Tecnicos / elevadores",
-      valor: 0
-    },
-    {
-      clave:"Pulmones / elevador",
-      valor: 0
-    },
-    {
-      clave:"Puestos de trabajo - completos",
-      valor: 0
-    },
-    {
-      clave:"Elevadores",
-      valor: 0
-    },
-    {
-      clave:"Entradas totales",
-      valor: 0
-    },
-    {
-      clave:"Entradas x puesto completo",
-      valor: 0
+      name: "Valor",
+      data: [],
+      color:"#efdf00"
     }
   ];
-
-  dataPersonalProductivo = [
-    {
-      clave:"Control Calidad",
-      valor: 0
-    },
-    {
-      clave:"Tecnico",
-      valor: 0
-    },
-    {
-      clave:"Electromecánico",
-      valor: 0
-    },
-    {
-      clave:"COTEC",
-      valor: 0
-    }
-  ];
-
   
-  dataActividadesSede = [
+  dataEstandarElevadorProductivo = [
     {
-      clave:"VN",
-      valor: 0
-    },
-    {
-      clave:"Renault selection",
-      valor: 0
-    },
-    {
-      clave:"Venta Electricos",
-      valor: 0
-    },
-    {
-      clave:"Colision",
-      valor: 0
-    },
-    {
-      clave:"Mecánica",
-      valor: 0
-    },
-    {
-      clave:"R. Minuto",
-      valor: 0
-    },
-    {
-      clave:"PRO+",
-      valor: 0
-    },
-    {
-      clave:"Taller Eléctricos",
-      valor: 0
+      name: "Valor",
+      data: [],
+      color:"#efdf00"
     }
   ];
 
-  constructor() {
+  dataFichajeRedRenault=[10,6];
+  dataClipRedRenault=[2,2];
+
+  constructor(private _dashBoardService:DashboardService) {
 
     this.chartOptions = {
       grid:{
@@ -174,7 +100,7 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Valor",
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3],
+          data: [],
           color:"#efdf00"
         }
       ],
@@ -306,6 +232,33 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._dashBoardService.getActividadSede().subscribe(async(data)=>{
+      this.dataActividadesSede = await data;
+    });
+
+    this._dashBoardService.getPersonalProductivo().subscribe(async(data)=>{
+      this.dataPersonalProductivo = await data;
+    });
+
+    this._dashBoardService.getIndicadores().subscribe(async (data)=>{
+      this.dataIndicadores = await data;
+    });
+
+    this._dashBoardService.getPuestoCompleto().subscribe(async(data)=>{
+      this.dataPuestoCompleto[0].data = await data;
+    });
+
+    this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
+      this.dataEstandarElevadorProductivo[0].data = await data;
+    });
+    
+    this._dashBoardService.getFichajeRedRenault().subscribe(async(data)=>{
+      this.dataFichajeRedRenault = await data;
+    });
+
+    this._dashBoardService.getClipRedRenault().subscribe(async(data)=>{
+      this.dataClipRedRenault = await data;
+    });
   }
 
 }
