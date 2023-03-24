@@ -42,6 +42,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
+  zonas=["zona 1","zona 2","zona 3","zona 4","zona 5","zona 6","zona 7","zona 8"];
   public chartOptions: Partial<ChartOptions>;
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
@@ -244,6 +245,30 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  async generarDataPuestoCompleto(data){
+
+    let elemento = [];
+
+    elemento = this.zonas.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    await data.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.aprovechamientoCapacidadServicio;
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this._dashBoardService.setPuestoCompleto(elemento);
+
+  }
+
   ngOnInit(): void {
     this._dashBoardService.getActividadSede().subscribe(async(data)=>{
       this.dataActividadesSede = await data;
@@ -258,7 +283,8 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.getPuestoCompleto().subscribe(async(data)=>{
-      this.dataPuestoCompleto[0].data = await data;
+      this.dataPuestoCompleto = await [{name: "Valor",data,color:"#efdf00"}];
+      await console.log("Este es el valor de puesto completo", data);
     });
 
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
@@ -273,9 +299,10 @@ export class DashboardComponent implements OnInit {
       this.dataClipRedRenault = await data;
     });
 
-    this._apiService.postQuery("Colision/ConsultarColision","",this.paramsDefault).subscribe(async(data:any)=>{
-      await console.log("Esto devuelve el query", data.result.result);
+    this._apiService.postQuery("Mecanica/ConsultarMecanica","",this.paramsDefault).subscribe(async(data:any)=>{
+      await this.generarDataPuestoCompleto(data?.result);
     });
+
   }
 
 }

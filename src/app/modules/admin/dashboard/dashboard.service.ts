@@ -5,10 +5,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DashboardService {
-
-  puestoCompleto = [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3];
+  puestoCompleto = [0, 0, 0, 0, 0, 0, 0, 0];
   estandarElevadorProductivo = [3.3, 6.1, 8.0, 2.1, 1.0, 0.6, 5.2, 4.3];
-
   fichajeRedRenault=[10,6];
   clipRedRenault=[1,8];
   
@@ -118,6 +116,8 @@ export class DashboardService {
   private fichajeRedRenault$: BehaviorSubject<any> = new BehaviorSubject<any>(this.fichajeRedRenault);
   private clipRedRenault$: BehaviorSubject<any> = new BehaviorSubject<any>(this.clipRedRenault);
 
+  //private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>(this.zonas);
+
   getActividadSede(){
     return this.actividadSede$.asObservable();
   }
@@ -146,6 +146,10 @@ export class DashboardService {
     return this.clipRedRenault$.asObservable();
   }
 
+  /*getZonas(){
+    return this.zonas$.asObservable();
+  }*/
+
   setActividadSede(valor){
     return this.actividadSede$.next(valor);
   }
@@ -166,7 +170,10 @@ export class DashboardService {
     return this.estandarElevadorProductivo$.next(valor);
   }
 
-  constructor() { }
+  /*setZonas(valor){
+    return this.zonas$.next(valor);
+  }*/
 
+  constructor() { }
 
 }
