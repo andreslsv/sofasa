@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DashboardService {
   puestoCompleto = [0, 0, 0, 0, 0, 0, 0, 0];
-  estandarElevadorProductivo = [3.3, 6.1, 8.0, 2.1, 1.0, 0.6, 5.2, 4.3];
+  estandarElevadorProductivo = [0, 0, 0, 0, 0, 0, 0, 0];
   fichajeRedRenault=[10,6];
   clipRedRenault=[1,8];
   

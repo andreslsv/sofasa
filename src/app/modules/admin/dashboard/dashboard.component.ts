@@ -269,6 +269,31 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  
+  async generarDataEstandarElevadorProductivo(data){
+
+    let elemento = [];
+
+    elemento = this.zonas.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    await data.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.elevadoresProductivos;
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this._dashBoardService.setEstandarElevadorProductivo(elemento);
+
+  }
+
   ngOnInit(): void {
     this._dashBoardService.getActividadSede().subscribe(async(data)=>{
       this.dataActividadesSede = await data;
@@ -284,11 +309,11 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getPuestoCompleto().subscribe(async(data)=>{
       this.dataPuestoCompleto = await [{name: "Valor",data,color:"#efdf00"}];
-      await console.log("Este es el valor de puesto completo", data);
     });
 
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
-      this.dataEstandarElevadorProductivo[0].data = await data;
+      this.dataEstandarElevadorProductivo = await [{name: "Valor",data,color:"#efdf00"}];
+      await console.log("Este es el valor de puesto completo", data);
     });
     
     this._dashBoardService.getFichajeRedRenault().subscribe(async(data)=>{
@@ -301,6 +326,7 @@ export class DashboardComponent implements OnInit {
 
     this._apiService.postQuery("Mecanica/ConsultarMecanica","",this.paramsDefault).subscribe(async(data:any)=>{
       await this.generarDataPuestoCompleto(data?.result);
+      await this.generarDataEstandarElevadorProductivo(data?.result);
     });
 
   }
