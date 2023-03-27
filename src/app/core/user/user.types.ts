@@ -1,3 +1,4 @@
+
 export interface User
 {
     id: string;
@@ -6,4 +7,5 @@ export interface User
     avatar?: string;
     status?: string;
     admin?: number;
+    ubicacion?:{region?: string;zona?: string;sociedad?: string;sede?: string;};
 }

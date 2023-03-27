@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
+import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './dashboard.service';
 
 export type ChartOptions = {
@@ -47,6 +50,7 @@ export class DashboardComponent implements OnInit {
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   dataIndicadores:any;
   dataPersonalProductivo:any;
@@ -77,8 +81,9 @@ export class DashboardComponent implements OnInit {
 
   dataFichajeRedRenault=[10,6];
   dataClipRedRenault=[2,2];
+  usuario: User;
 
-  constructor(private _dashBoardService:DashboardService, private _apiService:ApiService) {
+  constructor(private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
 
     this.chartOptions = {
       grid:{
@@ -386,6 +391,15 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getClipRedRenault().subscribe(async(data)=>{
       this.dataClipRedRenault = await data;
+    });
+
+    this._userService.user$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((user: User) => {
+        this.usuario = user;
+
+        // Mark for check
+        //this._changeDetectorRef.markForCheck();
     });
 
     this._apiService.postQuery("Mecanica/ConsultarMecanica","",this.paramsDefault).subscribe(async(data:any)=>{

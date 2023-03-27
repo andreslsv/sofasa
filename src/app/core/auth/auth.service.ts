@@ -92,6 +92,10 @@ export class AuthService
         return this._httpClient.post('http://139.99.121.175:9091/CapacidadServicio/api/Usuario/ValidarUsuario', credentials).pipe(
             switchMap((response: any) => {
 
+                const usuario = response.result.informacionUsuario.usuario;
+
+                usuario.ubicacion = response.result.informacionUsuario.ubicacion
+
                 // Store the access token in the local storage
                 this.accessToken = response.result.token;
 
@@ -99,7 +103,7 @@ export class AuthService
                 this._authenticated = true;
 
                 // Store the user on the user service
-                this._userService.user = response.result.informacionUsuario.usuario;
+                this._userService.user = usuario;
 
                 console.log("response.result.usuario =>", response.result.informacionUsuario.usuario);
 
