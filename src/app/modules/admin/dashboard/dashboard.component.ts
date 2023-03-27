@@ -291,8 +291,73 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setEstandarElevadorProductivo(elemento);
-
   }
+
+  
+  async generarDataIndicadores(data){
+    let elemento = [
+      {
+        clave:"Tasa ocupacion",
+        nombreCampo:"productividad",
+        valor: 0
+      },
+      {
+        clave:"Tasa eficiencia",
+        nombreCampo:"tasaEficiencia",
+        valor: 0
+      },
+      {
+        clave:"Tasa empleo",
+        nombreCampo:"tasaEmpleo",
+        valor: 0
+      },
+      {
+        clave:"Capacidad de servicio - puesto completo",
+        valor: 0
+      },
+      {
+        clave:"Tecnicos / elevadores",
+        valor: 0
+      },
+      {
+        clave:"Pulmones / elevador",
+        valor: 0
+      },
+      {
+        clave:"Puestos de trabajo - completos",
+        valor: 0
+      },
+      {
+        clave:"Elevadores",
+        valor: 0
+      },
+      {
+        clave:"Entradas totales",
+        valor: 0
+      },
+      {
+        clave:"Entradas x puesto completo",
+        valor: 0
+      }
+    ];
+
+    data.forEach((data)=>{
+      elemento[0].valor+=data.productividad;
+      elemento[1].valor+=data.tasaEficiencia;
+      elemento[2].valor+=data.tasaEmpleo;
+      elemento[3].valor+=data.puestosDeTrabajoCompletos;
+      elemento[4].valor+=data.tecnicosElevadoresTotales;
+      elemento[5].valor+=data.pulmonesElevadoresTotales;
+      elemento[6].valor+=data.puestosDeTrabajoCompletos;
+      elemento[7].valor+=data.elevadoresTotalesMecanica;
+      elemento[8].valor+=data.elevadoresTotalesMecanica;
+      elemento[9].valor+=data.entradasPuestoTrabajo;
+    });
+
+    this._dashBoardService.setIndicadores(elemento);
+  }
+
+
 
   ngOnInit(): void {
     this._dashBoardService.getActividadSede().subscribe(async(data)=>{
@@ -313,7 +378,6 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
       this.dataEstandarElevadorProductivo = await [{name: "Valor",data,color:"#efdf00"}];
-      await console.log("Este es el valor de puesto completo", data);
     });
     
     this._dashBoardService.getFichajeRedRenault().subscribe(async(data)=>{
@@ -327,6 +391,7 @@ export class DashboardComponent implements OnInit {
     this._apiService.postQuery("Mecanica/ConsultarMecanica","",this.paramsDefault).subscribe(async(data:any)=>{
       await this.generarDataPuestoCompleto(data?.result);
       await this.generarDataEstandarElevadorProductivo(data?.result);
+      await this.generarDataIndicadores(data?.result);
     });
 
   }
