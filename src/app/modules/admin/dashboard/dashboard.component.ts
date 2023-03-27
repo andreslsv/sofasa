@@ -100,6 +100,8 @@ export class DashboardComponent implements OnInit {
   sociedadesDisponibles=[];
   sedesDisponibles=[];
 
+  secciones=["Mecánica","Colisión"];
+
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
 
@@ -388,6 +390,15 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setZonas(listaZonas);
   }
 
+  seleccionarSeccion(indice){
+    const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
+    this._apiService.postQuery(nodo[indice],"",this.paramsDefault).subscribe(async(data:any)=>{
+      await this.generarDataPuestoCompleto(data?.result);
+      await this.generarDataEstandarElevadorProductivo(data?.result);
+      await this.generarDataIndicadores(data?.result);
+    });
+  }
+
   ngOnInit(): void {
 
     this._dashBoardService.getZonas().subscribe(async(data)=>{
@@ -430,13 +441,10 @@ export class DashboardComponent implements OnInit {
         await this.obtenerListaZonas(user?.ubicacion);
         await this.cargarUbicacionesDisponibles(user?.ubicacion);
         //this._changeDetectorRef.markForCheck();
+        this.seleccionarSeccion(0);
     });
 
-    this._apiService.postQuery("Mecanica/ConsultarMecanica","",this.paramsDefault).subscribe(async(data:any)=>{
-      await this.generarDataPuestoCompleto(data?.result);
-      await this.generarDataEstandarElevadorProductivo(data?.result);
-      await this.generarDataIndicadores(data?.result);
-    });
+    
 
   }
 

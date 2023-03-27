@@ -3,6 +3,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Route, RouterModule } from '@angular/router';
 import { DashboardComponent } from 'app/modules/admin/dashboard/dashboard.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import {MatTabsModule} from '@angular/material/tabs';
+
 
 const dashboardRoutes: Route[] = [
     {
@@ -17,7 +19,8 @@ const dashboardRoutes: Route[] = [
     imports     : [
         RouterModule.forChild(dashboardRoutes),
         NgApexchartsModule,
-        MatIconModule
+        MatIconModule,
+        MatTabsModule
     ]
 })
 export class DashboardModule

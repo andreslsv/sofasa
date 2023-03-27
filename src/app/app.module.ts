@@ -28,6 +28,7 @@ import { ColisionComponent } from './modules/admin/colision/colision.component';
 import { MecanicaComponent } from './modules/admin/mecanica/mecanica.component';
 import {MatSelectModule} from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -73,6 +74,7 @@ const routerConfig: ExtraOptions = {
         MatInputModule,
         MatSelectModule,
         MatTooltipModule,
+        MatTabsModule,
         
 
         // 3rd party modules that require global configuration via forRoot
