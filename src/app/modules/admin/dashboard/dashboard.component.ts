@@ -89,7 +89,6 @@ export class DashboardComponent implements OnInit {
     zona                  : [, [Validators.required]],
     sociedad              : [, [Validators.required]],
     sede                  : [, [Validators.required]],
-    categoria             : [, [Validators.required]],
   });
 
 
