@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
@@ -45,7 +46,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
-  zonas=["zona 1","zona 2","zona 3","zona 4","zona 5","zona 6","zona 7","zona 8"];
+  zonas=[];
   public chartOptions: Partial<ChartOptions>;
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
@@ -83,8 +84,58 @@ export class DashboardComponent implements OnInit {
   dataClipRedRenault=[2,2];
   usuario: User;
 
-  constructor(private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
+  seccionForm = this._formBuilder.group({
+    region                : [, [Validators.required]],
+    zona                  : [, [Validators.required]],
+    sociedad              : [, [Validators.required]],
+    sede                  : [, [Validators.required]],
+    categoria             : [, [Validators.required]],
+  });
 
+
+
+
+  regionesDisponibles=[];
+  zonasDisponibles=[];
+  sociedadesDisponibles=[];
+  sedesDisponibles=[];
+
+
+  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
+
+
+    this.chartOptions2 = {
+      colors: ["#000", "#efdf00"],
+      series: [
+        50, 20
+      ],
+      chart: {
+        width: 300,
+        type: "pie",
+      },
+      stroke:{
+        width:0
+      },
+      labels: ["Si", "No"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              show: false,
+              position: "right"
+            }
+          }
+        }
+      ]
+    };
+
+  }
+
+  obtenerValoresPuestoCompleto(){
     this.chartOptions = {
       grid:{
         show:true,
@@ -143,16 +194,7 @@ export class DashboardComponent implements OnInit {
       },
   
       xaxis: {
-        categories: [
-          "Zona1",
-          "Zona2",
-          "Zona3",
-          "Zona4",
-          "Zona5",
-          "Zona6",
-          "Zona7",
-          "Zona8"
-        ],
+        categories: this.zonas,
         position: "top",
         labels: {
           offsetY: 0,
@@ -211,37 +253,13 @@ export class DashboardComponent implements OnInit {
         }
       }
     };
+  }
 
-
-    this.chartOptions2 = {
-      colors: ["#000", "#efdf00"],
-      series: [
-        50, 20
-      ],
-      chart: {
-        width: 300,
-        type: "pie",
-      },
-      stroke:{
-        width:0
-      },
-      labels: ["Si", "No"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              show: false,
-              position: "right"
-            }
-          }
-        }
-      ]
-    };
-
+  cargarUbicacionesDisponibles(ubicaciones){
+    this.zonasDisponibles = ubicaciones.map((data)=>{return data.zona});
+    this.regionesDisponibles = ubicaciones.map((data)=>{return data.region});
+    this.sociedadesDisponibles = ubicaciones.map((data)=>{return data.sociedad});
+    this.sedesDisponibles = ubicaciones.map((data)=>{return data.sede});
   }
 
   obtenerDataPersonalProductivo(data){
@@ -362,9 +380,21 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setIndicadores(elemento);
   }
 
+  obtenerListaZonas(ubicacion){
+    const listaZonas = ubicacion.map((data)=>{
+      return data.zona
+    });
 
+    this._dashBoardService.setZonas(listaZonas);
+  }
 
   ngOnInit(): void {
+
+    this._dashBoardService.getZonas().subscribe(async(data)=>{
+      this.zonas = await data;
+      this.obtenerValoresPuestoCompleto();
+    });
+
     this._dashBoardService.getActividadSede().subscribe(async(data)=>{
       this.dataActividadesSede = await data;
     });
@@ -395,10 +425,10 @@ export class DashboardComponent implements OnInit {
 
     this._userService.user$
     .pipe(takeUntil(this._unsubscribeAll))
-    .subscribe((user: User) => {
-        this.usuario = user;
-
-        // Mark for check
+    .subscribe(async(user: User) => {
+        this.usuario = await user;
+        await this.obtenerListaZonas(user?.ubicacion);
+        await this.cargarUbicacionesDisponibles(user?.ubicacion);
         //this._changeDetectorRef.markForCheck();
     });
 

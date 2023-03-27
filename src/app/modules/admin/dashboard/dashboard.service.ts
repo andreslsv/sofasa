@@ -116,7 +116,7 @@ export class DashboardService {
   private fichajeRedRenault$: BehaviorSubject<any> = new BehaviorSubject<any>(this.fichajeRedRenault);
   private clipRedRenault$: BehaviorSubject<any> = new BehaviorSubject<any>(this.clipRedRenault);
 
-  //private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>(this.zonas);
+  private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   getActividadSede(){
     return this.actividadSede$.asObservable();
@@ -146,9 +146,9 @@ export class DashboardService {
     return this.clipRedRenault$.asObservable();
   }
 
-  /*getZonas(){
+  getZonas(){
     return this.zonas$.asObservable();
-  }*/
+  }
 
   setActividadSede(valor){
     return this.actividadSede$.next(valor);
@@ -170,9 +170,9 @@ export class DashboardService {
     return this.estandarElevadorProductivo$.next(valor);
   }
 
-  /*setZonas(valor){
+  setZonas(valor){
     return this.zonas$.next(valor);
-  }*/
+  }
 
   constructor() { }
 

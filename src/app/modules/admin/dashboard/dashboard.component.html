@@ -1,4 +1,50 @@
 <section class="p-4 w-full">
+    <div class="w-full">
+        <form [formGroup]="seccionForm" class="grid grid-cols-1 md:grid-cols-5 gap-2">
+            <mat-form-field class="w-full mt-2">
+                <mat-select *ngFor="let region of regionesDisponibles" placeholder="Región" [formControlName]="region">
+                    <mat-option [value]="'region 1'">
+                        {{region}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full mt-2">
+                <mat-select placeholder="Zona" matInput [formControlName]="'zona'">
+                    <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona">
+                      {{zona}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full mt-2">
+                <mat-select placeholder="Sociedad" matInput [formControlName]="'sociedad'">
+                    <mat-option *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+                      {{sociedad}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full mt-2">
+                <mat-select placeholder="Sede" matInput [formControlName]="'sede'">
+                    <mat-option *ngFor="let sede of sedesDisponibles" [value]="sede">
+                      {{sede}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full mt-2">
+                <mat-select placeholder="Sede" matInput [formControlName]="'categoria'">
+                    <mat-option [value]="'mecanica'">
+                        Mecánica
+                    </mat-option>
+                    <mat-option [value]="'colision'">
+                        Colisión
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
     <div class="grid grid-cols-2 gap-2">
         <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
             <div class="text-white px-2 pt-4 pb-6 text-xl font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
