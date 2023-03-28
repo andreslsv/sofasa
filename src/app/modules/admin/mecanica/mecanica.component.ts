@@ -40,6 +40,12 @@ export class MecanicaComponent implements OnInit {
   displayedColumns: string[] = ['datos-generales', 'indicador'];
   dataMecanica:any;
   user: User;
+  usuario: User;
+  zonasDisponibles: any;
+  regionesDisponibles: any;
+  sociedadesDisponibles: any;
+  sedesDisponibles: any;
+  ubicaciones:any;
 
   constructor(private _formBuilder: FormBuilder, private _mecanicaService:MecanicaService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef, private _apiService:ApiService) { }
 
@@ -96,6 +102,21 @@ export class MecanicaComponent implements OnInit {
 
   }
 
+  obtenerUbicacionesPorUsuario(){
+    this._userService.user$
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe(async(user: User) => {
+        this.usuario = await user;
+    });
+  }
+
+  obtenerApiDataUbicacion(){
+    this.zonasDisponibles = this.ubicaciones.map((data)=>{return data.zona});
+    this.regionesDisponibles = this.ubicaciones.map((data)=>{return data.region});
+    this.sociedadesDisponibles = this.ubicaciones.map((data)=>{return data.sociedad});
+    this.sedesDisponibles = this.ubicaciones.map((data)=>{return data.sede});
+  }
+
   ngOnInit(): void {
     this._mecanicaService.getMecanica().subscribe((data)=>{
       this.dataMecanica=data;
@@ -105,9 +126,12 @@ export class MecanicaComponent implements OnInit {
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe((user: User) => {
         this.user = user;
+        this.ubicaciones=user?.ubicacion;
+
+        this.obtenerApiDataUbicacion();
 
         // Mark for check
-        this._changeDetectorRef.markForCheck();
+        //this._changeDetectorRef.markForCheck();
     });
   }
 

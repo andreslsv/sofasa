@@ -52,6 +52,11 @@ export class ColisionComponent implements OnInit {
   dataColision:any;
   user: User;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  ubicaciones: any;
+  zonasDisponibles: any;
+  regionesDisponibles: any;
+  sociedadesDisponibles: any;
+  sedesDisponibles: any;
 
   constructor(private _formBuilder: FormBuilder, private _colisionService:ColisionService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef) { }
 
@@ -75,6 +80,13 @@ export class ColisionComponent implements OnInit {
     this._colisionService.setColision(this.dataColision);
   }
 
+  obtenerApiDataUbicacion(){
+    this.zonasDisponibles = this.ubicaciones.map((data)=>{return data.zona});
+    this.regionesDisponibles = this.ubicaciones.map((data)=>{return data.region});
+    this.sociedadesDisponibles = this.ubicaciones.map((data)=>{return data.sociedad});
+    this.sedesDisponibles = this.ubicaciones.map((data)=>{return data.sede});
+  }
+
   ngOnInit(): void {
     this._colisionService.getColision().subscribe((data)=>{
       this.dataColision=data;
@@ -84,6 +96,9 @@ export class ColisionComponent implements OnInit {
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe((user: User) => {
         this.user = user;
+        this.ubicaciones=user?.ubicacion;
+
+        this.obtenerApiDataUbicacion();
 
         // Mark for check
         this._changeDetectorRef.markForCheck();

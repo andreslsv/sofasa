@@ -15,32 +15,32 @@
                         <form [formGroup]="seccionForm" class="grid grid-cols-1 md:grid-cols-4 gap-2">
                             <mat-form-field class="w-full mt-2">
                                 <mat-select placeholder="Región" [formControlName]="'region'">
-                                    <mat-option [value]="'region 1'">
-                                      Región 1
+                                    <mat-option *ngFor="let region of regionesDisponibles" [value]="region">
+                                      {{region}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field class="w-full mt-2">
                                 <mat-select  placeholder="Zona" matInput [formControlName]="'zona'">
-                                    <mat-option [value]="'zona1'">
-                                      Zona 1
+                                    <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona">
+                                        {{zona}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field class="w-full mt-2">
                                 <mat-select placeholder="Sociedad" matInput [formControlName]="'sociedad'">
-                                    <mat-option [value]="'sociedad1'">
-                                      Sociedad 1
+                                    <mat-option *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+                                      {{sociedad}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field class="w-full mt-2">
                                 <mat-select placeholder="Sede" matInput [formControlName]="'sede'">
-                                    <mat-option [value]="'sociedad1'">
-                                      Sede 1 1
+                                    <mat-option *ngFor="let sede of sedesDisponibles" [value]="sede">
+                                      {{sede}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
