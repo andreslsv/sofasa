@@ -154,6 +154,7 @@ export class DashboardService {
   private personalProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.personalProductivo);
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
   private puestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(this.puestoCompleto);
+  private eficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private labelsPuestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(this.labelsDataPuestoCompleto);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
 
@@ -162,6 +163,13 @@ export class DashboardService {
 
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
+  getEficiencia(){
+    return this.eficiencia$.asObservable();
+  }
+
+  setEficiencia(valor){
+    return this.eficiencia$.next(valor);
+  }
 
   getApiDataDashboard(){
     return this.apiDataDashboard$.asObservable();

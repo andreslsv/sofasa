@@ -178,10 +178,6 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-
-
-
-
   dataIndicadores:any;
   dataPersonalProductivo:any;
   dataActividadesSede:any;
@@ -218,9 +214,6 @@ export class DashboardComponent implements OnInit {
     sede                  : [, [Validators.required]],
   });
 
-
-
-
   regionesDisponibles=[];
   zonasDisponibles=[];
   sociedadesDisponibles=[];
@@ -229,6 +222,7 @@ export class DashboardComponent implements OnInit {
   secciones=["Mecánica","Colisión"];
   apiDataUbicacion: any;
   apiDataDashboard: any;
+  dataEficiencia: any;
 
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
@@ -566,6 +560,32 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setEstandarElevadorProductivo(elementoEstandar);
     this.obtenerValoresEstandarxElevadores();
     this.obtenerValoresPuestoCompleto();
+    this.generarDataEficiencia();
+  }
+
+  generarDataEficiencia(){
+    let elemento = [];
+
+    //Extraer las zonas desde la api
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    //Cruzar los valores con las zonas de la api
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.tasaEficiencia;
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this._dashBoardService.setEficiencia(elemento);
+
   }
 
 
@@ -731,6 +751,10 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
       this.dataEstandarElevadorProductivo = await [{name: "Valor",data,color:"#efdf00"}];
+    });
+
+    this._dashBoardService.getEficiencia().subscribe(async(data)=>{
+      this.dataEficiencia = await [{name: "Valor",data,color:"#efdf00"}];
     });
 
     this._userService.user$
