@@ -593,8 +593,8 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setEstandarElevadorProductivo(elemento);
   }*/
 
-  /*
-  async generarDataIndicadores(data){
+  
+  generarDataIndicadores(){
     let elemento = [
       {
         clave:"Tasa ocupacion",
@@ -641,7 +641,7 @@ export class DashboardComponent implements OnInit {
       }
     ];
 
-    data.forEach((data)=>{
+    this.apiDataDashboard.forEach((data)=>{
       elemento[0].valor+=data.productividad;
       elemento[1].valor+=data.tasaEficiencia;
       elemento[2].valor+=data.tasaEmpleo;
@@ -655,7 +655,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setIndicadores(elemento);
-  }*/
+  }
 
   obtenerApiDataUbicacion(){
     this.zonasDisponibles = this.apiDataUbicacion.map((data)=>{return data.zona});
@@ -671,6 +671,7 @@ export class DashboardComponent implements OnInit {
       //await this.generarDataIndicadores(data?.result);
       await this._dashBoardService.setApiDataDashboard(data?.result);
       await this.generarDataPuestoCompleto();
+      await this.generarDataIndicadores();
       await this.filtrarPorZona();
       await this.filtrarPorRegion();
       await this.filtrarPorSede();
