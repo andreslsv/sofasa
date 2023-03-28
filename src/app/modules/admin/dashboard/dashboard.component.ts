@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatChip } from '@angular/material/chips/chip';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
@@ -47,11 +48,138 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   zonas=[];
-  public chartOptions: Partial<ChartOptions>;
+  //public chartOptions: Partial<ChartOptions>;
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+
+  zonasSelesccionadas=[];
+  regionesSeleccionadas=[];
+
+
+
+  chartOptions: Partial<ChartOptions> = {
+    grid:{
+      show:true,
+      borderColor:"#fff",
+      strokeDashArray: 5,
+      xaxis: {
+        lines: {
+            show: true,
+            //offsetX: 60,
+            //offsetY: 60
+        }
+      },
+      yaxis: {
+          lines: {
+              show: true,
+              //offsetX: 60,
+              //offsetY: 60
+          }
+      },
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      }
+    },
+    series: [
+      {
+        name: "Valor",
+        data: [],
+        color:"#efdf00"
+      }
+    ],
+    chart: {
+      height: 350,
+      width:"100%",
+      type: "bar"
+    },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          position: "top" // top, center, bottom
+        }
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function(val) {
+        return val + "%";
+      },
+      offsetY: -20,
+      style: {
+        fontSize: "12px",
+        colors: ["#fff"]
+      }
+    },
+    xaxis: {
+      categories: [],//Estas son las etiquetas que se muestran
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [50, 0, 100, 100]
+      }
+    },
+    yaxis: {
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      labels: {
+        show: false,
+        formatter: function(val) {
+          return val + "%";
+        }
+      }
+    }
+  };
+
+
+
+
 
   dataIndicadores:any;
   dataPersonalProductivo:any;
@@ -80,8 +208,6 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  dataFichajeRedRenault=[10,6];
-  dataClipRedRenault=[2,2];
   usuario: User;
 
   seccionForm = this._formBuilder.group({
@@ -100,10 +226,11 @@ export class DashboardComponent implements OnInit {
   sedesDisponibles=[];
 
   secciones=["Mecánica","Colisión"];
+  apiDataUbicacion: any;
+  apiDataDashboard: any;
 
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
-
 
     this.chartOptions2 = {
       colors: ["#000", "#efdf00"],
@@ -136,7 +263,17 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  obtenerValoresPuestoCompleto(){
+  toggleSelection(chip: MatChip,selector) {
+    //chip.toggleSelected(true);
+    if (selector.includes(chip.value)) {
+      selector.splice(selector.indexOf(chip.value), 1);
+    } else {
+      selector.push(chip.value);
+    }
+ }
+
+  async obtenerValoresPuestoCompleto(){
+    await console.log("---->",this.zonasDisponibles.filter((data)=>{return data!=null}));
     this.chartOptions = {
       grid:{
         show:true,
@@ -193,9 +330,8 @@ export class DashboardComponent implements OnInit {
           colors: ["#fff"]
         }
       },
-  
       xaxis: {
-        categories: this.zonas,
+        categories: await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),//Estas son las etiquetas que se muestran
         position: "top",
         labels: {
           offsetY: 0,
@@ -256,28 +392,26 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  cargarUbicacionesDisponibles(ubicaciones){
-    this.zonasDisponibles = ubicaciones.map((data)=>{return data.zona});
-    this.regionesDisponibles = ubicaciones.map((data)=>{return data.region});
-    this.sociedadesDisponibles = ubicaciones.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = ubicaciones.map((data)=>{return data.sede});
-  }
-
   obtenerDataPersonalProductivo(data){
     const valor = {
       
     }
   }
 
-  async generarDataPuestoCompleto(data){
+  
+  generarDataPuestoCompleto(){
 
     let elemento = [];
 
-    elemento = this.zonas.map((element)=>{
+    console.log("zonas disponibleeeesss", this.zonasDisponibles);
+
+    //Extraer las zonas desde la api
+    elemento = this.zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    await data.forEach((element) => {
+    //Cruzar los valores con las zonas de la api
+    this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
@@ -290,10 +424,10 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setPuestoCompleto(elemento);
-
+    this.obtenerValoresPuestoCompleto();
   }
 
-  
+  /*
   async generarDataEstandarElevadorProductivo(data){
 
     let elemento = [];
@@ -315,9 +449,9 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setEstandarElevadorProductivo(elemento);
-  }
+  }*/
 
-  
+  /*
   async generarDataIndicadores(data){
     let elemento = [
       {
@@ -379,30 +513,61 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setIndicadores(elemento);
-  }
+  }*/
 
-  obtenerListaZonas(ubicacion){
-    const listaZonas = ubicacion.map((data)=>{
-      return data.zona
-    });
-
-    this._dashBoardService.setZonas(listaZonas);
+  obtenerApiDataUbicacion(){
+    this.zonasDisponibles = this.apiDataUbicacion.map((data)=>{return data.zona});
+    this.regionesDisponibles = this.apiDataUbicacion.map((data)=>{return data.region});
+    this.sociedadesDisponibles = this.apiDataUbicacion.map((data)=>{return data.sociedad});
+    this.sedesDisponibles = this.apiDataUbicacion.map((data)=>{return data.sede});
   }
 
   seleccionarSeccion(indice){
     const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
     this._apiService.postQuery(nodo[indice],"",this.paramsDefault).subscribe(async(data:any)=>{
-      await this.generarDataPuestoCompleto(data?.result);
-      await this.generarDataEstandarElevadorProductivo(data?.result);
-      await this.generarDataIndicadores(data?.result);
+      //await this.generarDataEstandarElevadorProductivo(data?.result);
+      //await this.generarDataIndicadores(data?.result);
+      await this._dashBoardService.setApiDataDashboard(data?.result);
+      await this.generarDataPuestoCompleto();
+      await this.filtrarPorZona();
+      await this.filtrarPorRegion();
+      await this.filtrarPorSede();
+      await this.filtrarPorSociedad();
     });
+  }
+
+  filtrarPorZona(){
+    const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
+    console.log("dataFiltradaPorZona", dataFiltradaPorZona);
+  }
+
+  filtrarPorRegion(){
+    const dataFiltradaPorRegion=this.apiDataDashboard.filter((data)=>{return this.regionesDisponibles.includes(data.region)});
+    console.log("dataFiltradaPorZona", dataFiltradaPorRegion);
+  }
+
+  filtrarPorSede(){
+    const dataFiltradaPorSede=this.apiDataDashboard.filter((data)=>{return this.sedesDisponibles.includes(data.sede)});
+    console.log("dataFiltradaPorZona", dataFiltradaPorSede);
+  }
+
+  filtrarPorSociedad(){
+    const dataFiltradaPorSociedad=this.apiDataDashboard.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
+    console.log("dataFiltradaPorZona", dataFiltradaPorSociedad);
   }
 
   ngOnInit(): void {
 
+    this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
+      this.apiDataUbicacion = await data;
+    });
+
+    this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
+      this.apiDataDashboard = await data;
+    });
+
     this._dashBoardService.getZonas().subscribe(async(data)=>{
       this.zonas = await data;
-      this.obtenerValoresPuestoCompleto();
     });
 
     this._dashBoardService.getActividadSede().subscribe(async(data)=>{
@@ -424,26 +589,16 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
       this.dataEstandarElevadorProductivo = await [{name: "Valor",data,color:"#efdf00"}];
     });
-    
-    this._dashBoardService.getFichajeRedRenault().subscribe(async(data)=>{
-      this.dataFichajeRedRenault = await data;
-    });
-
-    this._dashBoardService.getClipRedRenault().subscribe(async(data)=>{
-      this.dataClipRedRenault = await data;
-    });
 
     this._userService.user$
     .pipe(takeUntil(this._unsubscribeAll))
     .subscribe(async(user: User) => {
         this.usuario = await user;
-        await this.obtenerListaZonas(user?.ubicacion);
-        await this.cargarUbicacionesDisponibles(user?.ubicacion);
         //this._changeDetectorRef.markForCheck();
-        this.seleccionarSeccion(0);
+        await this._dashBoardService.setApiDataUbicacion(this.usuario.ubicacion);
+        await this.obtenerApiDataUbicacion();
+        await this.seleccionarSeccion(0);
     });
-
-    
 
   }
 

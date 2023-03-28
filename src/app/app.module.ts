@@ -29,6 +29,9 @@ import { MecanicaComponent } from './modules/admin/mecanica/mecanica.component';
 import {MatSelectModule} from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -75,7 +78,8 @@ const routerConfig: ExtraOptions = {
         MatSelectModule,
         MatTooltipModule,
         MatTabsModule,
-        
+        MatExpansionModule,
+        MatChipsModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})
