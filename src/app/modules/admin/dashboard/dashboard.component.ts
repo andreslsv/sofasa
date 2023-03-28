@@ -48,7 +48,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   zonas=[];
-  //public chartOptions: Partial<ChartOptions>;
+  public chartOptionsEstandar: Partial<ChartOptions>;
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
@@ -57,7 +57,8 @@ export class DashboardComponent implements OnInit {
 
   zonasSelesccionadas=[];
   regionesSeleccionadas=[];
-
+  sociedadesSeleccionadas=[];
+  sedesSeleccionadas=[];
 
 
   chartOptions: Partial<ChartOptions> = {
@@ -263,6 +264,125 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  obtenerValoresEstandarxElevadores(){
+    this.chartOptionsEstandar = {
+      grid:{
+        show:true,
+        borderColor:"#fff",
+        strokeDashArray: 5,
+        xaxis: {
+          lines: {
+              show: true,
+              //offsetX: 60,
+              //offsetY: 60
+          }
+        },
+        yaxis: {
+            lines: {
+                show: true,
+                //offsetX: 60,
+                //offsetY: 60
+            }
+        },
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
+      },
+      series: [
+        {
+          name: "Valor",
+          data: [],
+          color:"#efdf00"
+        }
+      ],
+      chart: {
+        height: 350,
+        width:"100%",
+        type: "bar"
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            position: "top" // top, center, bottom
+          }
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function(val) {
+          return val + "%";
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#fff"]
+        }
+      },
+      xaxis: {
+        categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),//Estas son las etiquetas que se muestran
+        position: "top",
+        labels: {
+          offsetY: 0,
+          style:{
+            colors:"#fff"
+          }
+        },
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#EFDF00",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5
+            }
+          }
+        },
+        tooltip: {
+          enabled: true,
+          offsetY: -35
+        }
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "light",
+          type: "horizontal",
+          shadeIntensity: 0.25,
+          gradientToColors: undefined,
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [50, 0, 100, 100]
+        }
+      },
+      yaxis: {
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        },
+        labels: {
+          show: false,
+          formatter: function(val) {
+            return val + "%";
+          }
+        }
+      }
+    };
+  }
+
   toggleSelection(chip: MatChip,selector) {
     //chip.toggleSelected(true);
     if (selector.includes(chip.value)) {
@@ -402,11 +522,16 @@ export class DashboardComponent implements OnInit {
   generarDataPuestoCompleto(){
 
     let elemento = [];
+    let elementoEstandar = [];
 
     console.log("zonas disponibleeeesss", this.zonasDisponibles);
 
     //Extraer las zonas desde la api
     elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    elementoEstandar = this.zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
@@ -419,13 +544,30 @@ export class DashboardComponent implements OnInit {
       });
     });
 
+
+    this.apiDataDashboard.forEach((element) => {
+      elementoEstandar.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.elevadoresProductivos;
+          console.log("element2.valor+=element.elevadoresProductivos;",element2.valor,element.elevadoresProductivos);
+        }
+      });
+    });
+
     elemento=elemento.map((data)=>{
       return data.valor;
     });
 
+    elementoEstandar=elementoEstandar.map((data)=>{
+      return data.valor;
+    });
+
     this._dashBoardService.setPuestoCompleto(elemento);
+    this._dashBoardService.setEstandarElevadorProductivo(elementoEstandar);
+    this.obtenerValoresEstandarxElevadores();
     this.obtenerValoresPuestoCompleto();
   }
+
 
   /*
   async generarDataEstandarElevadorProductivo(data){

@@ -68,14 +68,53 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-            
+
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Grupo ciudad
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(ciudad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+                    <span *ngIf="c.selected">*</span>
+                    {{sociedad}}
+                </mat-chip>
+              </mat-chip-list>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Sede
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip [ngStyle]="{'background-color' : sedesSeleccionadas.includes(sede)?'black':'rgb(203 213 225)', 'color' : sedesSeleccionadas.includes(sede)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sedesSeleccionadas)" *ngFor="let sede of sedesDisponibles" [value]="sede">
+                    <span *ngIf="c.selected">*</span>
+                    {{sede}}
+                </mat-chip>
+              </mat-chip-list>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div class="w-full flex justify-end my-4">
+        <button mat-button>Filtrar</button>
     </div>
 
     <mat-tab-group class="mt-4" (selectedIndexChange)="seleccionarSeccion($event)">
         <mat-tab *ngFor="let seccion of secciones" [label]="seccion">
             <div class="grid grid-cols-2 gap-2">
                 <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
-                    <div class="text-white px-2 pt-4 pb-6 text-xl font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
                         <h2 class="opacity-40 ml-2">Capacidad de servicio - Puesto completo</h2>
                         <div>
                             <button mat-icon-button>
@@ -101,7 +140,7 @@
                 </div>
         
                 <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
-                    <div class="text-white px-2 pt-4 pb-6 text-xl font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
                         <h2 class="opacity-40 ml-2">Capacidad de servicio - Estandar x elevador productivo</h2>
                         <div>
                             <button mat-icon-button>
@@ -112,8 +151,7 @@
                             </button>
                         </div>
                     </div>
-                    <!--<apx-chart
-                    *ngIf="false"
+                    <apx-chart
                     class="w-full"
                       [series]="dataEstandarElevadorProductivo"
                       [chart]="chartOptions?.chart"
@@ -124,7 +162,7 @@
                       [xaxis]="chartOptions?.xaxis"
                       [fill]="chartOptions?.fill"
                       [title]="chartOptions?.title"
-                    ></apx-chart>-->
+                    ></apx-chart>
                 </div>
             </div>
         
