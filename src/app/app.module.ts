@@ -31,6 +31,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 const routerConfig: ExtraOptions = {
@@ -80,6 +82,7 @@ const routerConfig: ExtraOptions = {
         MatTabsModule,
         MatExpansionModule,
         MatChipsModule,
+        MatSnackBarModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})

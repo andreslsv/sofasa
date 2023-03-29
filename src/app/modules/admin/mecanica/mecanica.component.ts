@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
@@ -47,7 +48,11 @@ export class MecanicaComponent implements OnInit {
   sedesDisponibles: any;
   ubicaciones:any;
 
-  constructor(private _formBuilder: FormBuilder, private _mecanicaService:MecanicaService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef, private _apiService:ApiService) { }
+  constructor(private _formBuilder: FormBuilder, private _mecanicaService:MecanicaService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef, private _apiService:ApiService,private _snackBar: MatSnackBar) { }
+
+  openSnackBar(mensaje){
+    this._snackBar.open(mensaje, null, {duration: 4000});
+  }
 
   recalcular(){
     const valores = this.mecanicaForm.value;
@@ -89,17 +94,30 @@ export class MecanicaComponent implements OnInit {
       "pulmonesElevadoresProductivos": 0,
       "entradasPuestoTrabajo": 0,
       "entradasPotenciales": 0,
-      "region": "string",
-      "zona": "string",
-      "sociedad": "string",
-      "sede": "string",
       "elevadoresProductivos": 0
     };
 
-    this._apiService.postQuery("Mecanica/GuardarMecanica","",mecanica).subscribe(async(data:any)=>{
-      console.log("Resultado de guardar mecánica");
+    this.editarUbicaciones(mecanica);
+
+    this._apiService.postQuery("Mecanica/GuardarMecanica","",mecanica).subscribe(async(result:any)=>{
+      if (result.isSuccess) {
+        this.openSnackBar("Guardado");
+      } else {
+        this.openSnackBar("error");
+      }
     });
 
+  }
+
+  editarUbicaciones(dataQuery){
+    if (this.user?.admin==1) {
+      dataQuery.region=this.seccionForm.value.region;
+      dataQuery.zona=this.seccionForm.value.zona;
+      dataQuery.sociedad=this.seccionForm.value.sociedad;
+      dataQuery.sede=this.seccionForm.value.sede;
+    } else {
+      
+    }
   }
 
   obtenerUbicacionesPorUsuario(){

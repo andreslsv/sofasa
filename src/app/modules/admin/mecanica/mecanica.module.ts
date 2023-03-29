@@ -9,6 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const mecanicaRoutes: Route[] = [
     {
@@ -31,7 +32,8 @@ const mecanicaRoutes: Route[] = [
         MatInputModule,
         MatPaginatorModule,
         MatTooltipModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule
     ]
 })
 export class MecanicaModule

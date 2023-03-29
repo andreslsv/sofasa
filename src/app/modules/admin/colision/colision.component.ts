@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
+import { ApiService } from 'app/services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ColisionService } from './colision.service';
 
@@ -58,7 +60,11 @@ export class ColisionComponent implements OnInit {
   sociedadesDisponibles: any;
   sedesDisponibles: any;
 
-  constructor(private _formBuilder: FormBuilder, private _colisionService:ColisionService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _formBuilder: FormBuilder, private _colisionService:ColisionService,private _userService: UserService,private _changeDetectorRef: ChangeDetectorRef, private _apiService:ApiService,private _snackBar: MatSnackBar) { }
+
+  openSnackBar(mensaje){
+    this._snackBar.open(mensaje, null, {duration: 4000});
+  }
 
   sumatoriaPuestosTrabajo(){
     const valores = this.puestosTrabajoForm.value;
@@ -85,6 +91,74 @@ export class ColisionComponent implements OnInit {
     this.regionesDisponibles = this.ubicaciones.map((data)=>{return data.region});
     this.sociedadesDisponibles = this.ubicaciones.map((data)=>{return data.sociedad});
     this.sedesDisponibles = this.ubicaciones.map((data)=>{return data.sede});
+  }
+
+  guardarColision(){
+    const colision = {
+      "fechaRegistro": "2023-03-28T23:20:32.347Z",
+      "idUsuario": 0,
+      "entradasxPuestoTrabajo": 0,
+      "pulmonesPorPuestoTrabajo": 0,
+      "puestosDeTrabajoCompletos": 0,
+      "puestosDeTrabajoTotales": 0,
+      "entradasPromedioTaller": 0,
+      "personaProductivo": 0,
+      "pulmones": 0,
+      "totalHorasFacturadas": 0,
+      "totalHorasTrabajadas": 0,
+      "totalHorasDisponibles": 0,
+      "horasHabilesLey": 0,
+      "tiempoProductivo": 0,
+      "promedioHorasFacturacion": 0,
+      "puestoDesarmadoMarca": 0,
+      "puestoLatoneriaMarca": 0,
+      "puestoPreparacionMarca": 0,
+      "cabinaDePinturaMarca": 0,
+      "puestoDeArmadoMarca": 0,
+      "puestoDeBrilladoMarca": 0,
+      "puestoDesarmadoConce": 0,
+      "puestoLatoneriaConce": 0,
+      "puestoPreparacionConce": 0,
+      "cabinaDePinturaConce": 0,
+      "puestoDeArmadoConce": 0,
+      "puestoDeBrilladoConce": 0,
+      "tasaEmpleo": 0,
+      "tasaEficiencia": 0,
+      "productividad": 0,
+      "aprovechamientoCapacidadServicio": 0,
+      "capacidadServicioInstalada": 0,
+      "tecnicosPuestoTrabajo": 0,
+      "pulmonesPuestoTrabajo": 0,
+      "pulmonesPuestoTrabajoCompleto": 0,
+      "entradasPuestoTrabajo": 0,
+      "entradasPotencialesPuestoTrabajo": 0,
+      "region": "string",
+      "zona": "string",
+      "sociedad": "string",
+      "sede": "string",
+      "puestoTrabajoDefinidoMarca": 0
+    };
+
+    this.editarUbicaciones(colision);
+
+    this._apiService.postQuery("Colision/GuardarColision","",colision).subscribe(async(result:any)=>{
+      if (result.isSuccess) {
+        this.openSnackBar("Guardado");
+      } else {
+        this.openSnackBar("error");
+      }
+    });
+  }
+
+  editarUbicaciones(dataQuery){
+    if (this.user?.admin==1) {
+      dataQuery.region=this.seccionForm.value.region;
+      dataQuery.zona=this.seccionForm.value.zona;
+      dataQuery.sociedad=this.seccionForm.value.sociedad;
+      dataQuery.sede=this.seccionForm.value.sede;
+    } else {
+      
+    }
   }
 
   ngOnInit(): void {
