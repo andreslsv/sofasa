@@ -78,7 +78,6 @@ export class ColisionComponent implements OnInit {
 
     this.dataColision.forEach(element => {
       if (element.formula) {
-        console.log("Este es el valor de los valores", valores);
         element.indicador = element.formula(valores,valores2);
       }
     });
@@ -94,22 +93,25 @@ export class ColisionComponent implements OnInit {
   }
 
   guardarColision(){
-    const colision = {
+    let colision = {
       "fechaRegistro": "2023-03-28T23:20:32.347Z",
-      "idUsuario": 0,
-      "entradasxPuestoTrabajo": 0,
-      "pulmonesPorPuestoTrabajo": 0,
-      "puestosDeTrabajoCompletos": 0,
-      "puestosDeTrabajoTotales": 0,
-      "entradasPromedioTaller": 0,
+      "idUsuario":this.user?.id,
+      "pulmonesPorPuestoTrabajo": this.mecanicaForm.value.pul_por_pue_tra,
+      "entradasPromedioTaller": this.mecanicaForm.value.ent_pro_tal,
+      "pulmones": this.mecanicaForm.value.pulmones,
+      "totalHorasFacturadas": this.mecanicaForm.value.tot_hor_fac,
+      "totalHorasTrabajadas":  this.mecanicaForm.value.tot_hor_tra,
+      "totalHorasDisponibles": this.mecanicaForm.value.tot_hor_dis,
+      "horasHabilesLey": this.mecanicaForm.value.hor_hab_ley,
+      "tiempoProductivo": this.mecanicaForm.value.tie_pro,
+      "promedioHorasFacturacion": this.mecanicaForm.value.pro_hor_fac_por_ent
+    };
+
+    const colision2 = {
       "personaProductivo": 0,
-      "pulmones": 0,
-      "totalHorasFacturadas": 0,
-      "totalHorasTrabajadas": 0,
-      "totalHorasDisponibles": 0,
-      "horasHabilesLey": 0,
-      "tiempoProductivo": 0,
-      "promedioHorasFacturacion": 0,
+      "puestosDeTrabajoTotales": 0,
+      "puestosDeTrabajoCompletos": 0,
+      "entradasxPuestoTrabajo": 0,
       "puestoDesarmadoMarca": 0,
       "puestoLatoneriaMarca": 0,
       "puestoPreparacionMarca": 0,
@@ -132,20 +134,30 @@ export class ColisionComponent implements OnInit {
       "pulmonesPuestoTrabajoCompleto": 0,
       "entradasPuestoTrabajo": 0,
       "entradasPotencialesPuestoTrabajo": 0,
-      "region": "string",
-      "zona": "string",
-      "sociedad": "string",
-      "sede": "string",
       "puestoTrabajoDefinidoMarca": 0
-    };
+    }
 
+    this.guardarFormulas(colision2);
     this.editarUbicaciones(colision);
+
+    colision = {...colision, ...colision2};
 
     this._apiService.postQuery("Colision/GuardarColision","",colision).subscribe(async(result:any)=>{
       if (result.isSuccess) {
         this.openSnackBar("Guardado");
       } else {
         this.openSnackBar("error");
+      }
+    });
+  }
+
+  guardarFormulas(colision2){
+    const valores = this.mecanicaForm.value;
+    const valores2 = this.puestosTrabajoForm.value;
+
+    this.dataColision.forEach((data)=>{
+      if (colision2[data.nombreVariable] || colision2[data.nombreVariable]==0) {
+        colision2[data.nombreVariable] = data.formula(valores,valores2).toFixed(2);
       }
     });
   }
