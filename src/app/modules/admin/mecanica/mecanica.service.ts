@@ -24,6 +24,7 @@ export class MecanicaService {
 
   dataMecanica=[
     {
+      nombreVariable:"entradasPuestoTrabajo",
       datosGenerales:"Entradas x puesto de trabajo - completo",
       labelFormula:"(Entradas promedio dia (6 Meses)/(Puestos de trabajo completos)",
       indicador:0,
@@ -32,6 +33,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"aprovechamientoCapacidadServicio",
       datosGenerales:"Aprovechamiento Capacidad Servicio - Puesto completo",
       labelFormula:"(Entradas x puesto de trabajo - completo)/(Entradas x puesto trabajo)",
       indicador:0,
@@ -40,6 +42,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"capacidadDeServicioInstalada",
       datosGenerales:"Capacidad de servicio instalada",
       labelFormula:"(Entradas promedio taller (6 Meses)) / ((Elevadores totales - Mecanica )* (Entradas x puesto trabajo ))",
       indicador:0,
@@ -48,6 +51,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"tasaEmpleo",
       datosGenerales:"Tasa Empleo",
       labelFormula:"(Total Horas Trabajadas) / (Total Horas disponibles)",
       indicador:0,
@@ -56,6 +60,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"tasaEficiencia",
       datosGenerales:"Tasa Eficiencia",
       labelFormula:"(Total Horas Facturadas) / (Total Horas Disponibles)",
       indicador:0,
@@ -64,6 +69,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"productividad",
       datosGenerales:"Productividad",
       labelFormula:"(Total Horas Facturadas) / (Total Horas Trabajadas)",
       indicador:0,
@@ -72,6 +78,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"entradasPotenciales",
       datosGenerales:"Entradas Potenciales x puesto de trabajo - Estandar",
       labelFormula:"(Elevadores Totales  - mecanica) * (Entradas x puesto trabajo)",
       indicador:0,
@@ -80,6 +87,7 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"entradasPuestoTrabajo",
       datosGenerales:"Entradas x puesto trabajo",
       labelFormula:"(horas hábiles de ley * Tiempo productivo (habil - muerto )) / (Promedio horas facturacion por entrada)",
       indicador:0,
@@ -88,18 +96,21 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"tecnicosElevadoresTotales",
       datosGenerales:"Tecnicos / Elevadores Totales - Mecanica",
       labelFormula:"Elevadores Totales/Técnicos mecánicos + Electrónica",
       indicador:0,
       formula:(valores)=>{return valores.tec_mec/valores.ele_tot_mec}
     },
     {
+      nombreVariable:"pulmonesElevadoresTotales",
       datosGenerales:"Pulmones / Elevadores Totales - Mecanica",
       labelFormula:"Pulmones / Elevadores Totales - Mecánica",
       indicador:0,
       formula:(valores)=>{return valores.pulmones/valores.ele_tot_mec}
     },
     {
+      nombreVariable:"pulmonesElevadoresProductivos",
       datosGenerales:"Pulmones / Elevadores Productivos (Elevador + Tecnico)",
       labelFormula:"Pulmones / Elevadores Productivos (Elevador + Tecnico)",
       indicador:0,

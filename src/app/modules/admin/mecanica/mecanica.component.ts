@@ -68,12 +68,11 @@ export class MecanicaComponent implements OnInit {
 
   guardarMecanica(){
 
-    const mecanica = {
+    let mecanica = {
       "fechaRegistro": "2023-03-28T19:58:17.931Z",
       "idUsuario": this.user?.id,
       "entradasxPuestoTrabajo": this.mecanicaForm?.value?.ent_x_pues_de_tra,
       "pulmonesPorPuestoTrabajo": this.mecanicaForm?.value?.pul_por_pue_tra,
-      "puestosDeTrabajoCompletos": 0,
       "elevadoresTotalesMecanica": this.mecanicaForm?.value?.ele_tot_mec,
       "entradasPromedioTaller": this.mecanicaForm?.value?.ent_pro_tal_6_mes,
       "tecnicosMecanicosElectromecanicos":  this.mecanicaForm?.value?.ent_pro_tal_6_mes,
@@ -83,7 +82,11 @@ export class MecanicaComponent implements OnInit {
       "totalHorasDisponibles": this.mecanicaForm?.value?.tot_hor_dis,
       "horasHabilesLey": this.mecanicaForm?.value?.hor_hab_ley,
       "tiempoProductivo": this.mecanicaForm?.value?.tie_prod,
-      "promedioHorasFacturacionEntrada": this.mecanicaForm?.value?.pro_hor_fac_por_ent,
+      "promedioHorasFacturacionEntrada": this.mecanicaForm?.value?.pro_hor_fac_por_ent
+    };
+
+    const mecanica2 = {
+      "puestosDeTrabajoCompletos": 0,
       "tasaEmpleo": 0,
       "tasaEficiencia": 0,
       "productividad": 0,
@@ -97,7 +100,10 @@ export class MecanicaComponent implements OnInit {
       "elevadoresProductivos": 0
     };
 
+    this.guardarFormulas(mecanica2);
     this.editarUbicaciones(mecanica);
+
+    mecanica = {...mecanica, ...mecanica2};
 
     this._apiService.postQuery("Mecanica/GuardarMecanica","",mecanica).subscribe(async(result:any)=>{
       if (result.isSuccess) {
@@ -107,6 +113,20 @@ export class MecanicaComponent implements OnInit {
       }
     });
 
+  }
+
+  guardarFormulas(mecanica2){
+    const valores = this.mecanicaForm.value;
+
+    this.dataMecanica.forEach((data)=>{
+      console.log("Este es el valor de la data =>", data);
+      console.log("Este es el valor de mecanica2 =>", mecanica2);
+      console.log("Este es el valor seleccionado =>", mecanica2[data.nombreVariable]);
+
+      if (mecanica2[data.nombreVariable] || mecanica2[data.nombreVariable]==0) {
+        mecanica2[data.nombreVariable] = data.formula(valores).toFixed(2);
+      }
+    });
   }
 
   editarUbicaciones(dataQuery){
