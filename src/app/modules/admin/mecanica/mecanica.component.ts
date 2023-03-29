@@ -108,6 +108,8 @@ export class MecanicaComponent implements OnInit {
     this._apiService.postQuery("Mecanica/GuardarMecanica","",mecanica).subscribe(async(result:any)=>{
       if (result.isSuccess) {
         this.openSnackBar("Guardado");
+        this.seccionForm.reset();
+        this.mecanicaForm.reset();
       } else {
         this.openSnackBar("error");
       }

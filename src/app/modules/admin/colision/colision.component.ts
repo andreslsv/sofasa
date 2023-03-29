@@ -145,6 +145,8 @@ export class ColisionComponent implements OnInit {
     this._apiService.postQuery("Colision/GuardarColision","",colision).subscribe(async(result:any)=>{
       if (result.isSuccess) {
         this.openSnackBar("Guardado");
+        this.mecanicaForm.reset();
+        this.seccionForm.reset();
       } else {
         this.openSnackBar("error");
       }
