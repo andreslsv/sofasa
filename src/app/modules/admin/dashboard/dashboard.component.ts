@@ -7,6 +7,7 @@ import { ApiService } from 'app/services/api.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './dashboard.service';
+import { valoresGraficosDefault } from './graficos';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -32,134 +33,23 @@ export class DashboardComponent implements OnInit {
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   displayedColumns: string[] = ['position', 'name'];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-
-
   zonasSelesccionadas=[];
   regionesSeleccionadas=[];
   sociedadesSeleccionadas=[];
   sedesSeleccionadas=[];
-
-
-  chartOptions: Partial<ChartOptions> = {
-    grid:{
-      show:true,
-      borderColor:"#fff",
-      strokeDashArray: 5,
-      xaxis: {
-        lines: {
-            show: true,
-            //offsetX: 60,
-            //offsetY: 60
-        }
-      },
-      yaxis: {
-          lines: {
-              show: true,
-              //offsetX: 60,
-              //offsetY: 60
-          }
-      },
-      padding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      }
-    },
-    series: [
-      {
-        name: "Valor",
-        data: [],
-        color:"#efdf00"
-      }
-    ],
-    chart: {
-      height: 350,
-      width:"100%",
-      type: "bar"
-    },
-    plotOptions: {
-      bar: {
-        dataLabels: {
-          position: "top" // top, center, bottom
-        }
-      }
-    },
-    dataLabels: {
-      enabled: true,
-      formatter: function(val) {
-        return val + "%";
-      },
-      offsetY: -20,
-      style: {
-        fontSize: "12px",
-        colors: ["#fff"]
-      }
-    },
-    xaxis: {
-      categories: [],//Estas son las etiquetas que se muestran
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shade: "light",
-        type: "horizontal",
-        shadeIntensity: 0.25,
-        gradientToColors: undefined,
-        inverseColors: true,
-        opacityFrom: 1,
-        opacityTo: 1,
-        stops: [50, 0, 100, 100]
-      }
-    },
-    yaxis: {
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      labels: {
-        show: false,
-        formatter: function(val) {
-          return val + "%";
-        }
-      }
-    }
-  };
-
+  chartOptions=valoresGraficosDefault;
   dataIndicadores:any;
   dataPersonalProductivo:any;
   dataActividadesSede:any;
+  usuario: User;
+  regionesDisponibles=[];
+  zonasDisponibles=[];
+  sociedadesDisponibles=[];
+  sedesDisponibles=[];
+  secciones=["Mecánica","Colisión"];
+  apiDataUbicacion: any;
+  apiDataDashboard: any;
+  dataEficiencia: any;
 
   paramsDefault=      {
     "empresa": "",
@@ -184,25 +74,12 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  usuario: User;
-
   seccionForm = this._formBuilder.group({
     region                : [, [Validators.required]],
     zona                  : [, [Validators.required]],
     sociedad              : [, [Validators.required]],
     sede                  : [, [Validators.required]],
   });
-
-  regionesDisponibles=[];
-  zonasDisponibles=[];
-  sociedadesDisponibles=[];
-  sedesDisponibles=[];
-
-  secciones=["Mecánica","Colisión"];
-  apiDataUbicacion: any;
-  apiDataDashboard: any;
-  dataEficiencia: any;
-
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {}
 
@@ -335,7 +212,6 @@ export class DashboardComponent implements OnInit {
  }
 
   async obtenerValoresPuestoCompleto(){
-    await console.log("---->",this.zonasDisponibles.filter((data)=>{return data!=null}));
     this.chartOptions = {
       grid:{
         show:true,
@@ -460,8 +336,6 @@ export class DashboardComponent implements OnInit {
     let elemento = [];
     let elementoEstandar = [];
 
-    console.log("zonas disponibleeeesss", this.zonasDisponibles);
-
     //Extraer las zonas desde la api
     elemento = this.zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
@@ -485,7 +359,6 @@ export class DashboardComponent implements OnInit {
       elementoEstandar.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.elevadoresProductivos;
-          console.log("element2.valor+=element.elevadoresProductivos;",element2.valor,element.elevadoresProductivos);
         }
       });
     });
@@ -617,22 +490,18 @@ export class DashboardComponent implements OnInit {
 
   filtrarPorZona(){
     const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
-    console.log("dataFiltradaPorZona", dataFiltradaPorZona);
   }
 
   filtrarPorRegion(){
     const dataFiltradaPorRegion=this.apiDataDashboard.filter((data)=>{return this.regionesDisponibles.includes(data.region)});
-    console.log("dataFiltradaPorZona", dataFiltradaPorRegion);
   }
 
   filtrarPorSede(){
     const dataFiltradaPorSede=this.apiDataDashboard.filter((data)=>{return this.sedesDisponibles.includes(data.sede)});
-    console.log("dataFiltradaPorZona", dataFiltradaPorSede);
   }
 
   filtrarPorSociedad(){
     const dataFiltradaPorSociedad=this.apiDataDashboard.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
-    console.log("dataFiltradaPorZona", dataFiltradaPorSociedad);
   }
 
   ngOnInit(): void {

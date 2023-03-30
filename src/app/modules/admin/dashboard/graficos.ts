@@ -1,6 +1,6 @@
 import { ChartOptions } from "./dashboard.component";
 
-export const chartOptionsEstandar:Partial<ChartOptions> = {
+export const valoresGraficosDefault:Partial<ChartOptions> = {
     grid:{
       show:true,
       borderColor:"#fff",
