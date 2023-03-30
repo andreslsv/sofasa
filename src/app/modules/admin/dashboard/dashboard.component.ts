@@ -225,38 +225,7 @@ export class DashboardComponent implements OnInit {
   dataEficiencia: any;
 
 
-  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {
-
-    this.chartOptions2 = {
-      colors: ["#000", "#efdf00"],
-      series: [
-        50, 20
-      ],
-      chart: {
-        width: 300,
-        type: "pie",
-      },
-      stroke:{
-        width:0
-      },
-      labels: ["Si", "No"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              show: false,
-              position: "right"
-            }
-          }
-        }
-      ]
-    };
-
-  }
+  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {}
 
   obtenerValoresEstandarxElevadores(){
     this.chartOptionsEstandar = {
