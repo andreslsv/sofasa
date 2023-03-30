@@ -7,7 +7,7 @@ import { ApiService } from 'app/services/api.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './dashboard.service';
-import { valoresGraficosDefault, valoresIndicadoresDefault } from './graficos';
+import { valoresIndicadoresDefault } from './graficos';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -27,17 +27,22 @@ export type ChartOptions = {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild("chart") chart: ChartComponent;
+  //@ViewChild("chart") chart: ChartComponent;
 
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+  
+  //Valores para llenar las tablas
   chartOptions: Partial<ChartOptions>;
+  configEstandarElevador: Partial<ChartOptions>;
+  configEficiencia: Partial<ChartOptions>;
+
+
   dataIndicadores:any;
   usuario: User;
   apiDataUbicacion: any;
   apiDataDashboard: any;
-  dataEficiencia: any;
 
   regionesDisponibles=[];
   zonasDisponibles=[];
@@ -53,7 +58,6 @@ export class DashboardComponent implements OnInit {
   zonas=[];
 
   paramsDefault={"empresa": "","ultimoReg": "1","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
-  dataEstandarElevadorProductivo = [{name: "Valor",data: [],color:"#efdf00"}];
 
   seccionForm = this._formBuilder.group({
     region                : [, [Validators.required]],
@@ -64,124 +68,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {}
 
-  obtenerValoresEstandarxElevadores(){
-    this.chartOptionsEstandar = {
-      grid:{
-        show:true,
-        borderColor:"#fff",
-        strokeDashArray: 5,
-        xaxis: {
-          lines: {
-              show: true,
-              //offsetX: 60,
-              //offsetY: 60
-          }
-        },
-        yaxis: {
-            lines: {
-                show: true,
-                //offsetX: 60,
-                //offsetY: 60
-            }
-        },
-        padding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        }
-      },
-      series: [
-        {
-          name: "Valor",
-          data: [],//Estos son los valores
-          color:"#efdf00"
-        }
-      ],
-      chart: {
-        height: 350,
-        width:"100%",
-        type: "bar"
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            position: "top" // top, center, bottom
-          }
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function(val) {
-          return val + "%";
-        },
-        offsetY: -20,
-        style: {
-          fontSize: "12px",
-          colors: ["#fff"]
-        }
-      },
-      xaxis: {
-        categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),//Estas son las etiquetas que se muestran
-        position: "top",
-        labels: {
-          offsetY: 0,
-          style:{
-            colors:"#fff"
-          }
-        },
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        crosshairs: {
-          fill: {
-            type: "gradient",
-            gradient: {
-              colorFrom: "#EFDF00",
-              colorTo: "#BED1E6",
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5
-            }
-          }
-        },
-        tooltip: {
-          enabled: true,
-          offsetY: -35
-        }
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          type: "horizontal",
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [50, 0, 100, 100]
-        }
-      },
-      yaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        labels: {
-          show: false,
-          formatter: function(val) {
-            return val + "%";
-          }
-        }
-      }
-    };
-  }
 
   toggleSelection(chip: MatChip,selector) {
     //chip.toggleSelected(true);
@@ -190,143 +76,15 @@ export class DashboardComponent implements OnInit {
     } else {
       selector.push(chip.value);
     }
- }
-
-  async obtenerValoresPuestoCompleto(){
-    this.chartOptions = {
-      grid:{
-        show:true,
-        borderColor:"#fff",
-        strokeDashArray: 5,
-        xaxis: {
-          lines: {
-              show: true,
-              //offsetX: 60,
-              //offsetY: 60
-          }
-        },
-        yaxis: {
-            lines: {
-                show: true,
-                //offsetX: 60,
-                //offsetY: 60
-            }
-        },
-        padding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        }
-      },
-      series: [
-        {
-          name: "Valor",
-          data: [],
-          color:"#efdf00"
-        }
-      ],
-      chart: {
-        height: 350,
-        width:"100%",
-        type: "bar"
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            position: "top" // top, center, bottom
-          }
-        }
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function(val) {
-          return val + "%";
-        },
-        offsetY: -20,
-        style: {
-          fontSize: "12px",
-          colors: ["#fff"]
-        }
-      },
-      xaxis: {
-        categories: await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),//Estas son las etiquetas que se muestran
-        position: "top",
-        labels: {
-          offsetY: 0,
-          style:{
-            colors:"#fff"
-          }
-        },
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        crosshairs: {
-          fill: {
-            type: "gradient",
-            gradient: {
-              colorFrom: "#EFDF00",
-              colorTo: "#BED1E6",
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5
-            }
-          }
-        },
-        tooltip: {
-          enabled: true,
-          offsetY: -35
-        }
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          type: "horizontal",
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [50, 0, 100, 100]
-        }
-      },
-      yaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        labels: {
-          show: false,
-          formatter: function(val) {
-            return val + "%";
-          }
-        }
-      }
-    };
   }
 
-  
   generarDataPuestoCompleto(){
-
     let elemento = [];
-    let elementoEstandar = [];
 
-    //Extraer las zonas desde la api
     elemento = this.zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    elementoEstandar = this.zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0}
-    });
-
-    //Cruzar los valores con las zonas de la api
     this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
@@ -335,48 +93,27 @@ export class DashboardComponent implements OnInit {
       });
     });
 
-
-    this.apiDataDashboard.forEach((element) => {
-      elementoEstandar.forEach((element2)=>{
-        if (element.zona==element2.zona) {
-          element2.valor+=element.elevadoresProductivos;
-        }
-      });
-    });
-
     elemento=elemento.map((data)=>{
       return data.valor;
     });
 
-    elementoEstandar=elementoEstandar.map((data)=>{
-      return data.valor;
-    });
-
-    //this._dashBoardService.setPuestoCompleto(elemento);
-    //this._dashBoardService.setEstandarElevadorProductivo(elementoEstandar);
-    //this.obtenerValoresEstandarxElevadores();
-    //this.obtenerValoresPuestoCompleto();
-    //this.generarDataEficiencia();
-
-    console.log("Este es el valor de elemento", elemento);
-
     this.chartOptions.series[0].data=elemento;
+    this.chartOptions.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
     this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
   }
 
-  generarDataEficiencia(){
+  
+  generarDataEstandarElevador(){
     let elemento = [];
 
-    //Extraer las zonas desde la api
     elemento = this.zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    //Cruzar los valores con las zonas de la api
     this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.tasaEficiencia;
+          element2.valor+=element.elevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
         }
       });
     });
@@ -385,10 +122,11 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this._dashBoardService.setEficiencia(elemento);
-
+    this.configEstandarElevador.series[0].data=elemento;
+    this.configEstandarElevador.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
+    this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
-  
+
   generarDataIndicadores(){
     let elemento = valoresIndicadoresDefault;
 
@@ -418,16 +156,15 @@ export class DashboardComponent implements OnInit {
   seleccionarSeccion(indice){
     const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
     this._apiService.postQuery(nodo[indice],"",this.paramsDefault).subscribe(async(data:any)=>{
-      //await this.generarDataEstandarElevadorProductivo(data?.result);
-      //await this.generarDataIndicadores(data?.result);
       await this._dashBoardService.setApiDataDashboard(data?.result);
-      await this.cargarDataDeGraficos();
       await this.agregarFiltros();
+      await this.cargarDataDeGraficos();
     });
   }
 
   cargarDataDeGraficos(){
     this.generarDataPuestoCompleto();
+    this.generarDataEstandarElevador();
     this.generarDataIndicadores();
   }
 
@@ -473,24 +210,20 @@ export class DashboardComponent implements OnInit {
     */
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
-      this.chartOptions = data;
+      this.chartOptions = await data;
+    });
+
+    this._dashBoardService.getConfigEstandarElevador().subscribe(async (data)=>{
+      this.configEstandarElevador = await data;
+    });
+
+    this._dashBoardService.getConfigEficiencia().subscribe(async (data)=>{
+      this.configEficiencia = await data;
     });
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{
       this.dataIndicadores = await data;
     });
-
-    this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
-      this.dataEstandarElevadorProductivo = await [{name: "Valor",data,color:"#efdf00"}];
-    });
-
-    this._dashBoardService.getEficiencia().subscribe(async(data)=>{
-      this.dataEficiencia = await [{name: "Valor",data,color:"#efdf00"}];
-    });
-
-    /*
-      Obtener valores de tablas
-    */
 
     this._userService.user$
     .pipe(takeUntil(this._unsubscribeAll))

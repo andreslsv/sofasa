@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, BehaviorSubject } from 'rxjs';
-import { valoresGraficosDefault, valoresIndicadoresDefault } from './graficos';
+import { valoresGraficosDefaultEficiencia, valoresGraficosDefaultEstandar, valoresGraficosDefaultPuesto, valoresIndicadoresDefault } from './graficos';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +10,37 @@ export class DashboardService {
   puestoCompleto = [0, 0, 0, 0, 0, 0, 0, 0];
   estandarElevadorProductivo = [0, 0, 0, 0, 0, 0, 0, 0];
 
+  defaultPuestoCompleto=valoresGraficosDefaultPuesto;
+  defaultEstandarElevador=valoresGraficosDefaultEstandar;
+  defaultEficiencia=valoresGraficosDefaultEficiencia;
   indicadores = valoresIndicadoresDefault;
 
-  private configPuestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(valoresGraficosDefault);
+  private configPuestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultPuestoCompleto);
+  private configEstandarElevador$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEstandarElevador);
+  private configEficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEficiencia);
   
   private apiDataDashboard$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private apiDataUbicaciones$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
-  private eficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
+  getConfigEficiencia(){
+    return this.configEficiencia$.asObservable();
+  }
+
+  setConfigEficiencia(valor){
+    return this.configEficiencia$.next(valor);
+  }
+  
+  getConfigEstandarElevador(){
+    return this.configEstandarElevador$.asObservable();
+  }
+
+  setConfigEstandarElevador(valor){
+    return this.configEstandarElevador$.next(valor);
+  }
 
   getConfigPuestoCompleto(){
     return this.configPuestoCompleto$.asObservable();
@@ -28,14 +48,6 @@ export class DashboardService {
 
   setConfigPuestoCompleto(valor){
     return this.configPuestoCompleto$.next(valor);
-  }
-
-  getEficiencia(){
-    return this.eficiencia$.asObservable();
-  }
-
-  setEficiencia(valor){
-    return this.eficiencia$.next(valor);
   }
 
   getApiDataDashboard(){

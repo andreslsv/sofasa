@@ -126,6 +126,7 @@
                         </div>
                     </div>
                     <apx-chart
+                    *ngIf="chartOptions"
                     class="w-full"
                       [series]="chartOptions?.series"
                       [chart]="chartOptions?.chart"
@@ -153,15 +154,15 @@
                     </div>
                     <apx-chart
                     class="w-full"
-                      [series]="dataEstandarElevadorProductivo"
-                      [chart]="chartOptions?.chart"
-                      [grid]="chartOptions?.grid"
-                      [dataLabels]="chartOptions?.dataLabels"
-                      [plotOptions]="chartOptions?.plotOptions"
-                      [yaxis]="chartOptions?.yaxis"
-                      [xaxis]="chartOptions?.xaxis"
-                      [fill]="chartOptions?.fill"
-                      [title]="chartOptions?.title"
+                      [series]="configEstandarElevador?.series"
+                      [chart]="configEstandarElevador?.chart"
+                      [grid]="configEstandarElevador?.grid"
+                      [dataLabels]="configEstandarElevador?.dataLabels"
+                      [plotOptions]="configEstandarElevador?.plotOptions"
+                      [yaxis]="configEstandarElevador?.yaxis"
+                      [xaxis]="configEstandarElevador?.xaxis"
+                      [fill]="configEstandarElevador?.fill"
+                      [title]="configEstandarElevador?.title"
                     ></apx-chart>
                 </div>
             </div>
@@ -189,7 +190,7 @@
 
                 <div class="col-span-3">
 
-                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                  <!--<div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
                     <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
                         <h2 class="opacity-40 ml-2">Eficiencia red Renault</h2>
                         <div>
@@ -203,17 +204,17 @@
                     </div>
                     <apx-chart
                     class="w-full"
-                      [series]="dataEficiencia"
-                      [chart]="chartOptions?.chart"
-                      [grid]="chartOptions?.grid"
-                      [dataLabels]="chartOptions?.dataLabels"
-                      [plotOptions]="chartOptions?.plotOptions"
-                      [yaxis]="chartOptions?.yaxis"
-                      [xaxis]="chartOptions?.xaxis"
-                      [fill]="chartOptions?.fill"
-                      [title]="chartOptions?.title"
+                      [series]="configEficiencia?.series"
+                      [chart]="configEficiencia?.chart"
+                      [grid]="configEficiencia?.grid"
+                      [dataLabels]="configEficiencia?.dataLabels"
+                      [plotOptions]="configEficiencia?.plotOptions"
+                      [yaxis]="configEficiencia?.yaxis"
+                      [xaxis]="configEficiencia?.xaxis"
+                      [fill]="configEficiencia?.fill"
+                      [title]="configEficiencia?.title"
                     ></apx-chart>
-                  </div>
+                  </div>-->
 
 
                 </div>
