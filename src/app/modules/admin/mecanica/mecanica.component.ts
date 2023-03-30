@@ -70,7 +70,7 @@ export class MecanicaComponent implements OnInit {
 
     let mecanica = {
       "fechaRegistro": "2023-03-28T19:58:17.931Z",
-      "idUsuario": this.user?.id,
+      "idUsuario": this.usuario?.id,
       "entradasxPuestoTrabajo": this.mecanicaForm?.value?.ent_x_pues_de_tra,
       "pulmonesPorPuestoTrabajo": this.mecanicaForm?.value?.pul_por_pue_tra,
       "elevadoresTotalesMecanica": this.mecanicaForm?.value?.ele_tot_mec,

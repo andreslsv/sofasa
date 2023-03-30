@@ -55,7 +55,6 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   secciones=["Mecánica","Colisión"];
-  zonas=[];
 
   paramsDefault={"empresa": "","ultimoReg": "1","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
 
@@ -110,10 +109,12 @@ export class DashboardComponent implements OnInit {
       return {zona:element, valor:0}
     });
 
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
     this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.elevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
         }
       });
     });
@@ -199,10 +200,6 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
       this.apiDataDashboard = await data;
-    });
-
-    this._dashBoardService.getZonas().subscribe(async(data)=>{
-      this.zonas = await data;
     });
 
     /*
