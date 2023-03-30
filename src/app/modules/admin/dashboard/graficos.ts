@@ -116,3 +116,49 @@ export const valoresGraficosDefault:Partial<ChartOptions> = {
       }
     }
   };
+
+  export const valoresIndicadoresDefault = [
+    {
+      clave:"Tasa ocupacion",
+      nombreCampo:"productividad",
+      valor: 0
+    },
+    {
+      clave:"Tasa eficiencia",
+      nombreCampo:"tasaEficiencia",
+      valor: 0
+    },
+    {
+      clave:"Tasa empleo",
+      nombreCampo:"tasaEmpleo",
+      valor: 0
+    },
+    {
+      clave:"Capacidad de servicio - puesto completo",
+      valor: 0
+    },
+    {
+      clave:"Tecnicos / elevadores",
+      valor: 0
+    },
+    {
+      clave:"Pulmones / elevador",
+      valor: 0
+    },
+    {
+      clave:"Puestos de trabajo - completos",
+      valor: 0
+    },
+    {
+      clave:"Elevadores",
+      valor: 0
+    },
+    {
+      clave:"Entradas totales",
+      valor: 0
+    },
+    {
+      clave:"Entradas x puesto completo",
+      valor: 0
+    }
+  ];

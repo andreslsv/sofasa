@@ -7,7 +7,7 @@ import { ApiService } from 'app/services/api.service';
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, ApexPlotOptions, ApexTitleSubtitle, ApexXAxis, ApexYAxis, ChartComponent } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './dashboard.service';
-import { valoresGraficosDefault } from './graficos';
+import { valoresGraficosDefault, valoresIndicadoresDefault } from './graficos';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -28,51 +28,35 @@ export type ChartOptions = {
 })
 export class DashboardComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
-  zonas=[];
+
   public chartOptionsEstandar: Partial<ChartOptions>;
-  chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
-  displayedColumns: string[] = ['position', 'name'];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  zonasSelesccionadas=[];
-  regionesSeleccionadas=[];
-  sociedadesSeleccionadas=[];
-  sedesSeleccionadas=[];
+
   chartOptions=valoresGraficosDefault;
   dataIndicadores:any;
   dataPersonalProductivo:any;
   dataActividadesSede:any;
   usuario: User;
-  regionesDisponibles=[];
-  zonasDisponibles=[];
-  sociedadesDisponibles=[];
-  sedesDisponibles=[];
-  secciones=["Mecánica","Colisión"];
   apiDataUbicacion: any;
   apiDataDashboard: any;
   dataEficiencia: any;
 
-  paramsDefault=      {
-    "empresa": "",
-    "ultimoReg": "1",
-    "fechaIni": "2023-03-23T14:29:27.803Z",
-    "fechaFin": "2023-03-23T14:29:27.803Z"
-  };
+  regionesDisponibles=[];
+  zonasDisponibles=[];
+  sociedadesDisponibles=[];
+  sedesDisponibles=[];
+  zonasSelesccionadas=[];
+  regionesSeleccionadas=[];
+  sociedadesSeleccionadas=[];
+  sedesSeleccionadas=[];
+  displayedColumns: string[] = ['position', 'name'];
+  chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
+  secciones=["Mecánica","Colisión"];
+  zonas=[];
 
-  dataPuestoCompleto = [
-    {
-      name: "Valor",
-      data: [],
-      color:"#efdf00"
-    }
-  ];
-  
-  dataEstandarElevadorProductivo = [
-    {
-      name: "Valor",
-      data: [],
-      color:"#efdf00"
-    }
-  ];
+  paramsDefault={"empresa": "","ultimoReg": "1","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
+  dataPuestoCompleto = [{name: "Valor",data: [],color:"#efdf00"}];
+  dataEstandarElevadorProductivo = [{name: "Valor",data: [],color:"#efdf00"}];
 
   seccionForm = this._formBuilder.group({
     region                : [, [Validators.required]],
@@ -404,51 +388,7 @@ export class DashboardComponent implements OnInit {
   }
   
   generarDataIndicadores(){
-    let elemento = [
-      {
-        clave:"Tasa ocupacion",
-        nombreCampo:"productividad",
-        valor: 0
-      },
-      {
-        clave:"Tasa eficiencia",
-        nombreCampo:"tasaEficiencia",
-        valor: 0
-      },
-      {
-        clave:"Tasa empleo",
-        nombreCampo:"tasaEmpleo",
-        valor: 0
-      },
-      {
-        clave:"Capacidad de servicio - puesto completo",
-        valor: 0
-      },
-      {
-        clave:"Tecnicos / elevadores",
-        valor: 0
-      },
-      {
-        clave:"Pulmones / elevador",
-        valor: 0
-      },
-      {
-        clave:"Puestos de trabajo - completos",
-        valor: 0
-      },
-      {
-        clave:"Elevadores",
-        valor: 0
-      },
-      {
-        clave:"Entradas totales",
-        valor: 0
-      },
-      {
-        clave:"Entradas x puesto completo",
-        valor: 0
-      }
-    ];
+    let elemento = valoresIndicadoresDefault;
 
     this.apiDataDashboard.forEach((data)=>{
       elemento[0].valor+=data.productividad;
