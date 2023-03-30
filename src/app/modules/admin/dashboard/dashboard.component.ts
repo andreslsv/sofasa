@@ -454,12 +454,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  obtenerDataPersonalProductivo(data){
-    const valor = {
-      
-    }
-  }
-
   
   generarDataPuestoCompleto(){
 
@@ -535,32 +529,6 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setEficiencia(elemento);
 
   }
-
-
-  /*
-  async generarDataEstandarElevadorProductivo(data){
-
-    let elemento = [];
-
-    elemento = this.zonas.map((element)=>{
-      return {zona:element, valor:0}
-    });
-
-    await data.forEach((element) => {
-      elemento.forEach((element2)=>{
-        if (element.zona==element2.zona) {
-          element2.valor+=element.elevadoresProductivos;
-        }
-      });
-    });
-
-    elemento=elemento.map((data)=>{
-      return data.valor;
-    });
-
-    this._dashBoardService.setEstandarElevadorProductivo(elemento);
-  }*/
-
   
   generarDataIndicadores(){
     let elemento = [
