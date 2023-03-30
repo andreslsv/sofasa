@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  chartOptions=valoresGraficosDefault;
+  chartOptions: Partial<ChartOptions>;
   dataIndicadores:any;
   usuario: User;
   apiDataUbicacion: any;
@@ -53,7 +53,6 @@ export class DashboardComponent implements OnInit {
   zonas=[];
 
   paramsDefault={"empresa": "","ultimoReg": "1","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
-  dataPuestoCompleto = [{name: "Valor",data: [],color:"#efdf00"}];
   dataEstandarElevadorProductivo = [{name: "Valor",data: [],color:"#efdf00"}];
 
   seccionForm = this._formBuilder.group({
@@ -95,7 +94,7 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: "Valor",
-          data: [],
+          data: [],//Estos son los valores
           color:"#efdf00"
         }
       ],
@@ -353,11 +352,16 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this._dashBoardService.setPuestoCompleto(elemento);
-    this._dashBoardService.setEstandarElevadorProductivo(elementoEstandar);
-    this.obtenerValoresEstandarxElevadores();
-    this.obtenerValoresPuestoCompleto();
-    this.generarDataEficiencia();
+    //this._dashBoardService.setPuestoCompleto(elemento);
+    //this._dashBoardService.setEstandarElevadorProductivo(elementoEstandar);
+    //this.obtenerValoresEstandarxElevadores();
+    //this.obtenerValoresPuestoCompleto();
+    //this.generarDataEficiencia();
+
+    console.log("Este es el valor de elemento", elemento);
+
+    this.chartOptions.series[0].data=elemento;
+    this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
   }
 
   generarDataEficiencia(){
@@ -464,12 +468,16 @@ export class DashboardComponent implements OnInit {
       this.zonas = await data;
     });
 
-    this._dashBoardService.getIndicadores().subscribe(async (data)=>{
-      this.dataIndicadores = await data;
+    /*
+      Obtener valores de tablas
+    */
+
+    this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
+      this.chartOptions = data;
     });
 
-    this._dashBoardService.getPuestoCompleto().subscribe(async(data)=>{
-      this.dataPuestoCompleto = await [{name: "Valor",data,color:"#efdf00"}];
+    this._dashBoardService.getIndicadores().subscribe(async (data)=>{
+      this.dataIndicadores = await data;
     });
 
     this._dashBoardService.getEstandarElevadorProductivo().subscribe(async(data)=>{
@@ -479,6 +487,10 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.getEficiencia().subscribe(async(data)=>{
       this.dataEficiencia = await [{name: "Valor",data,color:"#efdf00"}];
     });
+
+    /*
+      Obtener valores de tablas
+    */
 
     this._userService.user$
     .pipe(takeUntil(this._unsubscribeAll))

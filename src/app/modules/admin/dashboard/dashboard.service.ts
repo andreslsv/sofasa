@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, BehaviorSubject } from 'rxjs';
-import { valoresIndicadoresDefault } from './graficos';
+import { valoresGraficosDefault, valoresIndicadoresDefault } from './graficos';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +11,24 @@ export class DashboardService {
   estandarElevadorProductivo = [0, 0, 0, 0, 0, 0, 0, 0];
 
   indicadores = valoresIndicadoresDefault;
+
+  private configPuestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(valoresGraficosDefault);
   
   private apiDataDashboard$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private apiDataUbicaciones$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
-  private puestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(this.puestoCompleto);
   private eficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+
+  getConfigPuestoCompleto(){
+    return this.configPuestoCompleto$.asObservable();
+  }
+
+  setConfigPuestoCompleto(valor){
+    return this.configPuestoCompleto$.next(valor);
+  }
 
   getEficiencia(){
     return this.eficiencia$.asObservable();
@@ -48,10 +58,6 @@ export class DashboardService {
     return this.estandarElevadorProductivo$.asObservable();
   }
 
-  getPuestoCompleto(){
-    return this.puestoCompleto$.asObservable();
-  }
-
   getIndicadores(){
     return this.indicadores$.asObservable();
   }
@@ -62,10 +68,6 @@ export class DashboardService {
 
   setIndicadores(valor){
     return this.indicadores$.next(valor);
-  }
-
-  setPuestoCompleto(valor){
-    return this.puestoCompleto$.next(valor);
   }
 
   setEstandarElevadorProductivo(valor){
