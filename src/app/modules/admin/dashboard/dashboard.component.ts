@@ -34,8 +34,6 @@ export class DashboardComponent implements OnInit {
 
   chartOptions=valoresGraficosDefault;
   dataIndicadores:any;
-  dataPersonalProductivo:any;
-  dataActividadesSede:any;
   usuario: User;
   apiDataUbicacion: any;
   apiDataDashboard: any;
@@ -419,13 +417,21 @@ export class DashboardComponent implements OnInit {
       //await this.generarDataEstandarElevadorProductivo(data?.result);
       //await this.generarDataIndicadores(data?.result);
       await this._dashBoardService.setApiDataDashboard(data?.result);
-      await this.generarDataPuestoCompleto();
-      await this.generarDataIndicadores();
-      await this.filtrarPorZona();
-      await this.filtrarPorRegion();
-      await this.filtrarPorSede();
-      await this.filtrarPorSociedad();
+      await this.cargarDataDeGraficos();
+      await this.agregarFiltros();
     });
+  }
+
+  cargarDataDeGraficos(){
+    this.generarDataPuestoCompleto();
+    this.generarDataIndicadores();
+  }
+
+  agregarFiltros(){
+    this.filtrarPorZona();
+    this.filtrarPorRegion();
+    this.filtrarPorSede();
+    this.filtrarPorSociedad();
   }
 
   filtrarPorZona(){
@@ -456,14 +462,6 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getZonas().subscribe(async(data)=>{
       this.zonas = await data;
-    });
-
-    this._dashBoardService.getActividadSede().subscribe(async(data)=>{
-      this.dataActividadesSede = await data;
-    });
-
-    this._dashBoardService.getPersonalProductivo().subscribe(async(data)=>{
-      this.dataPersonalProductivo = await data;
     });
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{
