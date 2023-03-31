@@ -194,8 +194,7 @@
                 </div>
 
                 <div class="col-span-3">
-
-                  <!--<div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
                     <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
                         <h2 class="opacity-40 ml-2">Eficiencia red Renault</h2>
                         <div>
@@ -207,20 +206,77 @@
                             </button>
                         </div>
                     </div>
-                    <apx-chart
-                    class="w-full"
-                      [series]="configEficiencia?.series"
-                      [chart]="configEficiencia?.chart"
-                      [grid]="configEficiencia?.grid"
-                      [dataLabels]="configEficiencia?.dataLabels"
-                      [plotOptions]="configEficiencia?.plotOptions"
-                      [yaxis]="configEficiencia?.yaxis"
-                      [xaxis]="configEficiencia?.xaxis"
-                      [fill]="configEficiencia?.fill"
-                      [title]="configEficiencia?.title"
-                    ></apx-chart>
-                  </div>-->
+                    <ng-container *ngIf="configEstandarElevador">
+                      <apx-chart
+                      class="w-full"
+                        [series]="configEficiencia?.series"
+                        [chart]="configEficiencia?.chart"
+                        [grid]="configEficiencia?.grid"
+                        [dataLabels]="configEficiencia?.dataLabels"
+                        [plotOptions]="configEficiencia?.plotOptions"
+                        [yaxis]="configEficiencia?.yaxis"
+                        [xaxis]="configEficiencia?.xaxis"
+                        [fill]="configEficiencia?.fill"
+                        [title]="configEficiencia?.title"
+                      ></apx-chart>
+                    </ng-container>
+                  </div>
 
+                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
+                        <h2 class="opacity-40 ml-2">Productividad Red Renault Colombia</h2>
+                        <div>
+                            <button mat-icon-button>
+                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                            </button>
+                            <button mat-icon-button>
+                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="configProductividad">
+                      <apx-chart
+                      class="w-full"
+                        [series]="configProductividad?.series"
+                        [chart]="configProductividad?.chart"
+                        [grid]="configProductividad?.grid"
+                        [dataLabels]="configProductividad?.dataLabels"
+                        [plotOptions]="configProductividad?.plotOptions"
+                        [yaxis]="configProductividad?.yaxis"
+                        [xaxis]="configProductividad?.xaxis"
+                        [fill]="configProductividad?.fill"
+                        [title]="configProductividad?.title"
+                      ></apx-chart>
+                    </ng-container>
+                  </div>
+
+                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
+                        <h2 class="opacity-40 ml-2">Entradas Actuales vs Potencial Entradas (Estandar Elevador)</h2>
+                        <div>
+                            <button mat-icon-button>
+                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                            </button>
+                            <button mat-icon-button>
+                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="configEntradas">
+                      <apx-chart
+                      class="w-full"
+                        [series]="configEntradas?.series"
+                        [chart]="configEntradas?.chart"
+                        [grid]="configEntradas?.grid"
+                        [dataLabels]="configEntradas?.dataLabels"
+                        [plotOptions]="configEntradas?.plotOptions"
+                        [yaxis]="configEntradas?.yaxis"
+                        [xaxis]="configEntradas?.xaxis"
+                        [fill]="configEntradas?.fill"
+                        [title]="configEntradas?.title"
+                      ></apx-chart>
+                    </ng-container>
+                  </div>
 
                 </div>
                 

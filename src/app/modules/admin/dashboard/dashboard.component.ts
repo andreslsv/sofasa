@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
   chartOptions: Partial<ChartOptions>;
   configEstandarElevador: Partial<ChartOptions>;
   configEficiencia: Partial<ChartOptions>;
-
+  configProductividad: Partial<ChartOptions>;
+  configEntradas: Partial<ChartOptions>;
 
   dataIndicadores:any;
   usuario: User;
@@ -156,9 +157,214 @@ export class DashboardComponent implements OnInit {
     });
 
     this.configEstandarElevador.series[0].data=elemento;
-    this.configEstandarElevador.xaxis.categories= await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
+    this.chartOptions.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
+
+  async generarDataEficiencia(){
+    let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.tasaEficiencia;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.configEficiencia.series[0].data=elemento;
+    this.configEficiencia.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
+    this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
+  }
+
+  async generarDataProductividad(){
+    let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.productividad;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.configProductividad.series[0].data=elemento;
+    this.configProductividad.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
+    this._dashBoardService.setConfigProductividad(this.configProductividad);
+  }
+
+
+
+  async generarDataEntradas(){
+    /*let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.entradasPuestoTrabajo;
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.configEntradas.series[0].data=elemento;
+    this.configEntradas.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
+    this._dashBoardService.setConfigProductividad(this.configEntradas);*/
+  }
+
 
   generarDataIndicadores(){
     let elemento = valoresIndicadoresDefault;
@@ -200,6 +406,9 @@ export class DashboardComponent implements OnInit {
     this.generarDataPuestoCompleto();
     this.generarDataEstandarElevador();
     this.generarDataIndicadores();
+    this.generarDataEficiencia();
+    this.generarDataProductividad();
+    this.generarDataEntradas();
   }
 
   agregarFiltros(){
@@ -250,6 +459,14 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getConfigEficiencia().subscribe(async (data)=>{
       this.configEficiencia = await data;
+    });
+
+    this._dashBoardService.getConfigEntradas().subscribe(async (data)=>{
+      this.configEntradas = await data;
+    });
+
+    this._dashBoardService.getConfigProductividad().subscribe(async (data)=>{
+      this.configProductividad = await data;
     });
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AsyncSubject, BehaviorSubject } from 'rxjs';
-import { ubicaciones, valoresGraficosDefaultEficiencia, valoresGraficosDefaultEstandar, valoresGraficosDefaultPuesto, valoresIndicadoresDefault } from './graficos';
+import { ubicaciones, valoresGraficosDefaultEficiencia, valoresGraficosDefaultEntradas, valoresGraficosDefaultEstandar, valoresGraficosDefaultProductividad, valoresGraficosDefaultPuesto, valoresIndicadoresDefault } from './graficos';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +13,15 @@ export class DashboardService {
   defaultPuestoCompleto=valoresGraficosDefaultPuesto;
   defaultEstandarElevador=valoresGraficosDefaultEstandar;
   defaultEficiencia=valoresGraficosDefaultEficiencia;
+  defaultProductividad=valoresGraficosDefaultProductividad;
+  defaultEntradas=valoresGraficosDefaultEntradas;
   indicadores = valoresIndicadoresDefault;
 
   private configPuestoCompleto$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultPuestoCompleto);
   private configEstandarElevador$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEstandarElevador);
   private configEficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEficiencia);
+  private configProductividad$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultProductividad);
+  private configEntradas$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEntradas);
   
   private apiDataDashboard$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private apiDataUbicaciones$: BehaviorSubject<any> = new BehaviorSubject<any>(ubicaciones);
@@ -25,6 +29,22 @@ export class DashboardService {
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+  getConfigEntradas(){
+    return this.configEntradas$.asObservable();
+  }
+
+  setConfigEntradas(valor){
+    return this.configEntradas$.next(valor);
+  }
+
+  getConfigProductividad(){
+    return this.configProductividad$.asObservable();
+  }
+
+  setConfigProductividad(valor){
+    return this.configProductividad$.next(valor);
+  }
 
   getConfigEficiencia(){
     return this.configEficiencia$.asObservable();
