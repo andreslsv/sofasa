@@ -362,6 +362,24 @@ export class DashboardComponent implements OnInit {
     this.generarDataProductividad({apiDataDashboard:filtrado});
   }
 
+  aplicarFiltroSedes(){
+    let filtrado=[];
+
+    this.sedesSeleccionadas.forEach((sede)=>{
+      this.apiDataDashboardBackup.map((dash)=>{
+        if(dash.sede==sede){
+          filtrado.push(dash);
+        }
+      });
+    });
+
+    //this._dashBoardService.setApiDataDashboard(filtrado);
+    this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
+    this.generarDataEstandarElevador({apiDataDashboard:filtrado});
+    this.generarDataEficiencia({apiDataDashboard:filtrado});
+    this.generarDataProductividad({apiDataDashboard:filtrado});
+  }
+
   ngOnInit(): void {
 
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
