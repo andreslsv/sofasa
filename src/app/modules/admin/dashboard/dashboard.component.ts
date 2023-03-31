@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  generarDataPuestoCompleto(){
+  async generarDataPuestoCompleto(){
     let elemento = [];
 
     elemento = this.zonasDisponibles.map((element)=>{
@@ -97,7 +97,41 @@ export class DashboardComponent implements OnInit {
     });
 
     this.chartOptions.series[0].data=elemento;
-    this.chartOptions.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
+
+    this.chartOptions.xaxis={
+      categories: await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
+
+
     this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
   }
 

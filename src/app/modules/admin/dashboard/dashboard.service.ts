@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AsyncSubject, BehaviorSubject } from 'rxjs';
+import { AsyncSubject, BehaviorSubject, Subject } from 'rxjs';
 import { valoresGraficosDefaultEficiencia, valoresGraficosDefaultEstandar, valoresGraficosDefaultPuesto, valoresIndicadoresDefault } from './graficos';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class DashboardService {
   private configEficiencia$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEficiencia);
   
   private apiDataDashboard$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  private apiDataUbicaciones$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private apiDataUbicaciones$: Subject<any> = new Subject<any>();
 
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
