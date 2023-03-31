@@ -27,7 +27,10 @@ export type ChartOptions = {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  //@ViewChild("chart") chart: ChartComponent;
+  @ViewChild("GpuestoCompleto") GpuestoCompleto: ChartComponent;
+  @ViewChild("GEstandarElevador") GEstandarElevador: ChartComponent;
+  @ViewChild("GEficiencia") GEficiencia: ChartComponent;
+  @ViewChild("GProductividad") GProductividad: ChartComponent;
 
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -97,39 +100,10 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this.chartOptions.series[0].data=elemento;
-    this.chartOptions.xaxis={
-      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    }
+    this.GpuestoCompleto.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
     
     this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
   }
@@ -156,39 +130,11 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this.configEstandarElevador.series[0].data=elemento;
-    this.chartOptions.xaxis={
-      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    }
+    this.GEstandarElevador.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
@@ -213,39 +159,11 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this.configEficiencia.series[0].data=elemento;
-    this.configEficiencia.xaxis={
-      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    }
+    this.GEficiencia.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
@@ -270,39 +188,13 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this.configProductividad.series[0].data=elemento;
-    this.configProductividad.xaxis={
-      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    }
+  
+
+    this.GProductividad.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
     this._dashBoardService.setConfigProductividad(this.configProductividad);
   }
 
