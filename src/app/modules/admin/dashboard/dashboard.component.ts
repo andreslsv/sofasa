@@ -147,11 +147,11 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setIndicadores(elemento);
   }
 
-  obtenerApiDataUbicacion(){
-    this.zonasDisponibles = this.apiDataUbicacion.map((data)=>{return data.zona});
-    this.regionesDisponibles = this.apiDataUbicacion.map((data)=>{return data.region});
-    this.sociedadesDisponibles = this.apiDataUbicacion.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = this.apiDataUbicacion.map((data)=>{return data.sede});
+  async obtenerApiDataUbicacion(){
+    this.zonasDisponibles = await this.apiDataUbicacion.map((data)=>{return data.zona});
+    this.regionesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.region});
+    this.sociedadesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sociedad});
+    this.sedesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sede});
   }
 
   seleccionarSeccion(indice){
@@ -201,10 +201,6 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
       this.apiDataDashboard = await data;
     });
-
-    /*
-      Obtener valores de tablas
-    */
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
       this.chartOptions = await data;

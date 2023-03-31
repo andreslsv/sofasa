@@ -125,18 +125,21 @@
                             </button>
                         </div>
                     </div>
-                    <apx-chart
-                    class="w-full"
-                      [series]="chartOptions?.series"
-                      [chart]="chartOptions?.chart"
-                      [grid]="chartOptions?.grid"
-                      [dataLabels]="chartOptions?.dataLabels"
-                      [plotOptions]="chartOptions?.plotOptions"
-                      [yaxis]="chartOptions?.yaxis"
-                      [xaxis]="chartOptions?.xaxis"
-                      [fill]="chartOptions?.fill"
-                      [title]="chartOptions?.title"
-                    ></apx-chart>
+                    <ng-container *ngIf="chartOptions">
+                      <apx-chart
+                        class="w-full"
+                        [series]="chartOptions?.series"
+                        [chart]="chartOptions?.chart"
+                        [grid]="chartOptions?.grid"
+                        [dataLabels]="chartOptions?.dataLabels"
+                        [plotOptions]="chartOptions?.plotOptions"
+                        [yaxis]="chartOptions?.yaxis"
+                        [xaxis]="chartOptions?.xaxis"
+                        [fill]="chartOptions?.fill"
+                        [title]="chartOptions?.title"
+                      ></apx-chart>                      
+                    </ng-container>
+
                 </div>
         
                 <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
@@ -151,18 +154,21 @@
                             </button>
                         </div>
                     </div>
-                    <apx-chart
-                    class="w-full"
-                      [series]="configEstandarElevador?.series"
-                      [chart]="configEstandarElevador?.chart"
-                      [grid]="configEstandarElevador?.grid"
-                      [dataLabels]="configEstandarElevador?.dataLabels"
-                      [plotOptions]="configEstandarElevador?.plotOptions"
-                      [yaxis]="configEstandarElevador?.yaxis"
-                      [xaxis]="configEstandarElevador?.xaxis"
-                      [fill]="configEstandarElevador?.fill"
-                      [title]="configEstandarElevador?.title"
-                    ></apx-chart>
+                    <ng-container *ngIf="configEstandarElevador">
+                      <apx-chart
+                      class="w-full"
+                        [series]="configEstandarElevador?.series"
+                        [chart]="configEstandarElevador?.chart"
+                        [grid]="configEstandarElevador?.grid"
+                        [dataLabels]="configEstandarElevador?.dataLabels"
+                        [plotOptions]="configEstandarElevador?.plotOptions"
+                        [yaxis]="configEstandarElevador?.yaxis"
+                        [xaxis]="configEstandarElevador?.xaxis"
+                        [fill]="configEstandarElevador?.fill"
+                        [title]="configEstandarElevador?.title"
+                      ></apx-chart>                      
+                    </ng-container>
+
                 </div>
             </div>
         
