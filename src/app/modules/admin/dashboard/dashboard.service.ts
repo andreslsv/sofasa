@@ -24,11 +24,20 @@ export class DashboardService {
   private configEntradas$: BehaviorSubject<any> = new BehaviorSubject<any>(this.defaultEntradas);
   
   private apiDataDashboard$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  private apiDataDashboardBackup$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   private apiDataUbicaciones$: BehaviorSubject<any> = new BehaviorSubject<any>(ubicaciones);
 
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+  getApiDataDashboardBackup(){
+    return this.apiDataDashboardBackup$.asObservable();
+  }
+
+  setApiDataDashboardBackup(valor){
+    return this.apiDataDashboardBackup$.next(valor);
+  }
 
   getConfigEntradas(){
     return this.configEntradas$.asObservable();

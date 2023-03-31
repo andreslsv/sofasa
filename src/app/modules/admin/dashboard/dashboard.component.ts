@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
   usuario: User;
   apiDataUbicacion: any;
   apiDataDashboard: any;
+  apiDataDashboardBackup:any;
 
   regionesDisponibles=[];
   zonasDisponibles=[];
@@ -84,12 +85,13 @@ export class DashboardComponent implements OnInit {
   generarDataPuestoCompleto(filtros=null){
     let elemento = [];
     const zonasDisponibles = filtros?.zonas?filtros.zonas:this.zonasDisponibles;
+    const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    this.apiDataDashboard.forEach((element) => {
+    apiDataDashboard.forEach((element) => {
       console.log("El this.apiDataDashboard de", element);
       elemento.forEach((element2)=>{
         console.log("element",element);
@@ -116,14 +118,13 @@ export class DashboardComponent implements OnInit {
   async generarDataEstandarElevador(filtros=null){
     let elemento = [];
     const zonasDisponibles = filtros?.zonas!=null?filtros.zonas:this.zonasDisponibles;
+    const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
-
-    this.apiDataDashboard.forEach((element) => {
+    apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
@@ -146,12 +147,13 @@ export class DashboardComponent implements OnInit {
   async generarDataEficiencia(filtros=null){
     let elemento = [];
     const zonasDisponibles = filtros?.zonas!=null?filtros.zonas:this.zonasDisponibles;
+    const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    this.apiDataDashboard.forEach((element) => {
+    apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.tasaEficiencia;//El valor debe ser la sumatoria de elevadoresProductivos
@@ -175,6 +177,7 @@ export class DashboardComponent implements OnInit {
     let elemento = [];
 
     const dataZona=filtros?.zonas?filtros.zonas:this.zonasDisponibles;
+    const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = dataZona.map((element)=>{
       return {zona:element, valor:0}
@@ -182,7 +185,7 @@ export class DashboardComponent implements OnInit {
 
     console.log("Primer momento del elemento", elemento);
 
-    this.apiDataDashboard.forEach((element) => {
+    apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.productividad;//El valor debe ser la sumatoria de elevadoresProductivos
@@ -297,7 +300,8 @@ export class DashboardComponent implements OnInit {
     const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
     this._apiService.postQuery(nodo[indice],"",this.paramsDefault).subscribe(async(data:any)=>{
       await this._dashBoardService.setApiDataDashboard(data?.result);
-      await this.agregarFiltros();
+      await this._dashBoardService.setApiDataDashboardBackup(data?.result);
+      //await this.agregarFiltros();
       await this.cargarDataDeGraficos();
     });
   }
@@ -326,7 +330,8 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorRegion(){
-    const dataFiltradaPorRegion=this.apiDataDashboard.filter((data)=>{return this.regionesDisponibles.includes(data.region)});
+    //const dataFiltradaPorRegion=this.apiDataDashboard.filter((data)=>{return this.regionesDisponibles.includes(data.region)});
+    //this.aplicarFiltroRegiones();
   }
 
   filtrarPorSede(){
@@ -337,6 +342,24 @@ export class DashboardComponent implements OnInit {
     let copia=this.apiDataDashboard;
     const dataFiltradaPorSociedad=copia.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
     this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
+  }
+
+  aplicarFiltroRegiones(){
+    let filtrado=[];
+
+    this.regionesSeleccionadas.forEach((region)=>{
+      this.apiDataDashboardBackup.map((dash)=>{
+        if(dash.region==region){
+          filtrado.push(dash);
+        }
+      });
+    });
+
+    //this._dashBoardService.setApiDataDashboard(filtrado);
+    this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
+    this.generarDataEstandarElevador({apiDataDashboard:filtrado});
+    this.generarDataEficiencia({apiDataDashboard:filtrado});
+    this.generarDataProductividad({apiDataDashboard:filtrado});
   }
 
   ngOnInit(): void {
@@ -351,6 +374,10 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
       this.apiDataDashboard = await data;
+    });
+
+    this._dashBoardService.getApiDataDashboardBackup().subscribe(async(data)=>{
+      this.apiDataDashboardBackup = await data;
     });
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
