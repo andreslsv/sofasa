@@ -81,15 +81,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  generarDataPuestoCompleto(){
+  generarDataPuestoCompleto(zona=null){
     let elemento = [];
+    const zonasDisponibles = zona!=null?zona:this.zonasDisponibles;
 
-    elemento = this.zonasDisponibles.map((element)=>{
+    elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
     this.apiDataDashboard.forEach((element) => {
+      console.log("El this.apiDataDashboard de", element);
       elemento.forEach((element2)=>{
+        console.log("element",element);
+        console.log("element2",element2);
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
         }
@@ -101,7 +105,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.GpuestoCompleto.updateOptions({
-      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      xaxis: {categories: zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
       series: [{data:elemento}]
     });
     
@@ -311,7 +315,22 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorZona(){
-    const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
+    let copia=this.apiDataDashboard;
+    //const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
+
+    const dataFiltradaPorZona = [];
+    
+    this.apiDataDashboard.map((data)=>{
+      if (this.zonasSelesccionadas.includes(data.zona)){
+        dataFiltradaPorZona.push(data);
+      }
+    });
+
+    this.GpuestoCompleto.updateOptions({
+      xaxis: {categories: this.zonasSelesccionadas.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:dataFiltradaPorZona}]
+    });
+    //this.generarDataPuestoCompleto(dataFiltradaPorZona);
   }
 
   filtrarPorRegion(){
@@ -323,7 +342,9 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorSociedad(){
-    const dataFiltradaPorSociedad=this.apiDataDashboard.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
+    let copia=this.apiDataDashboard;
+    const dataFiltradaPorSociedad=copia.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
+    this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
   }
 
   ngOnInit(): void {
