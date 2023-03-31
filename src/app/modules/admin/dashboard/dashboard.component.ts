@@ -81,9 +81,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  generarDataPuestoCompleto(zona=null){
+  generarDataPuestoCompleto(filtros=null){
     let elemento = [];
-    const zonasDisponibles = zona!=null?zona:this.zonasDisponibles;
+    const zonasDisponibles = filtros?.zonas?filtros.zonas:this.zonasDisponibles;
 
     elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
@@ -113,10 +113,11 @@ export class DashboardComponent implements OnInit {
   }
 
   
-  async generarDataEstandarElevador(){
+  async generarDataEstandarElevador(filtros=null){
     let elemento = [];
+    const zonasDisponibles = filtros?.zonas!=null?filtros.zonas:this.zonasDisponibles;
 
-    elemento = this.zonasDisponibles.map((element)=>{
+    elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
@@ -135,21 +136,20 @@ export class DashboardComponent implements OnInit {
     });
 
     this.GEstandarElevador.updateOptions({
-      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      xaxis: {categories: zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
       series: [{data:elemento}]
     });
 
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
-  async generarDataEficiencia(){
+  async generarDataEficiencia(filtros=null){
     let elemento = [];
+    const zonasDisponibles = filtros?.zonas!=null?filtros.zonas:this.zonasDisponibles;
 
-    elemento = this.zonasDisponibles.map((element)=>{
+    elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
-
-    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
 
     this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
@@ -164,21 +164,23 @@ export class DashboardComponent implements OnInit {
     });
 
     this.GEficiencia.updateOptions({
-      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      xaxis: {categories: zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
       series: [{data:elemento}]
     });
 
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
-  async generarDataProductividad(){
+  async generarDataProductividad(filtros=null){
     let elemento = [];
 
-    elemento = this.zonasDisponibles.map((element)=>{
+    const dataZona=filtros?.zonas?filtros.zonas:this.zonasDisponibles;
+
+    elemento = dataZona.map((element)=>{
       return {zona:element, valor:0}
     });
 
-    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+    console.log("Primer momento del elemento", elemento);
 
     this.apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
@@ -188,14 +190,16 @@ export class DashboardComponent implements OnInit {
       });
     });
 
+    console.log("Segundo momento del elemento", elemento);
+
     elemento=elemento.map((data)=>{
       return data.valor;
     });
 
-  
+    console.log("Tercer momento del elemento", elemento);
 
     this.GProductividad.updateOptions({
-      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      xaxis: {categories: dataZona},
       series: [{data:elemento}]
     });
 
@@ -315,22 +319,10 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorZona(){
-    let copia=this.apiDataDashboard;
-    //const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
-
-    const dataFiltradaPorZona = [];
-    
-    this.apiDataDashboard.map((data)=>{
-      if (this.zonasSelesccionadas.includes(data.zona)){
-        dataFiltradaPorZona.push(data);
-      }
-    });
-
-    this.GpuestoCompleto.updateOptions({
-      xaxis: {categories: this.zonasSelesccionadas.map((data)=>{return data!=null?data:'zona ej'})},
-      series: [{data:dataFiltradaPorZona}]
-    });
-    //this.generarDataPuestoCompleto(dataFiltradaPorZona);
+    this.generarDataProductividad({zonas:this.zonasSelesccionadas});
+    this.generarDataPuestoCompleto({zonas:this.zonasSelesccionadas});
+    this.generarDataEstandarElevador({zonas:this.zonasSelesccionadas});
+    this.generarDataEficiencia({zonas:this.zonasSelesccionadas});
   }
 
   filtrarPorRegion(){
