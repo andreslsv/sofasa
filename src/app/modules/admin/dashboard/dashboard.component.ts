@@ -27,7 +27,10 @@ export type ChartOptions = {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  //@ViewChild("chart") chart: ChartComponent;
+  @ViewChild("GpuestoCompleto") GpuestoCompleto: ChartComponent;
+  @ViewChild("GEstandarElevador") GEstandarElevador: ChartComponent;
+  @ViewChild("GEficiencia") GEficiencia: ChartComponent;
+  @ViewChild("GProductividad") GProductividad: ChartComponent;
 
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -37,7 +40,8 @@ export class DashboardComponent implements OnInit {
   chartOptions: Partial<ChartOptions>;
   configEstandarElevador: Partial<ChartOptions>;
   configEficiencia: Partial<ChartOptions>;
-
+  configProductividad: Partial<ChartOptions>;
+  configEntradas: Partial<ChartOptions>;
 
   dataIndicadores:any;
   usuario: User;
@@ -77,15 +81,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  async generarDataPuestoCompleto(){
+  generarDataPuestoCompleto(zona=null){
     let elemento = [];
+    const zonasDisponibles = zona!=null?zona:this.zonasDisponibles;
 
-    elemento = this.zonasDisponibles.map((element)=>{
+    elemento = zonasDisponibles.map((element)=>{
       return {zona:element, valor:0}
     });
 
     this.apiDataDashboard.forEach((element) => {
+      console.log("El this.apiDataDashboard de", element);
       elemento.forEach((element2)=>{
+        console.log("element",element);
+        console.log("element2",element2);
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
         }
@@ -96,10 +104,130 @@ export class DashboardComponent implements OnInit {
       return data.valor;
     });
 
-    this.chartOptions.series[0].data=elemento;
+    this.GpuestoCompleto.updateOptions({
+      xaxis: {categories: zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+    
+    this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
+  }
 
-    this.chartOptions.xaxis={
-      categories: await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+  
+  async generarDataEstandarElevador(){
+    let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.GEstandarElevador.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
+    this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
+  }
+
+  async generarDataEficiencia(){
+    let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.tasaEficiencia;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.GEficiencia.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
+    this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
+  }
+
+  async generarDataProductividad(){
+    let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.productividad;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+  
+
+    this.GProductividad.updateOptions({
+      xaxis: {categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:elemento}]
+    });
+
+    this._dashBoardService.setConfigProductividad(this.configProductividad);
+  }
+
+
+
+  async generarDataEntradas(){
+    /*let elemento = [];
+
+    elemento = this.zonasDisponibles.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
+
+    this.apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.entradasPuestoTrabajo;
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    this.configEntradas.series[0].data=elemento;
+    this.configEntradas.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
       position: "top",
       labels: {
         offsetY: 0,
@@ -130,37 +258,9 @@ export class DashboardComponent implements OnInit {
         offsetY: -35
       }
     }
-
-
-    this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
+    this._dashBoardService.setConfigProductividad(this.configEntradas);*/
   }
 
-  
-  generarDataEstandarElevador(){
-    let elemento = [];
-
-    elemento = this.zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0}
-    });
-
-    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
-
-    this.apiDataDashboard.forEach((element) => {
-      elemento.forEach((element2)=>{
-        if (element.zona==element2.zona) {
-          element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
-        }
-      });
-    });
-
-    elemento=elemento.map((data)=>{
-      return data.valor;
-    });
-
-    this.configEstandarElevador.series[0].data=elemento;
-    this.configEstandarElevador.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
-    this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
-  }
 
   generarDataIndicadores(){
     let elemento = valoresIndicadoresDefault;
@@ -181,11 +281,12 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setIndicadores(elemento);
   }
 
-  async obtenerApiDataUbicacion(){
-    this.zonasDisponibles = await this.apiDataUbicacion.map((data)=>{return data.zona});
-    this.regionesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.region});
-    this.sociedadesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sede});
+  obtenerApiDataUbicacion(){
+    const zonasDisponibles = this.usuario?.ubicacion.map((data)=>{return data.zona});
+    const regionesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.region});
+    const sociedadesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sociedad});
+    const sedesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sede});
+    this._dashBoardService.setApiDataUbicacion({region:regionesDisponibles,sede:sedesDisponibles,sociedad:sociedadesDisponibles,zona:zonasDisponibles});
   }
 
   seleccionarSeccion(indice){
@@ -201,6 +302,9 @@ export class DashboardComponent implements OnInit {
     this.generarDataPuestoCompleto();
     this.generarDataEstandarElevador();
     this.generarDataIndicadores();
+    this.generarDataEficiencia();
+    this.generarDataProductividad();
+    this.generarDataEntradas();
   }
 
   agregarFiltros(){
@@ -211,7 +315,22 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorZona(){
-    const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
+    let copia=this.apiDataDashboard;
+    //const dataFiltradaPorZona=this.apiDataDashboard.filter((data)=>{return this.zonasDisponibles.includes(data.zona)});
+
+    const dataFiltradaPorZona = [];
+    
+    this.apiDataDashboard.map((data)=>{
+      if (this.zonasSelesccionadas.includes(data.zona)){
+        dataFiltradaPorZona.push(data);
+      }
+    });
+
+    this.GpuestoCompleto.updateOptions({
+      xaxis: {categories: this.zonasSelesccionadas.map((data)=>{return data!=null?data:'zona ej'})},
+      series: [{data:dataFiltradaPorZona}]
+    });
+    //this.generarDataPuestoCompleto(dataFiltradaPorZona);
   }
 
   filtrarPorRegion(){
@@ -223,13 +342,19 @@ export class DashboardComponent implements OnInit {
   }
 
   filtrarPorSociedad(){
-    const dataFiltradaPorSociedad=this.apiDataDashboard.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
+    let copia=this.apiDataDashboard;
+    const dataFiltradaPorSociedad=copia.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
+    this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
   }
 
   ngOnInit(): void {
 
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
-      this.apiDataUbicacion = await data;
+      //this.apiDataUbicacion = await data;
+      this.zonasDisponibles=data.zona;
+      this.regionesDisponibles=data.region;
+      this.sociedadesDisponibles=data.sociedad;
+      this.sedesDisponibles=data.sede;
     });
 
     this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
@@ -238,6 +363,7 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
       this.chartOptions = await data;
+      console.log("ChartOptions ha cambiado", await data);
     });
 
     this._dashBoardService.getConfigEstandarElevador().subscribe(async (data)=>{
@@ -246,6 +372,14 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getConfigEficiencia().subscribe(async (data)=>{
       this.configEficiencia = await data;
+    });
+
+    this._dashBoardService.getConfigEntradas().subscribe(async (data)=>{
+      this.configEntradas = await data;
+    });
+
+    this._dashBoardService.getConfigProductividad().subscribe(async (data)=>{
+      this.configProductividad = await data;
     });
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{
@@ -257,9 +391,10 @@ export class DashboardComponent implements OnInit {
     .subscribe(async(user: User) => {
         this.usuario = await user;
         //this._changeDetectorRef.markForCheck();
-        await this._dashBoardService.setApiDataUbicacion(this.usuario.ubicacion);
+        //await this._dashBoardService.setApiDataUbicacion(this.usuario.ubicacion);
         await this.obtenerApiDataUbicacion();
         await this.seleccionarSeccion(0);
+        //await this.obtenerApiDataUbicacion();
     });
 
   }
