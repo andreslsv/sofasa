@@ -380,6 +380,24 @@ export class DashboardComponent implements OnInit {
     this.generarDataProductividad({apiDataDashboard:filtrado});
   }
 
+  aplicarFiltroSociedades(){
+    let filtrado=[];
+
+    this.sociedadesSeleccionadas.forEach((sociedad)=>{
+      this.apiDataDashboardBackup.map((dash)=>{
+        if(dash.sociedad==sociedad){
+          filtrado.push(dash);
+        }
+      });
+    });
+
+    //this._dashBoardService.setApiDataDashboard(filtrado);
+    this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
+    this.generarDataEstandarElevador({apiDataDashboard:filtrado});
+    this.generarDataEficiencia({apiDataDashboard:filtrado});
+    this.generarDataProductividad({apiDataDashboard:filtrado});
+  }
+
   ngOnInit(): void {
 
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{

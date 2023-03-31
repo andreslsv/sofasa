@@ -86,11 +86,14 @@
               </mat-expansion-panel-header>
               
               <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(ciudad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
-                    <span *ngIf="c.selected">*</span>
+                <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(sociedad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
                     {{sociedad}}
                 </mat-chip>
               </mat-chip-list>
+
+              <div>
+                <button class="absolute top-0 right-0 mr-1 mt-1" (click)="aplicarFiltroSociedades()" mat-button>Filtrar</button>
+              </div>
 
             </mat-expansion-panel>
         </mat-accordion>
