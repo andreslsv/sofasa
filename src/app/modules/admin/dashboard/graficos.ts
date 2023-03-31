@@ -398,3 +398,10 @@ export const valoresGraficosDefaultPuesto:Partial<ChartOptions> = {
       valor: 0
     }
   ];
+
+  export const ubicaciones = {
+    region: [],
+    sede: [],
+    sociedad: [],
+    zona: []
+  }

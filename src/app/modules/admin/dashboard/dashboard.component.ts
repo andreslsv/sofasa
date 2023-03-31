@@ -97,12 +97,44 @@ export class DashboardComponent implements OnInit {
     });
 
     this.chartOptions.series[0].data=elemento;
-    this.chartOptions.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
+    this.chartOptions.xaxis={
+      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
+      position: "top",
+      labels: {
+        offsetY: 0,
+        style:{
+          colors:"#fff"
+        }
+      },
+      axisBorder: {
+        show: false
+      },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#EFDF00",
+            colorTo: "#BED1E6",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5
+          }
+        }
+      },
+      tooltip: {
+        enabled: true,
+        offsetY: -35
+      }
+    }
+    
     this._dashBoardService.setConfigPuestoCompleto(this.chartOptions);
   }
 
   
-  generarDataEstandarElevador(){
+  async generarDataEstandarElevador(){
     let elemento = [];
 
     elemento = this.zonasDisponibles.map((element)=>{
@@ -124,7 +156,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.configEstandarElevador.series[0].data=elemento;
-    this.configEstandarElevador.xaxis.categories=this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
+    this.configEstandarElevador.xaxis.categories= await this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'});
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
@@ -147,11 +179,12 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setIndicadores(elemento);
   }
 
-  async obtenerApiDataUbicacion(){
-    this.zonasDisponibles = await this.apiDataUbicacion.map((data)=>{return data.zona});
-    this.regionesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.region});
-    this.sociedadesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = await this.apiDataUbicacion.map((data)=>{return data.sede});
+  obtenerApiDataUbicacion(){
+    const zonasDisponibles = this.usuario?.ubicacion.map((data)=>{return data.zona});
+    const regionesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.region});
+    const sociedadesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sociedad});
+    const sedesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sede});
+    this._dashBoardService.setApiDataUbicacion({region:regionesDisponibles,sede:sedesDisponibles,sociedad:sociedadesDisponibles,zona:zonasDisponibles});
   }
 
   seleccionarSeccion(indice){
@@ -195,7 +228,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
-      this.apiDataUbicacion = await data;
+      //this.apiDataUbicacion = await data;
+      this.zonasDisponibles=data.zona;
+      this.regionesDisponibles=data.region;
+      this.sociedadesDisponibles=data.sociedad;
+      this.sedesDisponibles=data.sede;
     });
 
     this._dashBoardService.getApiDataDashboard().subscribe(async(data)=>{
@@ -204,6 +241,7 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
       this.chartOptions = await data;
+      console.log("ChartOptions ha cambiado", await data);
     });
 
     this._dashBoardService.getConfigEstandarElevador().subscribe(async (data)=>{
@@ -223,9 +261,10 @@ export class DashboardComponent implements OnInit {
     .subscribe(async(user: User) => {
         this.usuario = await user;
         //this._changeDetectorRef.markForCheck();
-        await this._dashBoardService.setApiDataUbicacion(this.usuario.ubicacion);
+        //await this._dashBoardService.setApiDataUbicacion(this.usuario.ubicacion);
         await this.obtenerApiDataUbicacion();
         await this.seleccionarSeccion(0);
+        //await this.obtenerApiDataUbicacion();
     });
 
   }
