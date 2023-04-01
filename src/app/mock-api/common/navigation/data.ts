@@ -20,8 +20,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'dashboard',
         title: 'Dashboard',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'heroicons_outline:chart-bar',
         link : '/dashboard'
+    },
+    {
+        id   : 'dashboard-colision',
+        title: 'Dashboard Colisión',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-bar',
+        link : '/dashboard-colision'
     },
     {
         id   : 'usuarios',

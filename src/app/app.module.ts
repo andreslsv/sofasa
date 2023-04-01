@@ -32,6 +32,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { DashboardColisionComponent } from './modules/admin/dashboard-colision/dashboard-colision.component';
 
 
 
@@ -48,7 +49,8 @@ const routerConfig: ExtraOptions = {
         SubirExcelUsuariosComponent,
         AgregarUsuarioComponent,
         ColisionComponent,
-        MecanicaComponent
+        MecanicaComponent,
+        DashboardColisionComponent
     ],
     imports     : [
         BrowserModule,
