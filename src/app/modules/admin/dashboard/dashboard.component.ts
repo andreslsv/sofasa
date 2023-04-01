@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild("GEstandarElevador") GEstandarElevador: ChartComponent;
   @ViewChild("GEficiencia") GEficiencia: ChartComponent;
   @ViewChild("GProductividad") GProductividad: ChartComponent;
+  @ViewChild("GEntradas") GEntradas: ChartComponent;
 
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -173,6 +174,7 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
 
+
   async generarDataProductividad(filtros=null){
     let elemento = [];
 
@@ -207,6 +209,56 @@ export class DashboardComponent implements OnInit {
     });
 
     this._dashBoardService.setConfigProductividad(this.configProductividad);
+  }
+
+
+  async generarDataEntradasActuales(filtros=null){
+    let elemento = [];
+    let elemento2 = [];
+
+    const dataZona=filtros?.zonas?filtros.zonas:this.zonasDisponibles;
+    const apiDataDashboard=filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
+
+    elemento = dataZona.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    elemento2 = dataZona.map((element)=>{
+      return {zona:element, valor:0}
+    });
+
+    apiDataDashboard.forEach((element) => {
+      elemento.forEach((element2)=>{
+        if (element.zona==element2.zona) {
+          element2.valor+=element.entradasPuestoTrabajo;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    apiDataDashboard.forEach((element) => {
+      console.log("Elementos de la grafica", element);
+      elemento2.forEach((element2)=>{
+        console.log("Elementos de la grafica 2", element2);
+        if (element.zona==element2.zona) {
+          element2.valor+=element.entradasPotenciales;//El valor debe ser la sumatoria de elevadoresProductivos
+        }
+      });
+    });
+
+    elemento=elemento.map((data)=>{
+      return data.valor;
+    });
+
+    elemento2=elemento2.map((data)=>{
+      return data.valor;
+    });
+
+    this.GEntradas.updateOptions({
+      xaxis: {categories: dataZona},
+      series: [{data:elemento},{data:elemento2}]
+    });
+
+    this._dashBoardService.setConfigEntradas(this.configEntradas);
   }
 
 
@@ -313,6 +365,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataEficiencia();
     this.generarDataProductividad();
     this.generarDataEntradas();
+    this.generarDataEntradasActuales();
   }
 
   agregarFiltros(){
@@ -327,6 +380,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataPuestoCompleto({zonas:this.zonasSelesccionadas});
     this.generarDataEstandarElevador({zonas:this.zonasSelesccionadas});
     this.generarDataEficiencia({zonas:this.zonasSelesccionadas});
+    this.generarDataEntradasActuales({zonas:this.zonasSelesccionadas});
   }
 
   filtrarPorRegion(){
@@ -360,6 +414,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
     this.generarDataProductividad({apiDataDashboard:filtrado});
+    this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
   aplicarFiltroSedes(){
@@ -378,6 +433,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
     this.generarDataProductividad({apiDataDashboard:filtrado});
+    this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
   aplicarFiltroSociedades(){
@@ -396,6 +452,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
     this.generarDataProductividad({apiDataDashboard:filtrado});
+    this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
   ngOnInit(): void {

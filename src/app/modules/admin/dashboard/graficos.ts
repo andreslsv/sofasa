@@ -500,13 +500,13 @@ export const valoresGraficosDefaultPuesto:Partial<ChartOptions> = {
     },
     series: [
       {
-        name: "Net Profit",
-        data: [55, 55],
+        name: "Suma de entradas Totales dia",
+        data: [],
         color:"#efdf00"
       },
       {
-        name: "Net Profit",
-        data: [44, 55],
+        name: "Suma de entradas potenciales - Elevador",
+        data: [],
         color:"#888B8D"
       }
     ],
@@ -534,7 +534,7 @@ export const valoresGraficosDefaultPuesto:Partial<ChartOptions> = {
       }
     },
     xaxis: {
-      categories: ["Zona x","Zona y"],//Estas son las etiquetas que se muestran
+      categories: [],//Estas son las etiquetas que se muestran
       position: "top",
       labels: {
         offsetY: 0,

@@ -275,7 +275,8 @@
                     </div>
                     <ng-container *ngIf="configEntradas">
                       <apx-chart
-                      class="w-full"
+                        #GEntradas
+                        class="w-full"
                         [series]="configEntradas?.series"
                         [chart]="configEntradas?.chart"
                         [grid]="configEntradas?.grid"
