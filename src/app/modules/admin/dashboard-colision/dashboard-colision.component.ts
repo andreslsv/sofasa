@@ -128,7 +128,7 @@ export class DashboardColisionComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.puestosDeTrabajoTotales;//Valor quemado pulmonesElevadoresProductivos es el original
         }
       });
     });
@@ -230,7 +230,7 @@ export class DashboardColisionComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.entradasPuestoTrabajo;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.tasaEmpleo;//Valor quemado pulmonesElevadoresProductivos es el original
         }
       });
     });
@@ -240,7 +240,7 @@ export class DashboardColisionComponent implements OnInit {
       elemento2.forEach((element2)=>{
         console.log("Elementos de la grafica 2", element2);
         if (element.zona==element2.zona) {
-          element2.valor+=element.entradasPotenciales;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.tiempoProductivo;//Valor quemado pulmonesElevadoresProductivos es el original
         }
       });
     });
