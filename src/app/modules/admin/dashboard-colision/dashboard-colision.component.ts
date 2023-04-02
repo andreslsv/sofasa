@@ -104,7 +104,7 @@ export class DashboardColisionComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GpuestoCompleto.updateOptions({
@@ -134,7 +134,7 @@ export class DashboardColisionComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEstandarElevador.updateOptions({
@@ -163,7 +163,7 @@ export class DashboardColisionComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEficiencia.updateOptions({
@@ -198,7 +198,7 @@ export class DashboardColisionComponent implements OnInit {
     console.log("Segundo momento del elemento", elemento);
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     console.log("Tercer momento del elemento", elemento);
@@ -246,11 +246,11 @@ export class DashboardColisionComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     elemento2=elemento2.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEntradas.updateOptions({
@@ -341,10 +341,10 @@ export class DashboardColisionComponent implements OnInit {
   }
 
   obtenerApiDataUbicacion(){
-    const zonasDisponibles = this.usuario?.ubicacion.map((data)=>{return data.zona});
-    const regionesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.region});
-    const sociedadesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sociedad});
-    const sedesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sede});
+    const zonasDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.zona}));
+    const regionesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.region}));
+    const sociedadesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.sociedad}));
+    const sedesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.sede}));
     this._dashBoardService.setApiDataUbicacion({region:regionesDisponibles,sede:sedesDisponibles,sociedad:sociedadesDisponibles,zona:zonasDisponibles});
   }
 
@@ -398,16 +398,53 @@ export class DashboardColisionComponent implements OnInit {
     this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
   }
 
-  aplicarFiltroRegiones(){
+  filtradoAnidado(){
+    let filtrado=this.apiDataDashboardBackup;
+    let parametros:any;
+
+    if (this.regionesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroRegiones({anidado:true,dashboard:filtrado});
+      console.log("primer filtro", filtrado);
+    }
+
+    if (this.sedesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroSedes({anidado:true,dashboard:filtrado});
+      console.log("Segundo filtro", filtrado);
+    }
+
+    if (this.sociedadesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroSociedades({anidado:true,dashboard:filtrado});
+      console.log("Tercer filtro", filtrado);
+    }
+
+    if (this.zonasSelesccionadas.length>0) {
+      parametros={apiDataDashboard:filtrado,zonas:this.zonasSelesccionadas}
+    }else{
+      parametros={apiDataDashboard:filtrado};
+    }
+
+    this.generarDataPuestoCompleto(parametros);
+    this.generarDataEstandarElevador(parametros);
+    this.generarDataEficiencia(parametros);
+    this.generarDataProductividad(parametros);
+    this.generarDataEntradasActuales(parametros);
+  }
+
+  aplicarFiltroRegiones(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.regionesSeleccionadas.forEach((region)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.region==region){
           filtrado.push(dash);
         }
       });
     });
+    
+    if(comport?.anidado) {
+      return filtrado;
+    }
 
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
@@ -417,17 +454,22 @@ export class DashboardColisionComponent implements OnInit {
     this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
-  aplicarFiltroSedes(){
+  aplicarFiltroSedes(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.sedesSeleccionadas.forEach((sede)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.sede==sede){
           filtrado.push(dash);
         }
       });
     });
 
+    if(comport?.anidado) {
+      return filtrado;
+    }
+
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
@@ -436,16 +478,21 @@ export class DashboardColisionComponent implements OnInit {
     this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
-  aplicarFiltroSociedades(){
+  aplicarFiltroSociedades(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.sociedadesSeleccionadas.forEach((sociedad)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.sociedad==sociedad){
           filtrado.push(dash);
         }
       });
     });
+
+    if(comport?.anidado) {
+      return filtrado;
+    }
 
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
@@ -453,6 +500,18 @@ export class DashboardColisionComponent implements OnInit {
     this.generarDataEficiencia({apiDataDashboard:filtrado});
     this.generarDataProductividad({apiDataDashboard:filtrado});
     this.generarDataEntradasActuales({apiDataDashboard:filtrado});
+  }
+
+  resetearValores(){
+    this.generarDataPuestoCompleto({apiDataDashboard:this.apiDataDashboardBackup});
+    this.generarDataEstandarElevador({apiDataDashboard:this.apiDataDashboardBackup});
+    this.generarDataEficiencia({apiDataDashboard:this.apiDataDashboardBackup});
+    this.generarDataProductividad({apiDataDashboard:this.apiDataDashboardBackup});
+    this.generarDataEntradasActuales({apiDataDashboard:this.apiDataDashboardBackup});
+  }
+
+  filtrarElementosDuplicadas(lista){
+    return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
   ngOnInit(): void {

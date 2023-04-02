@@ -1,296 +1,301 @@
 <section class="p-2 w-full">
-    <!--<div class="w-full">
-        <form [formGroup]="seccionForm" class="grid grid-cols-1 md:grid-cols-4 gap-2">
-            <mat-form-field class="w-full">
-                <mat-select placeholder="Región" [formControlName]="'region'">
-                    <mat-option *ngFor="let region of regionesDisponibles" [value]="region">
-                        {{region}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+  <!--<div class="w-full">
+      <form [formGroup]="seccionForm" class="grid grid-cols-1 md:grid-cols-4 gap-2">
+          <mat-form-field class="w-full">
+              <mat-select placeholder="Región" [formControlName]="'region'">
+                  <mat-option *ngFor="let region of regionesDisponibles" [value]="region">
+                      {{region}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
 
-            <mat-form-field class="w-full">
-                <mat-select placeholder="Zona" matInput [formControlName]="'zona'">
-                    <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona">
-                      {{zona}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="w-full">
-                <mat-select placeholder="Sociedad" matInput [formControlName]="'sociedad'">
-                    <mat-option *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
-                      {{sociedad}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="w-full">
-                <mat-select placeholder="Sede" matInput [formControlName]="'sede'">
-                    <mat-option *ngFor="let sede of sedesDisponibles" [value]="sede">
-                      {{sede}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </form>
-    </div>-->
-
-    <div class="grid grid-cols-2 gap-3">
-        <mat-accordion>
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Región
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : regionesSeleccionadas.includes(region)?'black':'rgb(203 213 225)', 'color' : regionesSeleccionadas.includes(region)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, regionesSeleccionadas)" *ngFor="let region of regionesDisponibles" [value]="region">{{region}}</mat-chip>
-              </mat-chip-list>
-
-              <button mat-button (click)="aplicarFiltroRegiones()" class="absolute top-0 right-0 ml-2 mt-2">
-                Filtrar
-              </button>
-
-            </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Zona
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : zonasSelesccionadas.includes(zona)?'black':'rgb(203 213 225)', 'color' : zonasSelesccionadas.includes(zona)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, zonasSelesccionadas)" *ngFor="let zona of zonasDisponibles" [value]="zona">
-                    <span *ngIf="c.selected">*</span>
+          <mat-form-field class="w-full">
+              <mat-select placeholder="Zona" matInput [formControlName]="'zona'">
+                  <mat-option *ngFor="let zona of zonasDisponibles" [value]="zona">
                     {{zona}}
-                </mat-chip>
-              </mat-chip-list>
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
 
-              <div>
-                <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="filtrarPorZona()">Filtrar</button>
-              </div>
-
-            </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Grupo ciudad
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(sociedad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+          <mat-form-field class="w-full">
+              <mat-select placeholder="Sociedad" matInput [formControlName]="'sociedad'">
+                  <mat-option *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
                     {{sociedad}}
-                </mat-chip>
-              </mat-chip-list>
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
 
-              <div>
-                <button class="absolute top-0 right-0 mr-1 mt-1" (click)="aplicarFiltroSociedades()" mat-button>Filtrar</button>
+          <mat-form-field class="w-full">
+              <mat-select placeholder="Sede" matInput [formControlName]="'sede'">
+                  <mat-option *ngFor="let sede of sedesDisponibles" [value]="sede">
+                    {{sede}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </form>
+  </div>-->
+
+  <div class="grid grid-cols-2 gap-3">
+      <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Región
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip [ngStyle]="{'background-color' : regionesSeleccionadas.includes(region)?'black':'rgb(203 213 225)', 'color' : regionesSeleccionadas.includes(region)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, regionesSeleccionadas)" *ngFor="let region of regionesDisponibles" [value]="region">{{region}}</mat-chip>
+            </mat-chip-list>
+
+            <button mat-button (click)="aplicarFiltroRegiones()" class="absolute top-0 right-0 ml-2 mt-2">
+              Filtrar
+            </button>
+
+          </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Zona
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip [ngStyle]="{'background-color' : zonasSelesccionadas.includes(zona)?'black':'rgb(203 213 225)', 'color' : zonasSelesccionadas.includes(zona)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, zonasSelesccionadas)" *ngFor="let zona of zonasDisponibles" [value]="zona">
+                  <span *ngIf="c.selected">*</span>
+                  {{zona}}
+              </mat-chip>
+            </mat-chip-list>
+
+            <div>
+              <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="filtrarPorZona()">Filtrar</button>
+            </div>
+
+          </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Grupo ciudad
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(sociedad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+                  {{sociedad}}
+              </mat-chip>
+            </mat-chip-list>
+
+            <div>
+              <button class="absolute top-0 right-0 mr-1 mt-1" (click)="aplicarFiltroSociedades()" mat-button>Filtrar</button>
+            </div>
+
+          </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Sede
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip [ngStyle]="{'background-color' : sedesSeleccionadas.includes(sede)?'black':'rgb(203 213 225)', 'color' : sedesSeleccionadas.includes(sede)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sedesSeleccionadas)" *ngFor="let sede of sedesDisponibles" [value]="sede">
+                  <span *ngIf="c.selected">*</span>
+                  {{sede}}
+              </mat-chip>
+            </mat-chip-list>
+
+            <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="aplicarFiltroSedes()">Filtrar</button>
+            
+          </mat-expansion-panel>
+      </mat-accordion>
+
+      <div>
+        <button class="bg-black text-white" (click)="filtradoAnidado()" mat-button>Filtrar</button>
+        <button class="bg-black text-white ml-2" (click)="resetearValores()" mat-button>Resetear</button>
+      </div>
+  </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8">
+              <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
+                  <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                      <h2 class="opacity-40 ml-2">Capacidad de servicio - Puesto completo</h2>
+                      <div>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                          </button>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                          </button>
+                      </div>
+                  </div>
+                  <ng-container *ngIf="chartOptions">
+                    <apx-chart
+                      #GpuestoCompleto
+                      class="w-full"
+                      [series]="chartOptions?.series"
+                      [chart]="chartOptions?.chart"
+                      [grid]="chartOptions?.grid"
+                      [dataLabels]="chartOptions?.dataLabels"
+                      [plotOptions]="chartOptions?.plotOptions"
+                      [yaxis]="chartOptions?.yaxis"
+                      [xaxis]="chartOptions?.xaxis"
+                      [fill]="chartOptions?.fill"
+                      [title]="chartOptions?.title"
+                    ></apx-chart>                      
+                  </ng-container>
+
+              </div>
+      
+              <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
+                  <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
+                      <h2 class="opacity-40 ml-2">Capacidad de servicio - Estandar x elevador productivo</h2>
+                      <div>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                          </button>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                          </button>
+                      </div>
+                  </div>
+                  <ng-container *ngIf="configEstandarElevador">
+                    <apx-chart
+                    class="w-full"
+                      #GEstandarElevador
+                      [series]="configEstandarElevador?.series"
+                      [chart]="configEstandarElevador?.chart"
+                      [grid]="configEstandarElevador?.grid"
+                      [dataLabels]="configEstandarElevador?.dataLabels"
+                      [plotOptions]="configEstandarElevador?.plotOptions"
+                      [yaxis]="configEstandarElevador?.yaxis"
+                      [xaxis]="configEstandarElevador?.xaxis"
+                      [fill]="configEstandarElevador?.fill"
+                      [title]="configEstandarElevador?.title"
+                    ></apx-chart>                      
+                  </ng-container>
+
+              </div>
+          </div>
+      
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <div class="grow mt-3 px-1 rounded-2xl overflow-hidden col-span-1 md:col-span-2">
+                  <div class="my-2 text-center">
+                      <span class="font-semibold tracking-tight leading-7">INDICADORES</span>
+                  </div>
+                  <table mat-table [dataSource]="dataIndicadores" class="w-full">
+                      <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
+                        <td mat-cell *matCellDef="let element" class="text-left"> {{element?.clave}} </td>
+                      </ng-container>
+                    
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef class="text-right"> Valor </th>
+                        <td mat-cell *matCellDef="let element" class="text-right"> {{element?.valor?.toFixed(2)}} </td>
+                      </ng-container>
+                    
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
               </div>
 
-            </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  Sede
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : sedesSeleccionadas.includes(sede)?'black':'rgb(203 213 225)', 'color' : sedesSeleccionadas.includes(sede)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sedesSeleccionadas)" *ngFor="let sede of sedesDisponibles" [value]="sede">
-                    <span *ngIf="c.selected">*</span>
-                    {{sede}}
-                </mat-chip>
-              </mat-chip-list>
-
-              <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="aplicarFiltroSedes()">Filtrar</button>
-              
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8">
-                <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
-                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
-                        <h2 class="opacity-40 ml-2">Capacidad de servicio - Puesto completo</h2>
-                        <div>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
-                            </button>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="chartOptions">
-                      <apx-chart
-                        #GpuestoCompleto
-                        class="w-full"
-                        [series]="chartOptions?.series"
-                        [chart]="chartOptions?.chart"
-                        [grid]="chartOptions?.grid"
-                        [dataLabels]="chartOptions?.dataLabels"
-                        [plotOptions]="chartOptions?.plotOptions"
-                        [yaxis]="chartOptions?.yaxis"
-                        [xaxis]="chartOptions?.xaxis"
-                        [fill]="chartOptions?.fill"
-                        [title]="chartOptions?.title"
-                      ></apx-chart>                      
-                    </ng-container>
-
-                </div>
-        
-                <div class="flex flex-col w-full bg-black shadow-md rounded-xl">
-                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center">
-                        <h2 class="opacity-40 ml-2">Capacidad de servicio - Estandar x elevador productivo</h2>
-                        <div>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
-                            </button>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="configEstandarElevador">
-                      <apx-chart
+              <div class="col-span-1 md:col-span-3">
+                <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                  <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
+                      <h2 class="opacity-40 ml-2">Eficiencia red Renault</h2>
+                      <div>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                          </button>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                          </button>
+                      </div>
+                  </div>
+                  <ng-container *ngIf="configEficiencia">
+                    <apx-chart
+                      #GEficiencia
                       class="w-full"
-                        #GEstandarElevador
-                        [series]="configEstandarElevador?.series"
-                        [chart]="configEstandarElevador?.chart"
-                        [grid]="configEstandarElevador?.grid"
-                        [dataLabels]="configEstandarElevador?.dataLabels"
-                        [plotOptions]="configEstandarElevador?.plotOptions"
-                        [yaxis]="configEstandarElevador?.yaxis"
-                        [xaxis]="configEstandarElevador?.xaxis"
-                        [fill]="configEstandarElevador?.fill"
-                        [title]="configEstandarElevador?.title"
-                      ></apx-chart>                      
-                    </ng-container>
-
-                </div>
-            </div>
-        
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-              <div class="grow mt-3 px-1 rounded-2xl overflow-hidden col-span-1 md:col-span-2">
-                    <div class="my-2 text-center">
-                        <span class="font-semibold tracking-tight leading-7">INDICADORES</span>
-                    </div>
-                    <table mat-table [dataSource]="dataIndicadores" class="w-full">
-                        <ng-container matColumnDef="position">
-                          <th mat-header-cell *matHeaderCellDef class="text-left"> Nombre </th>
-                          <td mat-cell *matCellDef="let element" class="text-left"> {{element?.clave}} </td>
-                        </ng-container>
-                      
-                        <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef class="text-right"> Valor </th>
-                          <td mat-cell *matCellDef="let element" class="text-right"> {{element?.valor?.toFixed(2)}} </td>
-                        </ng-container>
-                      
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                      </table>
+                      [series]="configEficiencia?.series"
+                      [chart]="configEficiencia?.chart"
+                      [grid]="configEficiencia?.grid"
+                      [dataLabels]="configEficiencia?.dataLabels"
+                      [plotOptions]="configEficiencia?.plotOptions"
+                      [yaxis]="configEficiencia?.yaxis"
+                      [xaxis]="configEficiencia?.xaxis"
+                      [fill]="configEficiencia?.fill"
+                      [title]="configEficiencia?.title"
+                    ></apx-chart>
+                  </ng-container>
                 </div>
 
-                <div class="col-span-1 md:col-span-3">
-                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
-                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
-                        <h2 class="opacity-40 ml-2">Eficiencia red Renault</h2>
-                        <div>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
-                            </button>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="configEficiencia">
-                      <apx-chart
-                        #GEficiencia
-                        class="w-full"
-                        [series]="configEficiencia?.series"
-                        [chart]="configEficiencia?.chart"
-                        [grid]="configEficiencia?.grid"
-                        [dataLabels]="configEficiencia?.dataLabels"
-                        [plotOptions]="configEficiencia?.plotOptions"
-                        [yaxis]="configEficiencia?.yaxis"
-                        [xaxis]="configEficiencia?.xaxis"
-                        [fill]="configEficiencia?.fill"
-                        [title]="configEficiencia?.title"
-                      ></apx-chart>
-                    </ng-container>
+                <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                  <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
+                      <h2 class="opacity-40 ml-2">Productividad Red Renault Colombia</h2>
+                      <div>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                          </button>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                          </button>
+                      </div>
                   </div>
-
-                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
-                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
-                        <h2 class="opacity-40 ml-2">Productividad Red Renault Colombia</h2>
-                        <div>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
-                            </button>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="configProductividad">
-                      <apx-chart
-                        #GProductividad
-                        class="w-full"
-                        [series]="configProductividad?.series"
-                        [chart]="configProductividad?.chart"
-                        [grid]="configProductividad?.grid"
-                        [dataLabels]="configProductividad?.dataLabels"
-                        [plotOptions]="configProductividad?.plotOptions"
-                        [yaxis]="configProductividad?.yaxis"
-                        [xaxis]="configProductividad?.xaxis"
-                        [fill]="configProductividad?.fill"
-                        [title]="configProductividad?.title"
-                      ></apx-chart>
-                    </ng-container>
-                  </div>
-
-                  <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
-                    <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
-                        <h2 class="opacity-40 ml-2">Entradas Actuales vs Potencial Entradas (Estandar Elevador)</h2>
-                        <div>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
-                            </button>
-                            <button mat-icon-button>
-                                <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="configEntradas">
-                      <apx-chart
-                        #GEntradas
-                        class="w-full"
-                        [series]="configEntradas?.series"
-                        [chart]="configEntradas?.chart"
-                        [grid]="configEntradas?.grid"
-                        [dataLabels]="configEntradas?.dataLabels"
-                        [plotOptions]="configEntradas?.plotOptions"
-                        [yaxis]="configEntradas?.yaxis"
-                        [xaxis]="configEntradas?.xaxis"
-                        [fill]="configEntradas?.fill"
-                        [title]="configEntradas?.title"
-                      ></apx-chart>
-                    </ng-container>
-                  </div>
-
+                  <ng-container *ngIf="configProductividad">
+                    <apx-chart
+                      #GProductividad
+                      class="w-full"
+                      [series]="configProductividad?.series"
+                      [chart]="configProductividad?.chart"
+                      [grid]="configProductividad?.grid"
+                      [dataLabels]="configProductividad?.dataLabels"
+                      [plotOptions]="configProductividad?.plotOptions"
+                      [yaxis]="configProductividad?.yaxis"
+                      [xaxis]="configProductividad?.xaxis"
+                      [fill]="configProductividad?.fill"
+                      [title]="configProductividad?.title"
+                    ></apx-chart>
+                  </ng-container>
                 </div>
-                
-            </div>
+
+                <div class="flex flex-col w-full bg-black shadow-md rounded-xl col-span-3 mt-4">
+                  <div class="text-white px-2 pt-4 pb-6 text-lg font-semibold tracking-tight leading-7 flex flex-row justify-between items-center w-full">
+                      <h2 class="opacity-40 ml-2">Entradas Actuales vs Potencial Entradas (Estandar Elevador)</h2>
+                      <div>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:refresh'" class="icon-size-6"></mat-icon>
+                          </button>
+                          <button mat-icon-button>
+                              <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+                          </button>
+                      </div>
+                  </div>
+                  <ng-container *ngIf="configEntradas">
+                    <apx-chart
+                      #GEntradas
+                      class="w-full"
+                      [series]="configEntradas?.series"
+                      [chart]="configEntradas?.chart"
+                      [grid]="configEntradas?.grid"
+                      [dataLabels]="configEntradas?.dataLabels"
+                      [plotOptions]="configEntradas?.plotOptions"
+                      [yaxis]="configEntradas?.yaxis"
+                      [xaxis]="configEntradas?.xaxis"
+                      [fill]="configEntradas?.fill"
+                      [title]="configEntradas?.title"
+                    ></apx-chart>
+                  </ng-container>
+                </div>
+
+              </div>
+              
+          </div>
 </section>
