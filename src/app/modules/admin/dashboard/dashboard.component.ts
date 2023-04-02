@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GpuestoCompleto.updateOptions({
@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEstandarElevador.updateOptions({
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEficiencia.updateOptions({
@@ -198,7 +198,7 @@ export class DashboardComponent implements OnInit {
     console.log("Segundo momento del elemento", elemento);
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     console.log("Tercer momento del elemento", elemento);
@@ -246,11 +246,11 @@ export class DashboardComponent implements OnInit {
     });
 
     elemento=elemento.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     elemento2=elemento2.map((data)=>{
-      return data.valor;
+      return data.valor.toFixed(2);
     });
 
     this.GEntradas.updateOptions({
