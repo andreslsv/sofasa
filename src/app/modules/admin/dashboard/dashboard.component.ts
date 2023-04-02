@@ -341,10 +341,10 @@ export class DashboardComponent implements OnInit {
   }
 
   obtenerApiDataUbicacion(){
-    const zonasDisponibles = this.usuario?.ubicacion.map((data)=>{return data.zona});
-    const regionesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.region});
-    const sociedadesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sociedad});
-    const sedesDisponibles = this.usuario?.ubicacion.map((data)=>{return data.sede});
+    const zonasDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.zona}));
+    const regionesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.region}));
+    const sociedadesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.sociedad}));
+    const sedesDisponibles = this.filtrarElementosDuplicadas(this.usuario?.ubicacion.map((data)=>{return data.sede}));
     this._dashBoardService.setApiDataUbicacion({region:regionesDisponibles,sede:sedesDisponibles,sociedad:sociedadesDisponibles,zona:zonasDisponibles});
   }
 
@@ -508,6 +508,10 @@ export class DashboardComponent implements OnInit {
     this.generarDataEficiencia({apiDataDashboard:this.apiDataDashboardBackup});
     this.generarDataProductividad({apiDataDashboard:this.apiDataDashboardBackup});
     this.generarDataEntradasActuales({apiDataDashboard:this.apiDataDashboardBackup});
+  }
+
+  filtrarElementosDuplicadas(lista){
+    return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
   ngOnInit(): void {
