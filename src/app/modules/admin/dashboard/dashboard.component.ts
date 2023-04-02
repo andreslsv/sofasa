@@ -398,16 +398,46 @@ export class DashboardComponent implements OnInit {
     this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
   }
 
-  aplicarFiltroRegiones(){
+  filtradoAnidado(){
+    let filtrado=this.apiDataDashboardBackup;
+
+    if (this.regionesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroRegiones({anidado:true,dashboard:filtrado});
+      console.log("primer filtro", filtrado);
+    }
+
+    if (this.sedesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroSedes({anidado:true,dashboard:filtrado});
+      console.log("Segundo filtro", filtrado);
+    }
+
+    if (this.sociedadesSeleccionadas.length>0) {
+      filtrado=this.aplicarFiltroSociedades({anidado:true,dashboard:filtrado});
+      console.log("Tercer filtro", filtrado);
+    }
+
+    this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
+    this.generarDataEstandarElevador({apiDataDashboard:filtrado});
+    this.generarDataEficiencia({apiDataDashboard:filtrado});
+    this.generarDataProductividad({apiDataDashboard:filtrado});
+    this.generarDataEntradasActuales({apiDataDashboard:filtrado});
+  }
+
+  aplicarFiltroRegiones(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.regionesSeleccionadas.forEach((region)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.region==region){
           filtrado.push(dash);
         }
       });
     });
+    
+    if(comport?.anidado) {
+      return filtrado;
+    }
 
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
@@ -417,17 +447,22 @@ export class DashboardComponent implements OnInit {
     this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
-  aplicarFiltroSedes(){
+  aplicarFiltroSedes(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.sedesSeleccionadas.forEach((sede)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.sede==sede){
           filtrado.push(dash);
         }
       });
     });
 
+    if(comport?.anidado) {
+      return filtrado;
+    }
+
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
@@ -436,16 +471,21 @@ export class DashboardComponent implements OnInit {
     this.generarDataEntradasActuales({apiDataDashboard:filtrado});
   }
 
-  aplicarFiltroSociedades(){
+  aplicarFiltroSociedades(comport=null){
     let filtrado=[];
+    let dashBoard = comport?.dashboard ? comport.dashboard : this.apiDataDashboardBackup;
 
     this.sociedadesSeleccionadas.forEach((sociedad)=>{
-      this.apiDataDashboardBackup.map((dash)=>{
+      dashBoard.map((dash)=>{
         if(dash.sociedad==sociedad){
           filtrado.push(dash);
         }
       });
     });
+
+    if(comport?.anidado) {
+      return filtrado;
+    }
 
     //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
