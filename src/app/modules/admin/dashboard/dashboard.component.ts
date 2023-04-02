@@ -400,6 +400,7 @@ export class DashboardComponent implements OnInit {
 
   filtradoAnidado(){
     let filtrado=this.apiDataDashboardBackup;
+    let parametros:any;
 
     if (this.regionesSeleccionadas.length>0) {
       filtrado=this.aplicarFiltroRegiones({anidado:true,dashboard:filtrado});
@@ -416,11 +417,17 @@ export class DashboardComponent implements OnInit {
       console.log("Tercer filtro", filtrado);
     }
 
-    this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
-    this.generarDataEstandarElevador({apiDataDashboard:filtrado});
-    this.generarDataEficiencia({apiDataDashboard:filtrado});
-    this.generarDataProductividad({apiDataDashboard:filtrado});
-    this.generarDataEntradasActuales({apiDataDashboard:filtrado});
+    if (this.zonasSelesccionadas.length>0) {
+      parametros={apiDataDashboard:filtrado,zonas:this.zonasSelesccionadas}
+    }else{
+      parametros={apiDataDashboard:filtrado};
+    }
+
+    this.generarDataPuestoCompleto(parametros);
+    this.generarDataEstandarElevador(parametros);
+    this.generarDataEficiencia(parametros);
+    this.generarDataProductividad(parametros);
+    this.generarDataEntradasActuales(parametros);
   }
 
   aplicarFiltroRegiones(comport=null){
