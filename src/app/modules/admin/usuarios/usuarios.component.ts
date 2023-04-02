@@ -54,8 +54,9 @@ export class UsuariosComponent implements OnInit {
     sede     : [, [Validators.required]],
   });
 
-  displayedColumns: string[] = ['nombre', 'sede', 'telefono', 'email', 'cedula','genero','acciones'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'cedula', 'telefono', 'email', 'idUsuarioBir', 'genero', 'funcionPrincipal', 'funcionSecundaria','acciones'];
   dataSource = ELEMENT_DATA;
+  dataUsuarios: any;
 
   constructor(private _formBuilder: FormBuilder,public _dialog: MatDialog,private _apiService: ApiService) { }
 
@@ -81,7 +82,14 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  seleccionarSeccion(){
+    this._apiService.getQuery("Usuario/ObtenerUsuarios","").subscribe(async(data:any)=>{
+      this.dataUsuarios = await data.result;
+    });
+  }
+
   ngOnInit(): void {
+    this.seleccionarSeccion();
   }
 
 }
