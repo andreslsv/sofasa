@@ -18,7 +18,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'dashboard',
-        title: 'Dashboard',
+        title: 'Dashboard Mecánica',
         type : 'basic',
         icon : 'heroicons_outline:chart-bar',
         link : '/dashboard'
