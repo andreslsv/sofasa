@@ -48,9 +48,9 @@
                 <mat-chip [ngStyle]="{'background-color' : regionesSeleccionadas.includes(region)?'black':'rgb(203 213 225)', 'color' : regionesSeleccionadas.includes(region)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, regionesSeleccionadas)" *ngFor="let region of regionesDisponibles" [value]="region">{{region}}</mat-chip>
               </mat-chip-list>
 
-              <button mat-button (click)="aplicarFiltroRegiones()" class="absolute top-0 right-0 ml-2 mt-2">
+              <!--<button mat-button (click)="aplicarFiltroRegiones()" class="absolute top-0 right-0 ml-2 mt-2">
                 Filtrar
-              </button>
+              </button>-->
 
             </mat-expansion-panel>
         </mat-accordion>
@@ -70,9 +70,9 @@
                 </mat-chip>
               </mat-chip-list>
 
-              <div>
+              <!--<div>
                 <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="filtrarPorZona()">Filtrar</button>
-              </div>
+              </div>-->
 
             </mat-expansion-panel>
         </mat-accordion>
@@ -91,9 +91,9 @@
                 </mat-chip>
               </mat-chip-list>
 
-              <div>
+              <!--<div>
                 <button class="absolute top-0 right-0 mr-1 mt-1" (click)="aplicarFiltroSociedades()" mat-button>Filtrar</button>
-              </div>
+              </div>-->
 
             </mat-expansion-panel>
         </mat-accordion>
@@ -113,7 +113,7 @@
                 </mat-chip>
               </mat-chip-list>
 
-              <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="aplicarFiltroSedes()">Filtrar</button>
+              <!--<button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="aplicarFiltroSedes()">Filtrar</button>-->
               
             </mat-expansion-panel>
         </mat-accordion>
