@@ -321,10 +321,11 @@ export class DashboardColisionComponent implements OnInit {
   }
 
 
-  generarDataIndicadores(){
+  generarDataIndicadores(dashboard=null){
+    const dashBoard = dashboard?dashboard:this.apiDataDashboard;
     let elemento = valoresIndicadoresDefault;
 
-    this.apiDataDashboard.forEach((data)=>{
+    dashBoard.forEach((data)=>{
       elemento[0].valor+=data.productividad;
       elemento[1].valor+=data.tasaEficiencia;
       elemento[2].valor+=data.tasaEmpleo;
@@ -447,6 +448,7 @@ export class DashboardColisionComponent implements OnInit {
     }
 
     //this._dashBoardService.setApiDataDashboard(filtrado);
+    this.generarDataIndicadores(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});

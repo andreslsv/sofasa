@@ -321,10 +321,11 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  generarDataIndicadores(){
+  generarDataIndicadores(dashboard=null){
+    const dashBoard = dashboard?dashboard:this.apiDataDashboard;
     let elemento = valoresIndicadoresDefault;
 
-    this.apiDataDashboard.forEach((data)=>{
+    dashBoard.forEach((data)=>{
       elemento[0].valor+=data.productividad;
       elemento[1].valor+=data.tasaEficiencia;
       elemento[2].valor+=data.tasaEmpleo;
@@ -423,6 +424,7 @@ export class DashboardComponent implements OnInit {
       parametros={apiDataDashboard:filtrado};
     }
 
+    this.generarDataIndicadores(filtrado);
     this.generarDataPuestoCompleto(parametros);
     this.generarDataEstandarElevador(parametros);
     this.generarDataEficiencia(parametros);
