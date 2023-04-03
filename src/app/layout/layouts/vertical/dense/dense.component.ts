@@ -5,6 +5,8 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { NavigationService } from 'app/core/navigation/navigation.service';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.types';
 
 @Component({
     selector     : 'dense-layout',
@@ -17,6 +19,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
     navigation: Navigation;
     navigationAppearance: 'default' | 'dense' = 'dense';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    usuario: any;
 
     /**
      * Constructor
@@ -26,7 +29,8 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
         private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
+        private _fuseNavigationService: FuseNavigationService,
+        private _userService: UserService
     )
     {
     }
@@ -52,6 +56,12 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this._userService.user$
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe(async(user: User) => {
+            this.usuario = await user;
+        });
+        
         // Subscribe to navigation data
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -66,7 +76,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
 
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
-            });
+        });
     }
 
     /**
