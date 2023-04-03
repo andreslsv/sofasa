@@ -86,10 +86,10 @@ export class ColisionComponent implements OnInit {
   }
 
   obtenerApiDataUbicacion(){
-    this.zonasDisponibles = this.ubicaciones.map((data)=>{return data.zona});
-    this.regionesDisponibles = this.ubicaciones.map((data)=>{return data.region});
-    this.sociedadesDisponibles = this.ubicaciones.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = this.ubicaciones.map((data)=>{return data.sede});
+    this.zonasDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.zona}));
+    this.regionesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.region}));
+    this.sociedadesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.sociedad}));
+    this.sedesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.sede}));
   }
 
   guardarColision(){
@@ -199,6 +199,10 @@ export class ColisionComponent implements OnInit {
       dataQuery.sociedad=this.ubicaciones[0]?.sociedad;
       dataQuery.sede=this.ubicaciones[0]?.sede;
     }
+  }
+
+  filtrarElementosDuplicadas(lista){
+    return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
   ngOnInit(): void {

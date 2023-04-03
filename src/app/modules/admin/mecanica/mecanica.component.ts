@@ -177,10 +177,14 @@ export class MecanicaComponent implements OnInit {
   }
 
   obtenerApiDataUbicacion(){
-    this.zonasDisponibles = this.ubicaciones.map((data)=>{return data.zona});
-    this.regionesDisponibles = this.ubicaciones.map((data)=>{return data.region});
-    this.sociedadesDisponibles = this.ubicaciones.map((data)=>{return data.sociedad});
-    this.sedesDisponibles = this.ubicaciones.map((data)=>{return data.sede});
+    this.zonasDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.zona}));
+    this.regionesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.region}));
+    this.sociedadesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.sociedad}));
+    this.sedesDisponibles = this.filtrarElementosDuplicadas(this.ubicaciones.map((data)=>{return data.sede}));
+  }
+
+  filtrarElementosDuplicadas(lista){
+    return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
   ngOnInit(): void {
