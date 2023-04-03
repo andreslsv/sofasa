@@ -79,17 +79,18 @@ export class UsuariosComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((result: any) => {
+      this.obtenerUsuarios();
     });
   }
 
-  seleccionarSeccion(){
+  obtenerUsuarios(){
     this._apiService.getQuery("Usuario/ObtenerUsuarios","").subscribe(async(data:any)=>{
       this.dataUsuarios = await data.result;
     });
   }
 
   ngOnInit(): void {
-    this.seleccionarSeccion();
+    this.obtenerUsuarios();
   }
 
 }
