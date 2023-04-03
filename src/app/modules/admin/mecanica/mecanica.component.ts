@@ -67,6 +67,27 @@ export class MecanicaComponent implements OnInit {
   }
 
   guardarMecanica(){
+    const valores=this.seccionForm.value;
+
+    if (!valores.region) {
+      this._snackBar.open('Región no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.zona) {
+      this._snackBar.open('Zona no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.sociedad) {
+      this._snackBar.open('Sociedad no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.sede) {
+      this._snackBar.open('Sede no seleccionada', null, {duration: 4000});
+      return;
+    }
 
     let mecanica = {
       "fechaRegistro": "2023-03-28T19:58:17.931Z",
@@ -99,6 +120,8 @@ export class MecanicaComponent implements OnInit {
       "entradasPotenciales": 0,
       "elevadoresProductivos": 0
     };
+
+
 
     this.guardarFormulas(mecanica2);
     this.editarUbicaciones(mecanica);

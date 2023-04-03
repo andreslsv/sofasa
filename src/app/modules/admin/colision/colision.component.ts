@@ -93,6 +93,9 @@ export class ColisionComponent implements OnInit {
   }
 
   guardarColision(){
+
+    const valores=this.seccionForm.value;
+
     let colision = {
       "fechaRegistro": "2023-03-28T23:20:32.347Z",
       "idUsuario":this.user?.id,
@@ -135,6 +138,26 @@ export class ColisionComponent implements OnInit {
       "entradasPuestoTrabajo": 0,
       "entradasPotencialesPuestoTrabajo": 0,
       "puestoTrabajoDefinidoMarca": 0
+    }
+
+    if (!valores.region) {
+      this._snackBar.open('Región no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.zona) {
+      this._snackBar.open('Zona no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.sociedad) {
+      this._snackBar.open('Sociedad no seleccionada', null, {duration: 4000});
+      return;
+    }
+
+    if (!valores.sede) {
+      this._snackBar.open('Sede no seleccionada', null, {duration: 4000});
+      return;
     }
 
     this.guardarFormulas(colision2);
