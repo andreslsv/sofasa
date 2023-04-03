@@ -216,7 +216,7 @@
                       <th mat-header-cell *matHeaderCellDef class="text-right"> Indicador </th>
                       <td mat-cell *matCellDef="let element" class="text-right">
                         <span [matTooltip]="element?.labelFormula" class="bg-zinc-300 text-zinc-800 px-2 rounded-xl cursor-pointer">
-                            {{element?.indicador?.toFixed(2)}}
+                            {{element?.indicador?.toFixed(2)}}{{getCaracterPorcentaje(element)}}
                         </span>
                     </td>
                     </ng-container>

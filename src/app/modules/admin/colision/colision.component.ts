@@ -205,6 +205,14 @@ export class ColisionComponent implements OnInit {
     return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
+  getCaracterPorcentaje(elemento){
+    if (elemento.nombreVariable=="tasaEmpleo" || elemento.nombreVariable=="tasaEficiencia" || elemento.nombreVariable=="productividad" || elemento.nombreVariable=="aprovechamientoCapacidadServicio" || elemento.nombreVariable=="capacidadDeServicioInstalada") {
+      return "%";
+    }else{
+      return "";
+    }
+  }
+
   ngOnInit(): void {
     this._colisionService.getColision().subscribe((data)=>{
       this.dataColision=data;
