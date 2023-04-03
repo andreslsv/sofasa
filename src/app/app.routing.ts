@@ -3,6 +3,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { UsuariosGuard } from './modules/admin/usuarios/usuarios.guard';
 
 // @formatter:off
 /* eslint-disable max-len */
@@ -77,7 +78,7 @@ export const appRoutes: Route[] = [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
             {path: 'dashboard', loadChildren: () => import('app/modules/admin/dashboard/dashboard.module').then(m => m.DashboardModule)},
             {path: 'dashboard-colision', loadChildren: () => import('app/modules/admin/dashboard-colision/dashboard-colision.module').then(m => m.DashboardColisionModule)},
-            {path: 'usuarios', loadChildren: () => import('app/modules/admin/usuarios/usuarios.module').then(m => m.UsuariosModule)},
+            {path: 'usuarios',canActivate: [UsuariosGuard], loadChildren: () => import('app/modules/admin/usuarios/usuarios.module').then(m => m.UsuariosModule)},
             {path: 'colision', loadChildren: () => import('app/modules/admin/colision/colision.module').then(m => m.ColisionModule)},
             {path: 'mecanica', loadChildren: () => import('app/modules/admin/mecanica/mecanica.module').then(m => m.MecanicaModule)},
         ]
