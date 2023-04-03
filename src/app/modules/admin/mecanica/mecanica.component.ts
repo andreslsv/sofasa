@@ -69,22 +69,22 @@ export class MecanicaComponent implements OnInit {
   guardarMecanica(){
     const valores=this.seccionForm.value;
 
-    if (!valores.region) {
+    if (!valores.region && this.user?.admin==1) {
       this._snackBar.open('Región no seleccionada', null, {duration: 4000});
       return;
     }
 
-    if (!valores.zona) {
+    if (!valores.zona && this.user?.admin==1) {
       this._snackBar.open('Zona no seleccionada', null, {duration: 4000});
       return;
     }
 
-    if (!valores.sociedad) {
+    if (!valores.sociedad && this.user?.admin==1) {
       this._snackBar.open('Sociedad no seleccionada', null, {duration: 4000});
       return;
     }
 
-    if (!valores.sede) {
+    if (!valores.sede && this.user?.admin==1) {
       this._snackBar.open('Sede no seleccionada', null, {duration: 4000});
       return;
     }
@@ -161,7 +161,10 @@ export class MecanicaComponent implements OnInit {
       dataQuery.sociedad=this.seccionForm.value.sociedad;
       dataQuery.sede=this.seccionForm.value.sede;
     } else {
-      
+      dataQuery.region=this.ubicaciones[0]?.region;
+      dataQuery.zona=this.ubicaciones[0]?.zona;
+      dataQuery.sociedad=this.ubicaciones[0]?.sociedad;
+      dataQuery.sede=this.ubicaciones[0]?.sede;
     }
   }
 
