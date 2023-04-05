@@ -95,6 +95,7 @@ export class ColisionComponent implements OnInit {
   guardarColision(){
 
     const valores=this.seccionForm.value;
+    const puestosTrabajoForm=this.puestosTrabajoForm.value;
 
     let colision = {
       "fechaRegistro": "2023-03-28T23:20:32.347Z",
@@ -107,26 +108,37 @@ export class ColisionComponent implements OnInit {
       "totalHorasDisponibles": this.mecanicaForm.value.tot_hor_dis,
       "horasHabilesLey": this.mecanicaForm.value.hor_hab_ley,
       "tiempoProductivo": this.mecanicaForm.value.tie_pro,
-      "promedioHorasFacturacion": this.mecanicaForm.value.pro_hor_fac_por_ent
+      "promedioHorasFacturacion": this.mecanicaForm.value.pro_hor_fac_por_ent,
+
+      /*Puesto desarmado*/
+
+      "puestoDesarmadoMarca": puestosTrabajoForm.ej_puesto_desarmado,
+      "puestoDesarmadoConce": puestosTrabajoForm.tec_puesto_desarmado,
+
+      "puestoLatoneriaMarca": puestosTrabajoForm.ej_puesto_latoneria,
+      "puestoLatoneriaConce": puestosTrabajoForm.tec_puesto_latoneria,
+
+      "puestoPreparacionMarca": puestosTrabajoForm.ej_puesto_preparacion,
+      "puestoPreparacionConce": puestosTrabajoForm.tec_puesto_preparacion,
+
+      "cabinaDePinturaMarca": puestosTrabajoForm.ej_cabina_pintura,
+      "cabinaDePinturaConce": puestosTrabajoForm.tec_cabina_pintura,
+
+      "puestoDeArmadoMarca": puestosTrabajoForm.ej_cabina_pintura,
+      "puestoDeArmadoConce": puestosTrabajoForm.tec_cabina_pintura,
+      
+      "puestoDeBrilladoMarca": puestosTrabajoForm.ej_puesto_brillado,
+      "puestoDeBrilladoConce": puestosTrabajoForm.tec_puesto_brillado,
+
+      //"puestoTrabajoDefinidoMarca": 0,
+
     };
 
     const colision2 = {
       "personaProductivo": 0,
       "puestosDeTrabajoTotales": 0,
       "puestosDeTrabajoCompletos": 0,
-      "entradasxPuestoTrabajo": 0,
-      "puestoDesarmadoMarca": 0,
-      "puestoLatoneriaMarca": 0,
-      "puestoPreparacionMarca": 0,
-      "cabinaDePinturaMarca": 0,
-      "puestoDeArmadoMarca": 0,
-      "puestoDeBrilladoMarca": 0,
-      "puestoDesarmadoConce": 0,
-      "puestoLatoneriaConce": 0,
-      "puestoPreparacionConce": 0,
-      "cabinaDePinturaConce": 0,
-      "puestoDeArmadoConce": 0,
-      "puestoDeBrilladoConce": 0,
+      "entradasxPuestoTrabajo": 0,//-------------
       "tasaEmpleo": 0,
       "tasaEficiencia": 0,
       "productividad": 0,
@@ -135,9 +147,9 @@ export class ColisionComponent implements OnInit {
       "tecnicosPuestoTrabajo": 0,
       "pulmonesPuestoTrabajo": 0,
       "pulmonesPuestoTrabajoCompleto": 0,
-      "entradasPuestoTrabajo": 0,
+      "entradasPuestoTrabajo": 0,//-------------
       "entradasPotencialesPuestoTrabajo": 0,
-      "puestoTrabajoDefinidoMarca": 0
+      "puestoTrabajoDefinidoMarca": 0,
     }
 
     if (!valores.region && this.user?.admin==1) {

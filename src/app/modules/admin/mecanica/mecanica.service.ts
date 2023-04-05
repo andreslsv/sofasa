@@ -33,6 +33,22 @@ export class MecanicaService {
       }
     },
     {
+      nombreVariable:"entradasxPuestoTrabajo",
+      datosGenerales:"Entradas x puesto trabajo",
+      labelFormula:"Horas habiles de ley * Tiempo productivo habil muerto/promedio hora facturación * Entrada",
+      indicador:0,
+      formula:(valores)=>{
+        return (valores.hor_hab_ley*valores.tie_prod)/valores.pro_hor_fac_por_ent
+      }
+    },
+    {
+      nombreVariable:"puestosDeTrabajoCompletos",
+      datosGenerales:"Puestos de trabajo completos (productivos)",
+      labelFormula:"MIN(Elevadores totales, Técnicos mecánicos)",
+      indicador:0,
+      formula:(valores)=>{return Math.min(valores.ele_tot_mec, valores.tec_mec)}
+    },
+    {
       nombreVariable:"aprovechamientoCapacidadServicio",
       datosGenerales:"Aprovechamiento Capacidad Servicio - Puesto completo",
       labelFormula:"(Entradas x puesto de trabajo - completo)/(Entradas x puesto trabajo)",
@@ -84,15 +100,6 @@ export class MecanicaService {
       indicador:0,
       formula:(valores)=>{
         return valores.ele_tot_mec/valores.ent_x_pues_de_tra
-      }
-    },
-    {
-      nombreVariable:"entradasPuestoTrabajo",
-      datosGenerales:"Entradas x puesto trabajo",
-      labelFormula:"(horas hábiles de ley * Tiempo productivo (habil - muerto )) / (Promedio horas facturacion por entrada)",
-      indicador:0,
-      formula:(valores)=>{
-        return (valores.hor_hab_ley*valores.tie_prod)/valores.pro_hor_fac_por_ent
       }
     },
     {

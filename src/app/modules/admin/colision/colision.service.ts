@@ -7,11 +7,15 @@ import { BehaviorSubject } from 'rxjs';
 export class ColisionService {
 
   puestos_de_trabajo_definidos_por_marca(valores2){
-    return valores2.ej_puesto_desarmado+valores2.ej_puesto_latoneria+valores2.ej_puesto_preparacion+valores2.ej_cabina_pintura+valores2.ej_puesto_brillado;
+    const valor = parseInt(valores2.ej_puesto_desarmado)+parseInt(valores2.ej_puesto_latoneria)+parseInt(valores2.ej_puesto_preparacion)+parseInt(valores2.ej_cabina_pintura)+parseInt(valores2.ej_puesto_armado)+parseInt(valores2.ej_puesto_brillado);
+    console.log("puestos_de_trabajo_definidos_por_marca",valor);
+    return valor;
   }
 
   persona_productivo(valores2){
-    return valores2.tec_puesto_desarmado+valores2.tec_puesto_latoneria+valores2.tec_puesto_preparacion+valores2.tec_cabina_pintura+valores2.tec_puesto_brillado;
+    const valor = valores2.tec_puesto_desarmado+valores2.tec_puesto_latoneria+valores2.tec_puesto_preparacion+valores2.ej_cabina_pintura+valores2.tec_puesto_armado+valores2.tec_puesto_brillado;
+    console.log("persona_productivo",valor);
+    return valor;
   }
 
   entradas_por_puestos_de_trabajo(valores){
@@ -21,6 +25,14 @@ export class ColisionService {
   dataMecanica=[
     {
       nombreVariable:"entradasxPuestoTrabajo",
+      datosGenerales:"Entradas x puesto de trabajo",
+      labelFormula:"Horas habiles de ley * Tiempo productivo habil muerto/promedio hora facturación * Entrada",
+      indicador:0,
+      formula:(valores,valores2)=>{
+        return (valores.hor_hab_ley*valores.tie_pro)/valores.pro_hor_fac_por_ent}
+    },
+    {
+      nombreVariable:"entradasPuestoTrabajo",
       datosGenerales:"Entradas x puesto de trabajo - completo",
       labelFormula:"(Entradas promedio dia (6 Meses)) / (Puestos de trabajo completos)",
       indicador:0,
