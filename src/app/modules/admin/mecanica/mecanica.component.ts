@@ -118,7 +118,7 @@ export class MecanicaComponent implements OnInit {
       "pulmonesElevadoresProductivos": 0,
       "entradasPuestoTrabajo": 0,
       "entradasPotenciales": 0,
-      "elevadoresProductivos": 0
+      "elevadoresProductivos": 0,
     };
 
 

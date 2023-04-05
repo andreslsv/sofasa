@@ -115,6 +115,13 @@ export class MecanicaService {
       labelFormula:"Pulmones / Elevadores Productivos (Elevador + Tecnico)",
       indicador:0,
       formula:(valores)=>{return valores.pulmones/Math.min(valores.ele_tot_mec, valores.tec_mec)}
+    },
+    {
+      nombreVariable:"elevadoresProductivos",
+      datosGenerales:"Elevadores Productivos",
+      labelFormula:"MIN(Elevadores totales, Técnicos mecánicos)",
+      indicador:0,
+      formula:(valores)=>{return Math.min(valores.ele_tot_mec, valores.tec_mec)}
     }
   ];
 
