@@ -128,7 +128,7 @@ export class DashboardColisionComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.puestosDeTrabajoTotales;//Valor quemado pulmonesElevadoresProductivos es el original
+          element2.valor+=element.puestosDeTrabajoCompletos;
         }
       });
     });
@@ -230,17 +230,15 @@ export class DashboardColisionComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.tasaEmpleo;//Valor quemado pulmonesElevadoresProductivos es el original
+          element2.valor+=element.entradasxPuestoTrabajo;//Valor quemado pulmonesElevadoresProductivos es el original
         }
       });
     });
 
     apiDataDashboard.forEach((element) => {
-      console.log("Elementos de la grafica", element);
       elemento2.forEach((element2)=>{
-        console.log("Elementos de la grafica 2", element2);
         if (element.zona==element2.zona) {
-          element2.valor+=element.tiempoProductivo;//Valor quemado pulmonesElevadoresProductivos es el original
+          element2.valor+=element.entradasPotencialesPuestoTrabajo;//Valor quemado pulmonesElevadoresProductivos es el original
         }
       });
     });
@@ -342,12 +340,12 @@ export class DashboardColisionComponent implements OnInit {
       elemento[0].valor+=data.productividad;
       elemento[1].valor+=data.tasaEficiencia;
       elemento[2].valor+=data.tasaEmpleo;
-      elemento[3].valor+=data.puestosDeTrabajoCompletos;
-      elemento[4].valor+=data.tecnicosElevadoresTotales;
-      elemento[5].valor+=data.pulmonesElevadoresTotales;
+      elemento[3].valor+=data.pulmonesPorPuestoTrabajo;
+      elemento[4].valor+=data.tecnicosPuestoTrabajo;
+      elemento[5].valor+=data.pulmones;//Igual en mecanica
       elemento[6].valor+=data.puestosDeTrabajoCompletos;
-      elemento[7].valor+=data.elevadoresTotalesMecanica;
-      elemento[8].valor+=data.elevadoresTotalesMecanica;
+      elemento[7].valor+=data.puestoTrabajoDefinidoMarca;
+      elemento[8].valor+=data.entradasPromedioTaller;
       elemento[9].valor+=data.entradasPuestoTrabajo;
     });
 

@@ -83,6 +83,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+
   generarDataPuestoCompleto(filtros=null){
     let elemento = [];
     const zonasDisponibles = filtros?.zonas?filtros.zonas:this.zonasDisponibles;
@@ -93,10 +94,7 @@ export class DashboardComponent implements OnInit {
     });
 
     apiDataDashboard.forEach((element) => {
-      console.log("El this.apiDataDashboard de", element);
       elemento.forEach((element2)=>{
-        console.log("element",element);
-        console.log("element2",element2);
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
         }
@@ -128,7 +126,7 @@ export class DashboardComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.pulmonesElevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.elevadoresProductivos;//El valor debe ser la sumatoria de elevadoresProductivos
         }
       });
     });
@@ -144,6 +142,7 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.setConfigEstandarElevador(this.configEstandarElevador);
   }
+
 
   async generarDataEficiencia(filtros=null){
     let elemento = [];
@@ -230,7 +229,7 @@ export class DashboardComponent implements OnInit {
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
-          element2.valor+=element.entradasPuestoTrabajo;//El valor debe ser la sumatoria de elevadoresProductivos
+          element2.valor+=element.entradasxPuestoTrabajo;//El valor debe ser la sumatoria de elevadoresProductivos
         }
       });
     });
@@ -345,9 +344,9 @@ export class DashboardComponent implements OnInit {
       elemento[3].valor+=data.puestosDeTrabajoCompletos;
       elemento[4].valor+=data.tecnicosElevadoresTotales;
       elemento[5].valor+=data.pulmonesElevadoresTotales;
-      elemento[6].valor+=data.puestosDeTrabajoCompletos;
+      elemento[6].valor+=data.capacidadDeServicioInstalada;
       elemento[7].valor+=data.elevadoresTotalesMecanica;
-      elemento[8].valor+=data.elevadoresTotalesMecanica;
+      elemento[8].valor+=data.entradasPromedioTaller;
       elemento[9].valor+=data.entradasPuestoTrabajo;
     });
 
