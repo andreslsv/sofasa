@@ -320,9 +320,22 @@ export class DashboardColisionComponent implements OnInit {
     this._dashBoardService.setConfigProductividad(this.configEntradas);*/
   }
 
+  reiniciarValoresDataIndicadores(){
+    valoresIndicadoresDefault[0].valor=0;
+    valoresIndicadoresDefault[1].valor=0;
+    valoresIndicadoresDefault[2].valor=0;
+    valoresIndicadoresDefault[3].valor=0;
+    valoresIndicadoresDefault[4].valor=0;
+    valoresIndicadoresDefault[5].valor=0;
+    valoresIndicadoresDefault[6].valor=0;
+    valoresIndicadoresDefault[7].valor=0;
+    valoresIndicadoresDefault[8].valor=0;
+    valoresIndicadoresDefault[9].valor=0;
+  }
 
   generarDataIndicadores(dashboard=null){
     const dashBoard = dashboard?dashboard:this.apiDataDashboard;
+    this.reiniciarValoresDataIndicadores();
     let elemento = valoresIndicadoresDefault;
 
     dashBoard.forEach((data)=>{
@@ -424,6 +437,7 @@ export class DashboardColisionComponent implements OnInit {
       parametros={apiDataDashboard:filtrado};
     }
 
+    this.generarDataIndicadores(filtrado);
     this.generarDataPuestoCompleto(parametros);
     this.generarDataEstandarElevador(parametros);
     this.generarDataEficiencia(parametros);
