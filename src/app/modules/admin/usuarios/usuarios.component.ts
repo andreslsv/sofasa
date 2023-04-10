@@ -83,6 +83,21 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  editarUsuarioModal(id){
+    const dialogRef = this._dialog.open(AgregarUsuarioComponent, {
+      minWidth: '500px',
+      height: 'auto',
+      data:{
+        id:id
+      }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.obtenerUsuarios();
+    });
+  }
+
   obtenerUsuarios(){
     this._apiService.getQuery("Usuario/ObtenerUsuarios","").subscribe(async(data:any)=>{
       this.dataUsuarios = await data.result;

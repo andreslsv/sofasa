@@ -20,6 +20,18 @@
             </mat-form-field>
 
             <mat-form-field class="w-full -mb-3">
+                <input placeholder="Id usuario bir" matInput [formControlName]="'idUsuarioBir'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Id usuario bir" matInput [formControlName]="'idUsuarioBir'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
+                <input placeholder="Ipn token" matInput [formControlName]="'ipnToken'">
+            </mat-form-field>
+
+            <mat-form-field class="w-full -mb-3">
                 <input placeholder="Sede" matInput [formControlName]="'sede'">
                 <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:office-building'">
                 </mat-icon>
@@ -44,7 +56,7 @@
             </mat-form-field>
 
             <mat-form-field class="w-full -mb-3">
-                <mat-select placeholder="Genero" >
+                <mat-select placeholder="Genero" [formControlName]="'genero'">
                   <mat-option [value]="'hombre'">Hombre</mat-option>
                   <mat-option [value]="'mujer'">Mujer</mat-option>
                 </mat-select>
@@ -94,6 +106,6 @@
 
     <div class="mt-4 flex justify-end">
         <button mat-button class="mr-1" (click)="dialogRef.close()">Cancelar</button>
-        <button class="bg-black text-white" mat-button>Aceptar</button>
+        <button class="bg-black text-white" (click)="guardarUsuario()" mat-button>Aceptar</button>
     </div>
 </section>

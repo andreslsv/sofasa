@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiService } from 'app/services/api.service';
 
 @Component({
   selector: 'app-agregar-usuario',
@@ -8,10 +10,13 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./agregar-usuario.component.scss']
 })
 export class AgregarUsuarioComponent implements OnInit {
+  dataUsuario:any;
 
   usuarioForm = this._formBuilder.group({
     nombre                 : [, [Validators.required]],
     apellido               : [, [Validators.required]],
+    idUsuarioBir           : [, [Validators.required]],
+    ipnToken               : [, [Validators.required]],
     sede                   : [, [Validators.required]],
     telefono               : [, [Validators.required]],
     email                  : [, [Validators.required]],
@@ -27,9 +32,62 @@ export class AgregarUsuarioComponent implements OnInit {
     region                 : [, [Validators.required]],
   });
 
-  constructor(private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<AgregarUsuarioComponent>) { }
+  constructor(private _formBuilder: FormBuilder, public dialogRef: MatDialogRef<AgregarUsuarioComponent>,private _apiService:ApiService,@Inject(MAT_DIALOG_DATA) public data: any,private _snackBar: MatSnackBar) { }
+
+  generarUsuario(id=null){
+    const valores = this.usuarioForm.value;
+    const dataUsuario:any=[{
+      "cedula": valores.cedula,
+      "codigoBir": valores.codigoBir,
+      "idUsuarioBir": valores.idUsuarioBir,
+      "apellido":valores.apellido,
+      "nombre": valores.nombre,
+      "fechaDeNacimiento": "2023-04-10T14:09:58.663Z",
+      "genero": valores.genero,
+      "ipnToken": valores.ipnToken,
+      "telefono": valores.telefono,
+      "email": valores.email,
+      "funcionPrincipal": valores.funcionPrincipal,
+      "funcionSecundaria": valores.funcionSecundaria,
+      "sede": valores.sede,
+      "sociedad": valores.sociedad,
+      "duplicados": valores.duplicados,
+      "fechaDeCreacion": "2023-04-10T14:09:58.663Z",
+      "zona": "ZONA4",
+      "region": valores.region,
+      "clave": "1234567"
+    }];
+    if(id)dataUsuario.id=id;
+    return dataUsuario;
+  }
+  
+  guardarUsuario(){
+    this._apiService.postQuery("Usuario/CrearUsuario","",this.generarUsuario()).subscribe(async(result:any)=>{
+      if (result.isSuccess) {
+        this.openSnackBar("Usuario creado correctamente");
+        this.dialogRef.close();
+      }else{
+        this.openSnackBar("Ha ocurrido un error");
+      }
+    });
+  }
+
+  obtenerUsuario(){
+    this._apiService.getQuery("Usuario/ObtenerUsuario","").subscribe(async(data:any)=>{
+      console.log("El usuario a seleccionar", data.result);
+      this.dataUsuario = await data.result;
+    });
+  }
+
+  openSnackBar(mensaje){
+    this._snackBar.open(mensaje, null, {duration: 4000});
+  }
 
   ngOnInit(): void {
+    console.log("Vsalor del id del usuario en modal", this.data?.id);
+    if (this.data?.id) {
+      this.obtenerUsuario();
+    }
   }
 
 }
