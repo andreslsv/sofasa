@@ -37,6 +37,7 @@ export class AgregarUsuarioComponent implements OnInit {
   generarUsuario(id=null){
     const valores = this.usuarioForm.value;
     const dataUsuario:any=[{
+      "id":"0401818",
       "cedula": valores.cedula,
       "codigoBir": valores.codigoBir,
       "idUsuarioBir": valores.idUsuarioBir,
@@ -53,10 +54,12 @@ export class AgregarUsuarioComponent implements OnInit {
       "sociedad": valores.sociedad,
       "duplicados": valores.duplicados,
       "fechaDeCreacion": "2023-04-10T14:09:58.663Z",
-      "zona": "ZONA4",
+      "zona": valores.zona,
       "region": valores.region,
       "clave": "1234567"
     }];
+
+    
     if(id)dataUsuario.id=id;
     return dataUsuario;
   }
@@ -75,7 +78,7 @@ export class AgregarUsuarioComponent implements OnInit {
   obtenerUsuario(){
 
     const dataUsuario={
-      "id": this.data?.usuario?.idUsuarioBir,
+      "id": this.data?.usuario?.id,
       "email": this.data?.usuario?.email,
       "cedula": this.data?.usuario?.cedula,
       "codigoBir": this.data?.usuario?.codigoBir
@@ -85,7 +88,35 @@ export class AgregarUsuarioComponent implements OnInit {
 
     this._apiService.postQuery("Usuario/ObtenerUsuario","",dataUsuario).subscribe(async(data:any)=>{
       this.dataUsuario = await data.result;
+      await this.llenarFormulario(data.result);
     });
+  }
+
+  llenarFormulario(valor){
+
+    const usuario = {
+      "cedula": valor.cedula,
+      "codigoBir": valor.codigoBir,
+      "idUsuarioBir": valor.idUsuarioBir,
+      "apellido": valor.apellido,
+      "nombre": valor.nombre,
+      "fechaNacimiento": valor.fechaDeNacimiento,
+      "genero": valor.genero,
+      "ipnToken": valor.ipnToken,
+      "telefono": valor.telefono,
+      "email": valor.email,
+      "funcionPrincipal": valor.funcionPrincipal,
+      "funcionSecundaria": valor.funcionSecundaria,
+      "sede": valor.sede,
+      "sociedad": valor.sociedad,
+      "duplicados": valor.duplicados,
+      //"fechaDeCreacion": "2023-04-10T14:09:58.663Z",
+      "zona": valor.zona,
+      "region": valor.region,
+      //"clave": "1234567"
+    }
+
+    this.usuarioForm.setValue(usuario);
   }
 
   openSnackBar(mensaje){
