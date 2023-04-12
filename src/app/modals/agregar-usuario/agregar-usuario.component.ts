@@ -73,8 +73,17 @@ export class AgregarUsuarioComponent implements OnInit {
   }
 
   obtenerUsuario(){
-    this._apiService.getQuery("Usuario/ObtenerUsuario","").subscribe(async(data:any)=>{
-      console.log("El usuario a seleccionar", data.result);
+
+    const dataUsuario={
+      "id": this.data?.usuario?.idUsuarioBir,
+      "email": this.data?.usuario?.email,
+      "cedula": this.data?.usuario?.cedula,
+      "codigoBir": this.data?.usuario?.codigoBir
+    }
+
+    console.log("Este es el valor de daataUsuario", dataUsuario);
+
+    this._apiService.postQuery("Usuario/ObtenerUsuario","",dataUsuario).subscribe(async(data:any)=>{
       this.dataUsuario = await data.result;
     });
   }
@@ -84,8 +93,8 @@ export class AgregarUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Vsalor del id del usuario en modal", this.data?.id);
-    if (this.data?.id) {
+    console.log("Este es el valor de la data devuelta", this.data);
+    if (this.data?.usuario?.idUsuarioBir) {
       this.obtenerUsuario();
     }
   }

@@ -83,12 +83,12 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editarUsuarioModal(id){
+  editarUsuarioModal(usuario){
     const dialogRef = this._dialog.open(AgregarUsuarioComponent, {
       minWidth: '500px',
       height: 'auto',
       data:{
-        id:id
+        usuario:usuario
       }
       }
     );
