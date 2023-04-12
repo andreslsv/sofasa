@@ -44,10 +44,12 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : regionesSeleccionadas.includes(region)?'black':'rgb(203 213 225)', 'color' : regionesSeleccionadas.includes(region)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, regionesSeleccionadas)" *ngFor="let region of regionesDisponibles" [value]="region">{{region}}</mat-chip>
-              </mat-chip-list>
-
+              <div class="w-full h-64 overflow-x-hidden overflow-y-scroll">
+                <mat-chip-list aria-label="Fish selection">
+                  <mat-chip [ngStyle]="{'background-color' : regionesSeleccionadas.includes(region)?'black':'rgb(203 213 225)', 'color' : regionesSeleccionadas.includes(region)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, regionesSeleccionadas)" *ngFor="let region of regionesDisponibles" [value]="region">{{region}}</mat-chip>
+                </mat-chip-list>
+              </div>
+              
               <!--<button mat-button (click)="aplicarFiltroRegiones()" class="absolute top-0 right-0 ml-2 mt-2">
                 Filtrar
               </button>-->
@@ -63,12 +65,15 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : zonasSelesccionadas.includes(zona)?'black':'rgb(203 213 225)', 'color' : zonasSelesccionadas.includes(zona)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, zonasSelesccionadas)" *ngFor="let zona of zonasDisponibles" [value]="zona">
-                    <span *ngIf="c.selected">*</span>
-                    {{zona}}
-                </mat-chip>
-              </mat-chip-list>
+              <div class="w-full h-64 overflow-x-hidden overflow-y-scroll">
+                <mat-chip-list aria-label="Fish selection">
+                  <mat-chip [ngStyle]="{'background-color' : zonasSelesccionadas.includes(zona)?'black':'rgb(203 213 225)', 'color' : zonasSelesccionadas.includes(zona)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, zonasSelesccionadas)" *ngFor="let zona of zonasDisponibles" [value]="zona">
+                      <span *ngIf="c.selected">*</span>
+                      {{zona}}
+                  </mat-chip>
+                </mat-chip-list>                
+              </div>
+
 
               <!--<div>
                 <button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="filtrarPorZona()">Filtrar</button>
@@ -85,11 +90,14 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(sociedad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
-                    {{sociedad}}
-                </mat-chip>
-              </mat-chip-list>
+              <div class="w-full h-64 overflow-x-hidden overflow-y-scroll">
+                <mat-chip-list aria-label="Fish selection">
+                  <mat-chip [ngStyle]="{'background-color' : sociedadesSeleccionadas.includes(sociedad)?'black':'rgb(203 213 225)', 'color' : sociedadesSeleccionadas.includes(sociedad)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sociedadesSeleccionadas)" *ngFor="let sociedad of sociedadesDisponibles" [value]="sociedad">
+                      {{sociedad}}
+                  </mat-chip>
+                </mat-chip-list>                
+              </div>
+
 
               <!--<div>
                 <button class="absolute top-0 right-0 mr-1 mt-1" (click)="aplicarFiltroSociedades()" mat-button>Filtrar</button>
@@ -106,12 +114,15 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip [ngStyle]="{'background-color' : sedesSeleccionadas.includes(sede)?'black':'rgb(203 213 225)', 'color' : sedesSeleccionadas.includes(sede)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sedesSeleccionadas)" *ngFor="let sede of sedesDisponibles" [value]="sede">
-                    <span *ngIf="c.selected">*</span>
-                    {{sede}}
-                </mat-chip>
-              </mat-chip-list>
+              <div class="w-full h-64 overflow-x-hidden overflow-y-scroll">
+                <mat-chip-list aria-label="Fish selection">
+                  <mat-chip [ngStyle]="{'background-color' : sedesSeleccionadas.includes(sede)?'black':'rgb(203 213 225)', 'color' : sedesSeleccionadas.includes(sede)?'white':'black'}" class="cursor-pointer" #c="matChip" (click)="toggleSelection(c, sedesSeleccionadas)" *ngFor="let sede of sedesDisponibles" [value]="sede">
+                      <span *ngIf="c.selected">*</span>
+                      {{sede}}
+                  </mat-chip>
+                </mat-chip-list>                
+              </div>
+
 
               <!--<button class="absolute top-0 right-0 mr-1 mt-1" mat-button (click)="aplicarFiltroSedes()">Filtrar</button>-->
               
