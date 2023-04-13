@@ -90,13 +90,14 @@ export class DashboardComponent implements OnInit {
     const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0}
+      return {zona:element, valor:0, productividad:0, eficiencia:0, tasaEmpleo:0, puestosDeTrabajoCompletos:0,tecnicosElevadoresTotales:0,pulmonesElevadoresTotales:0,capacidadDeServicioInstalada:0, elevadoresTotalesMecanica:0, entradasPromedioTaller:0, entradasPuestoTrabajo:0}
     });
 
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
+
         }
       });
     });
