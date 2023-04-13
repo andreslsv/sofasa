@@ -36,8 +36,6 @@ export class DashboardComponent implements OnInit {
   public chartOptionsEstandar: Partial<ChartOptions>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  
-  //Valores para llenar las tablas
   chartOptions: Partial<ChartOptions>;
   configEstandarElevador: Partial<ChartOptions>;
   configEficiencia: Partial<ChartOptions>;
@@ -75,7 +73,6 @@ export class DashboardComponent implements OnInit {
 
 
   toggleSelection(chip: MatChip,selector) {
-    //chip.toggleSelected(true);
     if (selector.includes(chip.value)) {
       selector.splice(selector.indexOf(chip.value), 1);
     } else {
@@ -83,24 +80,35 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
   generarDataPuestoCompleto(filtros=null){
     let elemento = [];
     const zonasDisponibles = filtros?.zonas?filtros.zonas:this.zonasDisponibles;
     const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0, productividad:0, eficiencia:0, tasaEmpleo:0, puestosDeTrabajoCompletos:0,tecnicosElevadoresTotales:0,pulmonesElevadoresTotales:0,capacidadDeServicioInstalada:0, elevadoresTotalesMecanica:0, entradasPromedioTaller:0, entradasPuestoTrabajo:0}
+      return {zona:element, valor:0, productividad:0, tasaEficiencia:0, tasaEmpleo:0, puestosDeTrabajoCompletos:0,tecnicosElevadoresTotales:0,pulmonesElevadoresTotales:0,capacidadDeServicioInstalada:0, elevadoresTotalesMecanica:0, entradasPromedioTaller:0, entradasPuestoTrabajo:0}
     });
 
     apiDataDashboard.forEach((element) => {
       elemento.forEach((element2)=>{
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
-
+          element2.productividad+=element.productividad;
+          element2.tasaEficiencia+=element.tasaEficiencia;
+          element2.tasaEmpleo+=element.tasaEmpleo;
+          element2.puestosDeTrabajoCompletos+=element.puestosDeTrabajoCompletos;
+          element2.tecnicosElevadoresTotales+=element.tecnicosElevadoresTotales;
+          element2.pulmonesElevadoresTotales+=element.pulmonesElevadoresTotales;
+          element2.capacidadDeServicioInstalada+=element.capacidadDeServicioInstalada;
+          element2.elevadoresTotalesMecanica+=element.elevadoresTotalesMecanica;
+          element2.entradasPromedioTaller+=element.entradasPromedioTaller;
+          element2.entradasPuestoTrabajo+=element.entradasPuestoTrabajo;
         }
       });
     });
+
+    let elementoParaIndicadores = elemento;
+    this.generarDataIndicadores(elementoParaIndicadores);
 
     elemento=elemento.map((data)=>{
       return data.valor.toFixed(2);
@@ -261,65 +269,6 @@ export class DashboardComponent implements OnInit {
     this._dashBoardService.setConfigEntradas(this.configEntradas);
   }
 
-
-
-  async generarDataEntradas(){
-    /*let elemento = [];
-
-    elemento = this.zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0}
-    });
-
-    console.log("this.apiDataDashboard =>",this.apiDataDashboard);
-
-    this.apiDataDashboard.forEach((element) => {
-      elemento.forEach((element2)=>{
-        if (element.zona==element2.zona) {
-          element2.valor+=element.entradasPuestoTrabajo;
-        }
-      });
-    });
-
-    elemento=elemento.map((data)=>{
-      return data.valor;
-    });
-
-    this.configEntradas.series[0].data=elemento;
-    this.configEntradas.xaxis={
-      categories: this.zonasDisponibles.map((data)=>{return data!=null?data:'zona ej'}),
-      position: "top",
-      labels: {
-        offsetY: 0,
-        style:{
-          colors:"#fff"
-        }
-      },
-      axisBorder: {
-        show: false
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: "gradient",
-          gradient: {
-            colorFrom: "#EFDF00",
-            colorTo: "#BED1E6",
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-        offsetY: -35
-      }
-    }
-    this._dashBoardService.setConfigProductividad(this.configEntradas);*/
-  }
-
   reiniciarValoresDataIndicadores(){
     valoresIndicadoresDefault[0].valor=0;
     valoresIndicadoresDefault[1].valor=0;
@@ -367,7 +316,6 @@ export class DashboardComponent implements OnInit {
     this._apiService.postQuery(nodo[indice],"",this.paramsDefault).subscribe(async(data:any)=>{
       await this._dashBoardService.setApiDataDashboard(data?.result);
       await this._dashBoardService.setApiDataDashboardBackup(data?.result);
-      //await this.agregarFiltros();
       await this.cargarDataDeGraficos();
     });
   }
@@ -378,38 +326,7 @@ export class DashboardComponent implements OnInit {
     this.generarDataIndicadores();
     this.generarDataEficiencia();
     this.generarDataProductividad();
-    this.generarDataEntradas();
     this.generarDataEntradasActuales();
-  }
-
-  agregarFiltros(){
-    this.filtrarPorZona();
-    this.filtrarPorRegion();
-    this.filtrarPorSede();
-    this.filtrarPorSociedad();
-  }
-
-  filtrarPorZona(){
-    this.generarDataProductividad({zonas:this.zonasSelesccionadas});
-    this.generarDataPuestoCompleto({zonas:this.zonasSelesccionadas});
-    this.generarDataEstandarElevador({zonas:this.zonasSelesccionadas});
-    this.generarDataEficiencia({zonas:this.zonasSelesccionadas});
-    this.generarDataEntradasActuales({zonas:this.zonasSelesccionadas});
-  }
-
-  filtrarPorRegion(){
-    //const dataFiltradaPorRegion=this.apiDataDashboard.filter((data)=>{return this.regionesDisponibles.includes(data.region)});
-    //this.aplicarFiltroRegiones();
-  }
-
-  filtrarPorSede(){
-    const dataFiltradaPorSede=this.apiDataDashboard.filter((data)=>{return this.sedesDisponibles.includes(data.sede)});
-  }
-
-  filtrarPorSociedad(){
-    let copia=this.apiDataDashboard;
-    const dataFiltradaPorSociedad=copia.filter((data)=>{return this.sociedadesDisponibles.includes(data.sociedad)});
-    this.generarDataPuestoCompleto(dataFiltradaPorSociedad);
   }
 
   filtradoAnidado(){
@@ -461,7 +378,6 @@ export class DashboardComponent implements OnInit {
       return filtrado;
     }
 
-    //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
@@ -485,7 +401,6 @@ export class DashboardComponent implements OnInit {
       return filtrado;
     }
 
-    //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
@@ -509,7 +424,6 @@ export class DashboardComponent implements OnInit {
       return filtrado;
     }
 
-    //this._dashBoardService.setApiDataDashboard(filtrado);
     this.generarDataPuestoCompleto({apiDataDashboard:filtrado});
     this.generarDataEstandarElevador({apiDataDashboard:filtrado});
     this.generarDataEficiencia({apiDataDashboard:filtrado});
@@ -530,9 +444,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
-      //this.apiDataUbicacion = await data;
       this.zonasDisponibles=data.zona;
       this.regionesDisponibles=data.region;
       this.sociedadesDisponibles=data.sociedad;
@@ -549,7 +461,6 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getConfigPuestoCompleto().subscribe(async (data)=>{
       this.chartOptions = await data;
-      console.log("ChartOptions ha cambiado", await data);
     });
 
     this._dashBoardService.getConfigEstandarElevador().subscribe(async (data)=>{
