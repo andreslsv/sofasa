@@ -33,6 +33,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DashboardColisionComponent } from './modules/admin/dashboard-colision/dashboard-colision.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 
@@ -88,6 +89,9 @@ const routerConfig: ExtraOptions = {
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})
+    ],
+    providers:[
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     bootstrap   : [
         AppComponent
