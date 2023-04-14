@@ -437,6 +437,10 @@ export class DashboardComponent implements OnInit {
     this.generarDataEficiencia({apiDataDashboard:this.apiDataDashboardBackup});
     this.generarDataProductividad({apiDataDashboard:this.apiDataDashboardBackup});
     this.generarDataEntradasActuales({apiDataDashboard:this.apiDataDashboardBackup});
+    this.zonasSelesccionadas=[];
+    this.regionesSeleccionadas=[];
+    this.sociedadesSeleccionadas=[];
+    this.sedesSeleccionadas=[];
   }
 
   filtrarElementosDuplicadas(lista){
