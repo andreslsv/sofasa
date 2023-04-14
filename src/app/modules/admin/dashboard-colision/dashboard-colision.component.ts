@@ -89,7 +89,7 @@ export class DashboardColisionComponent implements OnInit {
     const apiDataDashboard = filtros?.apiDataDashboard?filtros.apiDataDashboard:this.apiDataDashboard;
 
     elemento = zonasDisponibles.map((element)=>{
-      return {zona:element, valor:0}
+      return {zona:element, valor:0, productividad:0, tasaEficiencia:0, tasaEmpleo:0, pulmonesPorPuestoTrabajo:0, tecnicosPuestoTrabajo:0, pulmones:0, puestosDeTrabajoCompletos:0, puestoTrabajoDefinidoMarca:0, entradasPromedioTaller:0, entradasPuestoTrabajo:0}
     });
 
     apiDataDashboard.forEach((element) => {
@@ -99,9 +99,21 @@ export class DashboardColisionComponent implements OnInit {
         console.log("element2",element2);
         if (element.zona==element2.zona) {
           element2.valor+=element.aprovechamientoCapacidadServicio;
+          element2.productividad+=element.productividad;
+          element2.tasaEficiencia+=element.tasaEficiencia;
+          element2.tasaEmpleo+=element.tasaEmpleo;
+          element2.pulmonesPorPuestoTrabajo+=element.pulmonesPorPuestoTrabajo;
+          element2.pulmones+=element.pulmones;
+          element2.puestosDeTrabajoCompletos+=element.puestosDeTrabajoCompletos;
+          element2.puestoTrabajoDefinidoMarca+=element.puestoTrabajoDefinidoMarca;
+          element2.entradasPromedioTaller+=element.entradasPromedioTaller;
+          element2.entradasPuestoTrabajo+=element.entradasPuestoTrabajo;
         }
       });
     });
+
+    let elementoParaIndicadores = elemento;
+    this.generarDataIndicadores(elementoParaIndicadores);
 
     elemento=elemento.map((data)=>{
       return data.valor.toFixed(2);
