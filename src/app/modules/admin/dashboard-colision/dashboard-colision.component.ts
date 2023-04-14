@@ -8,6 +8,7 @@ import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, Ape
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardColisionService } from './dashboard-colision.service';
 import { valoresIndicadoresDefault } from './graficos';
+import { saveAs } from 'file-saver';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -542,6 +543,27 @@ export class DashboardColisionComponent implements OnInit {
 
   filtrarElementosDuplicadas(lista){
     return lista.filter((item, index) => lista.indexOf(item) === index);
+  }
+
+  saveDataToCSV(data: any[], filename: string) {
+    // Convierte los datos en una cadena CSV
+    const csvData = this.convertToCSV(data);
+  
+    // Crea un objeto Blob con la cadena CSV
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+  
+    // Utiliza file-saver para descargar el archivo CSV
+    saveAs(blob, filename);
+  }
+  
+  convertToCSV(data: any[]) {
+    const headers = Object.keys(data[0]).join(',');
+    const rows = data.map(obj => Object.values(obj).join(','));
+    return `${headers}\n${rows.join('\n')}`;
+  }
+
+  guardarDataCsv(){
+    this.saveDataToCSV(this.apiDataDashboardBackup,"dashboard");
   }
 
   ngOnInit(): void {

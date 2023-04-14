@@ -129,9 +129,12 @@
             </mat-expansion-panel>
         </mat-accordion>
 
-        <div>
+        <div class="flex justify-start">
           <button class="bg-black text-white" (click)="filtradoAnidado()" mat-button>Filtrar</button>
           <button class="bg-black text-white ml-2" (click)="resetearValores()" mat-button>Resetear</button>
+          <button class="ml-2" (click)="resetearValores()" mat-stroked-button>
+            <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
+          </button>
         </div>
     </div>
 
