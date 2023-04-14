@@ -563,7 +563,12 @@ export class DashboardColisionComponent implements OnInit {
   }
 
   guardarDataCsv(){
-    this.saveDataToCSV(this.apiDataDashboardBackup,"dashboard");
+    const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
+
+    this._apiService.postQuery(nodo[1],"",this.paramsDefault).subscribe(async(data:any)=>{
+      this.saveDataToCSV(data.result,"dashboard");
+    });
+ 
   }
 
   ngOnInit(): void {
