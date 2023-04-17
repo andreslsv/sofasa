@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { DashboardColisionService } from './dashboard-colision.service';
 import { valoresIndicadoresDefault } from './graficos';
 import { saveAs } from 'file-saver';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -71,17 +72,46 @@ export class DashboardColisionComponent implements OnInit {
     sociedad              : [, [Validators.required]],
     sede                  : [, [Validators.required]],
   });
+  seleccionado: any;
 
-  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardColisionService, private _apiService:ApiService, private _userService:UserService) {}
+  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardColisionService, private _apiService:ApiService, private _userService:UserService,private _snackBar: MatSnackBar) {}
 
 
-  toggleSelection(chip: MatChip,selector) {
+  toggleSelection(chip: MatChip,selector,funcionActualizar=null) {
     //chip.toggleSelected(true);
     if (selector.includes(chip.value)) {
       selector.splice(selector.indexOf(chip.value), 1);
     } else {
       selector.push(chip.value);
     }
+
+    if (funcionActualizar) {
+      funcionActualizar(selector);
+    }
+  }
+
+  actualizarZonasSeleccionados=(valor)=>{
+    let sel=this.seleccionado;
+    sel.zonasSelesccionadas=valor;
+    this._dashBoardService.setSeleccionados(sel);
+  }
+
+  actualizarRegionesSeleccionadas=(valor)=>{
+    let sel=this.seleccionado;
+    sel.regionesSeleccionadas=valor;
+    this._dashBoardService.setSeleccionados(sel);
+  }
+
+  actualizarSociedadesSeleccionadas=(valor)=>{
+    let sel=this.seleccionado;
+    sel.sociedadesSeleccionadas=valor;
+    this._dashBoardService.setSeleccionados(sel);
+  }
+
+  actualizarSedesSeleccionadas=(valor)=>{
+    let sel=this.seleccionado;
+    sel.sedesSeleccionadas=valor;
+    this._dashBoardService.setSeleccionados(sel);
   }
 
   generarDataPuestoCompleto(filtros=null){
@@ -566,9 +596,42 @@ export class DashboardColisionComponent implements OnInit {
     const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
 
     this._apiService.postQuery(nodo[1],"",this.paramsDefault).subscribe(async(data:any)=>{
-      this.saveDataToCSV(data.result,"dashboard");
+      const dataFiltrada = this.filtrarDataCSV(data.result);
+
+      if (dataFiltrada.length>0) {
+        this.saveDataToCSV(dataFiltrada,"dashboard");
+      }else{
+        this.openSnackBar("Nada para guardar");
+      }
+
     });
  
+  }
+
+  openSnackBar(mensaje){
+    this._snackBar.open(mensaje, null, {duration: 4000});
+  }
+
+  filtrarDataCSV(dashboard){
+    let personasFiltradas = dashboard;
+
+    if (this.seleccionado?.regionesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.regionesSeleccionadas.includes(dash.region));
+    }
+
+    if (this.seleccionado?.zonasSelesccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.zonasSelesccionadas.includes(dash.zona));
+    }
+
+    if (this.seleccionado?.sociedadesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.sociedadesSeleccionadas.includes(dash.sociedad));
+    }
+
+    if (this.seleccionado?.sedesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.sedesSeleccionadas.includes(dash.sede));
+    }
+    
+    return personasFiltradas;
   }
 
   ngOnInit(): void {
@@ -612,6 +675,10 @@ export class DashboardColisionComponent implements OnInit {
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{
       this.dataIndicadores = await data;
+    });
+
+    this._dashBoardService.getSeleccionado().subscribe((data)=>{
+      this.seleccionado = data;
     });
 
     this._userService.user$
