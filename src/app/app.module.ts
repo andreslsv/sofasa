@@ -32,8 +32,11 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DashboardColisionComponent } from './modules/admin/dashboard-colision/dashboard-colision.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 
@@ -86,6 +89,8 @@ const routerConfig: ExtraOptions = {
         MatExpansionModule,
         MatChipsModule,
         MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
 
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({})

@@ -6,6 +6,7 @@ import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ColisionService } from './colision.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-colision',
@@ -98,7 +99,7 @@ export class ColisionComponent implements OnInit {
     const puestosTrabajoForm=this.puestosTrabajoForm.value;
 
     let colision = {
-      "fechaRegistro": "2023-03-28T23:20:32.347Z",
+      "fechaRegistro": moment().format(),
       "idUsuario":this.user?.id,
       "pulmonesPorPuestoTrabajo": this.mecanicaForm.value.pul_por_pue_tra,
       "entradasPromedioTaller": this.mecanicaForm.value.ent_pro_tal,

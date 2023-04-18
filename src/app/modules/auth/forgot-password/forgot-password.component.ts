@@ -4,6 +4,7 @@ import { finalize } from 'rxjs';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { ApiService } from 'app/services/api.service';
 
 @Component({
     selector     : 'auth-forgot-password',
@@ -27,7 +28,8 @@ export class AuthForgotPasswordComponent implements OnInit
      */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _apiService:ApiService
     )
     {
     }
@@ -43,7 +45,9 @@ export class AuthForgotPasswordComponent implements OnInit
     {
         // Create the form
         this.forgotPasswordForm = this._formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
+            email: ['', [Validators.required, Validators.email]],
+            codigoBir: ['', [Validators.required]],
+            cedula: ['', [Validators.required]]
         });
     }
 
@@ -68,25 +72,58 @@ export class AuthForgotPasswordComponent implements OnInit
         // Hide the alert
         this.showAlert = false;
 
+        const valores = this.forgotPasswordForm.value;
+
+        const nodo = ["Usuario/OlvideContraseña"];
+        const paramsDefault={id:0,email:valores.email,codigoBir:valores.codigoBir,cedula:valores.cedula};
+    
+        this._apiService.postQuery(nodo[0],"",paramsDefault).pipe(
+            finalize(() => {
+
+                
+                this.forgotPasswordForm.enable();
+
+                
+                this.forgotPasswordNgForm.resetForm();
+
+                
+                this.showAlert = true;
+            })
+        )
+        .subscribe(
+            async(data:any)=>{
+                this.alert = {
+                    type   : 'success',
+                    message: 'El mensaje ha sido enviado correctamente a su correo.'
+                };
+            },
+            async(data:any)=>{
+                this.alert = {
+                    type   : 'error',
+                    message: 'Credenciales no encontradas'
+                };
+            }
+            );
+
         // Forgot password
-        this._authService.forgotPassword(this.forgotPasswordForm.get('email').value)
+        /*this._authService.forgotPassword(this.forgotPasswordForm.get('email').value)
             .pipe(
                 finalize(() => {
 
-                    // Re-enable the form
+                    
                     this.forgotPasswordForm.enable();
 
-                    // Reset the form
+                    
                     this.forgotPasswordNgForm.resetForm();
 
-                    // Show the alert
+                    
                     this.showAlert = true;
                 })
             )
             .subscribe(
                 (response) => {
 
-                    // Set the alert
+                    
                     this.alert = {
                         type   : 'success',
                         message: 'Password reset sent! You\'ll receive an email if you are registered on our system.'
@@ -94,12 +131,12 @@ export class AuthForgotPasswordComponent implements OnInit
                 },
                 (response) => {
 
-                    // Set the alert
+                    
                     this.alert = {
                         type   : 'error',
                         message: 'Email does not found! Are you sure you are already a member?'
                     };
                 }
-            );
+            );*/
     }
 }

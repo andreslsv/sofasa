@@ -72,6 +72,13 @@ export class DashboardColisionComponent implements OnInit {
     sociedad              : [, [Validators.required]],
     sede                  : [, [Validators.required]],
   });
+
+
+  fechaForm = this._formBuilder.group({
+    fechaIni                : [, [Validators.required]],
+    fechaFin                  : [, [Validators.required]]
+  });
+
   seleccionado: any;
 
   constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardColisionService, private _apiService:ApiService, private _userService:UserService,private _snackBar: MatSnackBar) {}
@@ -584,6 +591,7 @@ export class DashboardColisionComponent implements OnInit {
   
     // Utiliza file-saver para descargar el archivo CSV
     saveAs(blob, filename);
+    this._dashBoardService.setSeleccionados({zonasSelesccionadas:[], regionesSeleccionadas:[], sociedadesSeleccionadas:[], sedesSeleccionadas:[]});
   }
   
   convertToCSV(data: any[]) {
@@ -593,12 +601,37 @@ export class DashboardColisionComponent implements OnInit {
   }
 
   guardarDataCsv(){
+    const valores = this.fechaForm.value;
     const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
+    const paramsDefault={"empresa": "","ultimoReg": "0","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
 
-    this._apiService.postQuery(nodo[1],"",this.paramsDefault).subscribe(async(data:any)=>{
-      const dataFiltrada = this.filtrarDataCSV(data.result);
+    if (valores.fechaIni && valores.fechaFin){
+      paramsDefault.fechaIni=valores.fechaIni;
+      paramsDefault.fechaFin=valores.fechaFin;
+    }
 
-      if (dataFiltrada.length>0) {
+    this._apiService.postQuery(nodo[1],"",paramsDefault).subscribe(async(data:any)=>{
+      let dataFiltrada = await data.result;
+
+      if (this.seleccionado?.regionesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.regionesSeleccionadas.includes(dash.region));
+      }
+
+      if (this.seleccionado?.zonasSelesccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.zonasSelesccionadas.includes(dash.zona));
+      }
+
+      if (this.seleccionado?.sociedadesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.sociedadesSeleccionadas.includes(dash.sociedad));
+      }
+
+      if (this.seleccionado?.sedesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.sedesSeleccionadas.includes(dash.sede));
+      }
+
+      console.log("dataFiltrada>>>>>>>>>>>>", dataFiltrada);
+
+      if(dataFiltrada.length>0) {
         this.saveDataToCSV(dataFiltrada,"dashboard");
       }else{
         this.openSnackBar("Nada para guardar");
@@ -612,8 +645,8 @@ export class DashboardColisionComponent implements OnInit {
     this._snackBar.open(mensaje, null, {duration: 4000});
   }
 
-  filtrarDataCSV(dashboard){
-    let personasFiltradas = dashboard;
+  async filtrarDataCSV(dashboard){
+    let personasFiltradas = await dashboard;
 
     if (this.seleccionado?.regionesSeleccionadas) {
       personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.regionesSeleccionadas.includes(dash.region));
@@ -630,7 +663,7 @@ export class DashboardColisionComponent implements OnInit {
     if (this.seleccionado?.sedesSeleccionadas) {
       personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.sedesSeleccionadas.includes(dash.sede));
     }
-    
+
     return personasFiltradas;
   }
 
