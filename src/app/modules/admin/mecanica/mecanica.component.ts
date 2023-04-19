@@ -6,6 +6,7 @@ import { User } from 'app/core/user/user.types';
 import { ApiService } from 'app/services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MecanicaService } from './mecanica.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-mecanica',
@@ -90,7 +91,7 @@ export class MecanicaComponent implements OnInit {
     }
 
     let mecanica = {
-      "fechaRegistro": "2023-03-28T19:58:17.931Z",
+      "fechaRegistro": moment().format(),
       "idUsuario": this.user?.id,
       "entradasxPuestoTrabajo": this.mecanicaForm?.value?.ent_x_pues_de_tra,
       "pulmonesPorPuestoTrabajo": this.mecanicaForm?.value?.pul_por_pue_tra,
