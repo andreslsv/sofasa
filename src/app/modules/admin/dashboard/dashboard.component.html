@@ -36,6 +36,21 @@
     </div>-->
 
     <div class="grid grid-cols-2 gap-3" *ngIf="usuario?.admin==1">
+
+      <form [formGroup]="fechaForm" class="grid grid-cols-2 gap-2 col-span-2">
+        <mat-form-field class="w-full -mb-3">
+            <input placeholder="fechaIni" matInput  [matDatepicker]="picker" [formControlName]="'fechaIni'">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="w-full -mb-3">
+          <input placeholder="fechaFin" matInput [formControlName]="'fechaFin'"  [matDatepicker]="picker2">
+          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      </form>
+
         <mat-accordion>
             <mat-expansion-panel hideToggle>
               <mat-expansion-panel-header>
@@ -132,7 +147,7 @@
         <div class="flex justify-start">
           <button class="bg-black text-white" (click)="filtradoAnidado()" mat-button>Filtrar</button>
           <button class="bg-black text-white ml-2" (click)="resetearValores()" mat-button>Resetear</button>
-          <button class="ml-2" (click)="resetearValores()" mat-stroked-button>
+          <button class="ml-2"  (click)="guardarDataCsv()" mat-stroked-button>
             <mat-icon [svgIcon]="'heroicons_outline:download'" class="icon-size-6"></mat-icon>
           </button>
         </div>

@@ -8,6 +8,8 @@ import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexGrid, Ape
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './dashboard.service';
 import { valoresIndicadoresDefault } from './graficos';
+import { saveAs } from 'file-saver';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -59,6 +61,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   chartOptions2: { series: number[]; colors: string[]; stroke:{width:number}; chart: { width: number; type: string; }; labels: string[]; responsive: { breakpoint: number; options: { chart: { width: number; }; legend: { position: string; show:boolean; }; }; }[]; };
   secciones=["Mecánica","Colisión"];
+  seleccionado: any;
 
   paramsDefault={"empresa": "","ultimoReg": "1","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
 
@@ -69,7 +72,12 @@ export class DashboardComponent implements OnInit {
     sede                  : [, [Validators.required]],
   });
 
-  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService) {}
+  fechaForm = this._formBuilder.group({
+    fechaIni                : [, [Validators.required]],
+    fechaFin                  : [, [Validators.required]]
+  });
+
+  constructor(private _formBuilder: FormBuilder, private _dashBoardService:DashboardService, private _apiService:ApiService, private _userService:UserService,private _snackBar: MatSnackBar) {}
 
 
   toggleSelection(chip: MatChip,selector) {
@@ -447,6 +455,91 @@ export class DashboardComponent implements OnInit {
     return lista.filter((item, index) => lista.indexOf(item) === index);
   }
 
+  saveDataToCSV(data: any[], filename: string) {
+    // Convierte los datos en una cadena CSV
+    const csvData = this.convertToCSV(data);
+  
+    // Crea un objeto Blob con la cadena CSV
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+  
+    // Utiliza file-saver para descargar el archivo CSV
+    saveAs(blob, filename);
+    this._dashBoardService.setSeleccionados({zonasSelesccionadas:[], regionesSeleccionadas:[], sociedadesSeleccionadas:[], sedesSeleccionadas:[]});
+  }
+  
+  convertToCSV(data: any[]) {
+    const headers = Object.keys(data[0]).join(',');
+    const rows = data.map(obj => Object.values(obj).join(','));
+    return `${headers}\n${rows.join('\n')}`;
+  }
+  
+  guardarDataCsv(){
+    const valores = this.fechaForm.value;
+    const nodo = ["Mecanica/ConsultarMecanica","Colision/ConsultarColision"];
+    const paramsDefault={"empresa": "","ultimoReg": "0","fechaIni": "2023-03-23T14:29:27.803Z","fechaFin": "2023-03-23T14:29:27.803Z"};
+
+    if (valores.fechaIni && valores.fechaFin){
+      paramsDefault.fechaIni=valores.fechaIni;
+      paramsDefault.fechaFin=valores.fechaFin;
+    }
+
+    this._apiService.postQuery(nodo[1],"",paramsDefault).subscribe(async(data:any)=>{
+      let dataFiltrada = await data.result;
+
+      if (this.seleccionado?.regionesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.regionesSeleccionadas.includes(dash.region));
+      }
+
+      if (this.seleccionado?.zonasSelesccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.zonasSelesccionadas.includes(dash.zona));
+      }
+
+      if (this.seleccionado?.sociedadesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.sociedadesSeleccionadas.includes(dash.sociedad));
+      }
+
+      if (this.seleccionado?.sedesSeleccionadas.length>0) {
+        dataFiltrada = dataFiltrada.filter(dash => this.seleccionado.sedesSeleccionadas.includes(dash.sede));
+      }
+
+      console.log("dataFiltrada>>>>>>>>>>>>", dataFiltrada);
+
+      if(dataFiltrada.length>0) {
+        this.saveDataToCSV(dataFiltrada,"dashboard");
+      }else{
+        this.openSnackBar("Nada para guardar");
+      }
+
+    });
+ 
+  }
+
+  openSnackBar(mensaje){
+    this._snackBar.open(mensaje, null, {duration: 4000});
+  }
+
+  async filtrarDataCSV(dashboard){
+    let personasFiltradas = await dashboard;
+
+    if (this.seleccionado?.regionesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.regionesSeleccionadas.includes(dash.region));
+    }
+
+    if (this.seleccionado?.zonasSelesccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.zonasSelesccionadas.includes(dash.zona));
+    }
+
+    if (this.seleccionado?.sociedadesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.sociedadesSeleccionadas.includes(dash.sociedad));
+    }
+
+    if (this.seleccionado?.sedesSeleccionadas) {
+      personasFiltradas = personasFiltradas.filter(dash => this.seleccionado.sedesSeleccionadas.includes(dash.sede));
+    }
+
+    return personasFiltradas;
+  }
+
   ngOnInit(): void {
     this._dashBoardService.getApiDataUbicacion().subscribe(async(data)=>{
       this.zonasDisponibles=data.zona;
@@ -485,6 +578,10 @@ export class DashboardComponent implements OnInit {
 
     this._dashBoardService.getIndicadores().subscribe(async (data)=>{
       this.dataIndicadores = await data;
+    });
+
+    this._dashBoardService.getSeleccionado().subscribe((data)=>{
+      this.seleccionado = data;
     });
 
     this._userService.user$

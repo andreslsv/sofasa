@@ -9,6 +9,7 @@ export class DashboardService {
 
   puestoCompleto = [0, 0, 0, 0, 0, 0, 0, 0];
   estandarElevadorProductivo = [0, 0, 0, 0, 0, 0, 0, 0];
+  seleccionado = {zonasSelesccionadas:[], regionesSeleccionadas:[], sociedadesSeleccionadas:[], sedesSeleccionadas:[]};
 
   defaultPuestoCompleto=valoresGraficosDefaultPuesto;
   defaultEstandarElevador=valoresGraficosDefaultEstandar;
@@ -30,6 +31,12 @@ export class DashboardService {
   private indicadores$: BehaviorSubject<any> = new BehaviorSubject<any>(this.indicadores);
   private estandarElevadorProductivo$: BehaviorSubject<any> = new BehaviorSubject<any>(this.estandarElevadorProductivo);
   private zonas$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
+  private seleccionado$: BehaviorSubject<any> = new BehaviorSubject<any>(this.seleccionado);
+
+  getSeleccionado(){
+    return this.seleccionado$.asObservable();
+  }
 
   getApiDataDashboardBackup(){
     return this.apiDataDashboardBackup$.asObservable();
@@ -117,6 +124,10 @@ export class DashboardService {
 
   setZonas(valor){
     return this.zonas$.next(valor);
+  }
+
+  setSeleccionados(valor){
+    return this.seleccionado$.next(valor);
   }
 
   constructor() { }
